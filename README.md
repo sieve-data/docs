@@ -1,3 +1,10 @@
+Instructions to Use
+------------
+Follow instructions [here](https://github.com/slatedocs/slate/wiki/Using-Slate-Natively).
+
+```bundle exec middleman serve```
+```bundle exec middleman build```
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/slatedocs/img/main/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
   <br>
