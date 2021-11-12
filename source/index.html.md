@@ -231,7 +231,7 @@ This endpoint allows you to specify which metadata tags you want to delete from 
 
 ### HTTP Request
 
-`POST https://api.sievedata.com/v1/add_tags`
+`POST https://api.sievedata.com/v1/delete_tags`
 
 ### Parameters
 
@@ -306,6 +306,10 @@ project.push_data(urls, train=True)
 test_url = 'https://cdn.cnn.com/cnnnext/dam/assets/200824175931-kobe-bryant-file-super-tease.jpg'
 test_url1 = 'https://api.time.com/wp-content/uploads/2020/09/kobe-bryant-book-04.jpg'
 project.push_data([test_url, test_url1])
+
+# send video for Sieve to tag
+test_url1 = 'https://example.com/video/video.mp4'
+project.push_data([test_url, test_url1])
 ```
 
 ```shell
@@ -347,7 +351,7 @@ This endpoint is for submitting data to Sieve. You might do this for one of two 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```urls``` | list | list of input urls (images) you want to submit
+```urls``` | list | list of input urls (images or videos) you want to submit
 ```train``` | bool | By default, this is set to false. Set to true if data is meant to be used by Sieve to train tagging models, false otherwise.
 
 # Querying Data
@@ -400,7 +404,7 @@ curl https://api.sievedata.com/v1/get_metadata_by_job_id \
 }
 ```
 
-This endpoint is for retreiving a batch of images image and their metadata by the ```job_id```. The ```job_id``` is something that was returned to you when you initially submitted data which is unique to the batch you submitted during that one request.
+This endpoint is for retreiving a batch of images and their metadata by the ```job_id```. The ```job_id``` is something that was returned to you when you initially submitted data which is unique to the batch you submitted during that one request.
 
 ### HTTP Request
 
