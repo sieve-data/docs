@@ -3,7 +3,7 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - python
+#   - python
 
 toc_footers:
   - <a target='_blank' href='https://sievedata.com/'>Sign Up for a Sieve Account</a>
@@ -22,15 +22,15 @@ meta:
 
 # Introduction
 
-Welcome to the Sieve API! You can use our API to access Sieve API endpoints, which can help you submit images to Sieve to get tagged and later query by ids, timestamps, or subsets.
+Welcome to the Sieve API! You can use our API to access Sieve API endpoints, which can help you submit visual data to Sieve and then query that data by many visual attributes that are relevant to your data.
 
 Our API is currently in Beta, so please [reach out to us](https://sievedata.com/) if you're interested in the API and getting onboarded. We're trying to handle as many customers as possible right now.
 
 > API Endpoint
 
-```python
+<!-- ```python
 https://api.sievedata.com/v1/
-```
+``` -->
 
 ```shell
 https://api.sievedata.com/v1/
@@ -39,11 +39,11 @@ https://api.sievedata.com/v1/
 
 > To authorize, use this code:
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient(api_key="YOUR_API_KEY")
-```
+``` -->
 
 ```shell
 # With shell, you can just pass the correct header with each request
@@ -63,12 +63,12 @@ Sieve expects for the API key to be included in all API requests to the server i
 
 ## Initialize a New Project
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient(api_key="YOUR_API_KEY")
 client.init_project(project_name="amazing_project_1")
-```
+``` -->
 
 ```shell
 curl https://api.sievedata.com/v1/init_project \
@@ -102,20 +102,20 @@ Parameter | Type | Description
 ```project_name``` | string | the name of the project
 
 <aside class="notice">
-A project name is used to access images and tags for that project
+A project name needs to be specified on every API request having to do with project data.
 </aside>
 
 ## Get All Projects
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient(api_key="YOUR_API_KEY")
 print(client.get_all_projects()) # this prints project names in a list
-```
+``` -->
 
 ```shell
-curl https://api.sievedata.com/v1/get_all_projects \
+curl https://api.sievedata.com/v1/get_projects \
     -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -140,7 +140,7 @@ This endpoint retrieves the names of all projects you've created within your org
 
 ## Add Metadata Tags
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient('YOUR_API_KEY')
@@ -153,7 +153,7 @@ my_proj.add_tags(
         {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
     ]
 )
-```
+``` -->
 
 ```shell
 curl https://api.sievedata.com/v1/add_tags \
@@ -174,11 +174,11 @@ curl https://api.sievedata.com/v1/add_tags \
 
 ```json
 {
-    "description": "pushed tags"
+    "description": "Pushed tags"
 }
 ```
 
-This endpoint allows you to specify which types of metadata you want tagged in this project.
+This endpoint allows you to specify which types of metadata you want tagged in this project. Typically, you'll work with the Sieve team so they can decide which of their internal models will work best for your use-case.
 
 ### HTTP Request
 
@@ -193,7 +193,7 @@ Parameter | Type | Description
 
 ## Delete Metadata Tags
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient('YOUR_API_KEY')
@@ -202,7 +202,7 @@ my_proj = client.get_project("amazing_project_1")
 my_proj.delete_tags(
     tags=["glare", "weather"]
 )
-```
+``` -->
 
 ```shell
 curl https://api.sievedata.com/v1/delete_tags \
@@ -240,59 +240,11 @@ Parameter | Type | Description
 ```project_name``` | string | the name of the project
 ```tags``` | dict | list of tag names to delete
 
-## Get Metadata Tag Status
-
-```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-print(project.get_tag_status() # prints status of all tags in the project
-```
-
-```shell
-curl https://api.sievedata.com/v1/get_tag_status \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1"
-    }'
-
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "successful",
-    "tag_status": [
-        {"name": "glare", "status": "live"},
-        {"name": "weather", "status": "training"},
-        {"name": "angle", "status": "queued"}
-    ]
-}
-```
-
-This endpoint allows you to get the status of the tagging models for each type of metadata tag added to the project.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/add_tags`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```tags``` | dict | list of tag names to delete
-
 # Submitting Data
 
-## Create Training / Tagging Job
+## Push Video Data
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient('YOUR_API_KEY')
@@ -310,20 +262,16 @@ project.push_data([test_url, test_url1])
 # send video for Sieve to tag
 test_url1 = 'https://example.com/video/video.mp4'
 project.push_data([test_url, test_url1])
-```
+``` -->
 
 ```shell
-curl https://api.sievedata.com/v1/push_data \
+curl https://api.sievedata.com/v1/push_video \
     -X POST \
     -H "X-API-Key: YOUR_API_KEY" \
     -H "Content-Type: application/json" \
     -d '{
         "project_name": amazing_project_1,
-        "urls": [
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg"
-        ],
-        "train": true
+        "video_url": "https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi"
     }'
 ```
 
@@ -331,148 +279,29 @@ curl https://api.sievedata.com/v1/push_data \
 
 ```json
 {
-    "description": "successful",
-    "image_ids": [
-        "39a28821-aa81-4a69-9197-b519252a42c4",
-        "e0ddbbdf-027c-4e3a-bd6d-4e9ba9fb35f1"
-    ],
-    "job_id": "42077167-c11a-404c-b538-a5d5f057365b"
+    "description": "Published video to batching",
+    "job_id":"add3978a-94ac-4585-ab52-8bc5c2295c6f"
 }
 ```
 
-This endpoint is for submitting data to Sieve. You might do this for one of two purposes. Either you're submitting data to us so we can train our models and deploy them to then be able to tag your data or you're submitting the data to actually get it tagged.
+This endpoint allows you to submit video data to Sieve. Every video you submit to Sieve either needs to have a URL that is signed (secure) or public. Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-urls.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. Sieve processes cuts videos into their individual frames and uses a set of filters to process them efficiently.
 
 ### HTTP Request
 
-`POST https://api.sievedata.com/v1/push_data`
+`POST https://api.sievedata.com/v1/push_video`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```urls``` | list | list of input urls (images or videos) you want to submit
-```train``` | bool | By default, this is set to false. Set to true if data is meant to be used by Sieve to train tagging models, false otherwise.
+```video_url``` | string | valid URL to video
 
-# Querying Data
-
-## Query by Job ID
-
-```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.get_metadata_by_job_id("42077167-c11a-404c-b538-a5d5f057365b")
-```
-
-```shell
-curl https://api.sievedata.com/v1/get_metadata_by_job_id \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "job_id": "42077167-c11a-404c-b538-a5d5f057365b"
-    }’
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "successful",
-    "metadata": [
-        {
-            "image_id": "39a28821-aa81-4a69-9197-b519252a42c4",
-            "job_id": "42077167-c11a-404c-b538-a5d5f057365b",
-            "url": "https://cdn.cnn.com/cnnnext/dam/assets/200824175931-kobe-bryant-file-super-tease.jpg",
-            "glare": "1",
-            "angle": "3",
-            "weather": "other"
-        },
-        {
-            "image_id": "e0ddbbdf-027c-4e3a-bd6d-4e9ba9fb35f1",
-            "job_id": "42077167-c11a-404c-b538-a5d5f057365b",
-            "url": "https://api.time.com/wp-content/uploads/2020/09/kobe-bryant-book-04.jpg",
-            "glare": "2",
-            "angle": "3",
-            "weather": "other"
-        }
-    ]
-}
-```
-
-This endpoint is for retreiving a batch of images and their metadata by the ```job_id```. The ```job_id``` is something that was returned to you when you initially submitted data which is unique to the batch you submitted during that one request.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/get_metadata_from_job_id`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```job_id``` | string | the job id
-
-## Query by Image ID
-
-```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-project.get_metadata_by_image_ids(["39a28821-aa81-4a69-9197-b519252a42c4"])
-```
-
-```shell
-curl https://api.sievedata.com/v1/get_metadata_by_image_ids \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "image_ids": ["39a28821-aa81-4a69-9197-b519252a42c4"]
-    }’
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "successful",
-    "metadata": [
-        {
-            "image_id": "39a28821-aa81-4a69-9197-b519252a42c4",
-            "job_id": "42077167-c11a-404c-b538-a5d5f057365b",
-            "url": "https://cdn.cnn.com/cnnnext/dam/assets/200824175931-kobe-bryant-file-super-tease.jpg",
-            "glare": "1",
-            "angle": "3",
-            "weather": "other"
-        }
-    ]
-}
-```
-
-This endpoint is for retreiving an image and its metadata by the ```image_id```. The ```image_id``` is something that was returned to you when you initially submitted data which is unique to each image you submitted.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/get_metadata_from_image_ids`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```image_ids``` | list | a list of image ids
+# Querying and Exporting Data
 
 ## Query by Metadata
 
-```python
+<!-- ```python
 from sieve.client import SieveClient
 
 client = SieveClient('YOUR_API_KEY')
@@ -484,49 +313,160 @@ my_proj.get_by_metadata(
         "weather": ["rainy", "other"]
     }
 )
-```
+``` -->
 
 ```shell
-curl https://api.sievedata.com/v1/get_metadata_by_subset \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "tags": {
-            "glare": [2],
-            "weather": ["rainy", "other"]
-        }
-    }
+curl 'https://api.sievedata.com/v1/get_metadata?project_name=demo_project&blur=slightly_blurry&lighting=dim&person_detected=True&noise=clear' \
+    -X GET \
+    -H "X-API-Key: YOUR_API_KEY"
 ```
 
-> A sample response would look as follows:
+> A sample response would look as follows (truncated):
 
 ```json
-{
-    "description": "successful",
-    "metadata": [
-        {
-            "image_id": "e0ddbbdf-027c-4e3a-bd6d-4e9ba9fb35f1",
-            "job_id": "42077167-c11a-404c-b538-a5d5f057365b",
-            "url": "https://api.time.com/wp-content/uploads/2020/09/kobe-bryant-book-04.jpg",
-            "glare": "2",
-            "angle": "3",
-            "weather": "other"
-        }
-    ]
-}
+[
+    {
+        "project_name":"demo_project",
+        "aspect_ratio":"22:15",
+        "blur":"slightly_blurry",
+        "contrast":"normal",
+        "frame_number":21260,
+        "group_id":"267fb3eb-90e2-400a-a8db-7b48e48583e5",
+        "image_height":480,
+        "image_width":704,
+        "lighting":"dim",
+        "motion_detected":true,
+        "noise":"clear",
+        "person_detected":true,
+        "sharpness":"not_sharp",
+        "train":false,
+        "storage_path":"gs://sieve-data-frames-api_test_org/PRG1/PRG1-21260.jpg",
+        "video_url":"https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
+        "signed_url":"PLACEHOLDER_SIGNED_URL",
+        "video_name":"PRG1"
+    },
+    thousands of more samples...
+]
 ```
 
-This endpoint is for retreiving a set of images and their metadata, matching the query parameters. Each tag can be specified in the query along with a list of possible outputs that would count as a valid match (treated as an OR).
+This endpoint is for retreiving a set of frames / images based on their defining metadata. Each tag can be specified as a part of the URL along with the matching output class. You'll be returned a list of matching samples along with all their metadata. Keep in mind that, the response to this call is truncated due to large
+payload sizes so if you're interested in exporting an entire query, you should use then next listed API call.
 
 ### HTTP Request
 
-`POST https://api.sievedata.com/v1/get_metadata_subset`
+`POST https://api.sievedata.com/v1/get_metadata`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```tags``` | dict | a dictionary of form seen in the example
+```tags``` | list | a list passed in as URL parameters
+
+
+## Export Query by Metadata
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.get_by_metadata(
+    {
+        "glare": [2],
+        "weather": ["rainy", "other"]
+    }
+)
+``` -->
+
+```shell
+curl 'https://api.sievedata.com/v1/export_metadata?export_name=some_name&project_name=demo_project&blur=slightly_blurry&lighting=dim&person_detected=True&noise=clear' \
+    -X GET \
+    -H "X-API-Key: YOUR_API_KEY"
+```
+
+> A sample response would look as follows (truncated):
+
+```json
+{
+    "description":"queued for tarring",
+    "metadata_json_url": "PLACEHOLDER_JSON_URL",
+    "num_samples": 49210
+}
+```
+
+This endpoint is for retreiving and exporting a set of frames / images based on their defining metadata. Each tag can be specified as a part of the URL along with the matching output class. You'll be returned a list of matching samples along with all their metadata. You'll be returned a signed URL to a JSON containing a non-truncated version of the metadata for the query. You can either choose to process this yourself or wait for Sieve to automatically process and compress the raw data for you in the backend for a faster download. Use the `get_exports_status` to get information about all your exports, including status, and links to download.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/export_metadata`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```export_name``` | string | the name of the export
+```tags``` | list | a list passed in as URL parameters
+
+## Get Exports
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.get_by_metadata(
+    {
+        "glare": [2],
+        "weather": ["rainy", "other"]
+    }
+)
+``` -->
+
+```shell
+curl 'https://api.sievedata.com/v1/get_exports_status?project_name=CamNet' \
+    -X GET \
+    -H "X-API-Key: YOUR_API_KEY"
+```
+
+> A sample response would look as follows (truncated):
+
+```json
+{
+    "description":"Successful",
+    "exports":[
+        {
+            "name": "people_with_greenery",
+            "json_path":"SIGNED_URL_TO_METADATA_JSON",
+            "status": "failed",
+            "time_created": "12/07/2021, 03:57:59"
+        },
+        {
+            "name":"dim_lighting_and_people",
+            "json_path":"SIGNED_URL_TO_METADATA_JSON",
+            "status":"complete",
+            "tar_path":"SIGNED_URL_TO_ZIPPED_IMAGES",
+            "time_created":"12/07/2021, 01:13:17"
+        }
+    ]
+}
+```
+
+This endpoint is for retreiving information you can use to download your exported query data.
+
+Use `curl sample_tar_path | tar -xz` to download and uncompress your query raw data.
+
+Use `curl sample_metadata_json_path --output sieve-metadata.json` to download the metadata json.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/export_metadata`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
