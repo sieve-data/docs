@@ -133,7 +133,9 @@ curl https://api.sievedata.com/v1/get_projects \
         "API-Key": "YOUR_API_KEY",
         "can_set": True,
         "can_store": True,
-        "name": "YOUR_NAME"
+        "name": "YOUR_NAME",
+        "videos_left": NUM_VIDEOS_LEFT,
+        "hours_left": NUM_HOURS_LEFT
     }
 }
 ```
