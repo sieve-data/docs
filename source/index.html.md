@@ -315,6 +315,192 @@ Parameter | Type | Description
 ```project_name``` | string | the name of the project
 ```tags``` | list | list of tag names to delete
 
+## Add Custom Model Config
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.add_tags(
+    tags = [
+        {"name": "glare", "description": "1-5 scale of how glary the image is"},
+        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
+        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
+    ]
+)
+``` -->
+
+```shell
+curl https://api.sievedata.com/v1/add_custom_model_config \
+    -X POST \
+    -H "X-API-Key: YOUR_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "project_name": "amazing_project_1",
+        "model_name": "my_model_name",
+        "version_name": "my_version_name",
+        "file_urls": [
+            "file_1",
+            "file_2",
+            "file_n"
+        ]
+    }'
+```
+
+> A sample response would look as follows:
+
+```json
+{
+    "description": "Pushed custom model my_model_name with version my_version_name"
+}
+```
+
+This endpoint allows you to configure a new version for a custom model within your project that is controlled by you, allowing you to attach your own config files to that version to be pulled when we run the model.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/add_custom_model_config`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```model_name``` | string | the name of the model you are modifying
+```version_name``` | string | the version of the model you are setting
+```file_urls``` | list | list of file_urls for your config for the model architecture
+
+## Set Active Custom Model Configuration
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.add_tags(
+    tags = [
+        {"name": "glare", "description": "1-5 scale of how glary the image is"},
+        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
+        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
+    ]
+)
+``` -->
+
+```shell
+curl https://api.sievedata.com/v1/set_active_custom_model \
+    -X POST \
+    -H "X-API-Key: YOUR_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "project_name": "amazing_project_1",
+        "model_name": "my_model_name",
+        "version_name": "my_version_name",
+    }'
+```
+
+> A sample response would look as follows:
+
+```json
+{
+    "description": "Set custom model my_model_name to active version my_version_name"
+}
+```
+
+This endpoint allows you to set your active model version for custom models. These versions would've either been added by us or by you with the add_custom_model_config endpoint.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/set_active_custom_model`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```model_name``` | string | the name of the model you are setting
+```version_name``` | string | the version of the model you are activating
+
+## Get Custom Models 
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.add_tags(
+    tags = [
+        {"name": "glare", "description": "1-5 scale of how glary the image is"},
+        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
+        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
+    ]
+)
+``` -->
+
+```shell
+curl 'https://api.sievedata.com/v1/get_custom_models?project_name=amazing_project_1' \
+    -X GET \
+    -H "X-API-Key: YOUR_API_KEY" \
+    -H "Content-Type: application/json"
+```
+
+> A sample response would look as follows:
+
+```json
+{
+    "description": "Successful",
+    "tag_status": {
+        "project_name": "demo_project",
+        "custom_models": [
+            {
+            "custom_model_info": {
+                "active_version": "version_1",
+                "versions": {
+                    "version_1": {
+                        "files": [
+                            "file_1",
+                            "file_2.txt",
+                            ...
+                            "file_n.yaml"
+                        ]
+                    },
+                    ...
+                    "version_n": {
+                        "files": [
+                            "file_11",
+                            "file_22.txt",
+                            ...
+                            "file_nn.yaml"
+                        ]
+                    }
+                }
+            },
+            "model_name": "my_custom_model",
+            "outputs": ["low", "normal"],
+            "status": "up",
+            },
+            ...
+        ]
+    }
+    
+}
+```
+
+This endpoint allows you to view the statuses and active configs of all custom models controlled by you that you've shipped to your platform thus far.
+
+### HTTP Request
+
+`GET https://api.sievedata.com/v1/get_custom_models`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+
 # Submitting Data
 
 ## Push Video Data
