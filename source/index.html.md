@@ -652,7 +652,7 @@ Parameter | Type | Description
 ```project_name``` | string | the name of the project
 ```job_id``` | string | the job id of a videeo you've submitted
 
-# Querying and Exporting Data
+# Querying, Exporting, and Deleting Data
 
 ## Query by Metadata
 
@@ -898,3 +898,44 @@ Use `curl sample_metadata_json_path --output sieve-metadata.json` to download th
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
+
+## Delete Video Data
+
+<!-- ```python
+from sieve.client import SieveClient
+
+client = SieveClient('YOUR_API_KEY')
+my_proj = client.get_project("amazing_project_1")
+
+my_proj.get_by_metadata(
+    {
+        "glare": [2],
+        "weather": ["rainy", "other"]
+    }
+)
+``` -->
+
+```shell
+curl 'https://api.sievedata.com/v1/delete_video_data?project_name=CamNet&video_name=MyVideo' \
+    -X DELETE \
+    -H "X-API-Key: YOUR_API_KEY"
+```
+
+> A sample response would look as follows (truncated):
+
+```json
+{
+    "description":"Deleted video data of MyVideo in project CamNet successfully.",
+}
+```
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/delete_video_data`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```video_name``` | string | the name of the video
