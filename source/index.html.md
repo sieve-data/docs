@@ -77,6 +77,7 @@ curl https://api.sievedata.com/v1/init_project \
     -H "Content-Type: application/json" \
     -d '{
         "project_name": "amazing_project_1"
+        "config_url": "YOUR_CONFIG_URL"
     }'
 ```
 
@@ -89,7 +90,7 @@ curl https://api.sievedata.com/v1/init_project \
 }
 ```
 
-This endpoint creates a new Sieve project. A new project might be per general problem, per dataset, or however else you want to divide projects. Functionally, all querying will happen within a specific project.
+This endpoint creates a new Sieve project. A new project might be per general problem, per dataset, or however else you want to divide projects. Functionally, all querying will happen within a specific project. Each project has a custom config that we will help you set up. You can try out some sample project configs by signing up for our free demo!
 
 ### HTTP Request
 
@@ -100,6 +101,8 @@ This endpoint creates a new Sieve project. A new project might be per general pr
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
+```config_url``` | string (optional) | url to custom config json
+```config``` | object (optional) | custom config json
 
 <aside class="notice">
 A project name needs to be specified on every API request having to do with project data.
@@ -146,7 +149,7 @@ This endpoint retrieves the names of all projects you've created within your org
 
 `GET https://api.sievedata.com/v1/get_projects`
 
-## Add Metadata Tags
+## Get Project Info (Tags, FPS, etc.)
 
 <!-- ```python
 from sieve.client import SieveClient
@@ -164,60 +167,7 @@ my_proj.add_tags(
 ``` -->
 
 ```shell
-curl https://api.sievedata.com/v1/add_tags \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "tags": [
-            {"name": "glare", "description": "1-5 scale of how glary the image is"},
-            {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
-            {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
-        ]
-    }'
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "Pushed tags"
-}
-```
-
-This endpoint allows you to specify which types of metadata you want tagged in this project. Typically, you'll work with the Sieve team so they can decide which of their internal models will work best for your use-case.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/add_tags`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```tags``` | list | list of tags and their descriptions
-
-## Get Metadata Tags
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.add_tags(
-    tags = [
-        {"name": "glare", "description": "1-5 scale of how glary the image is"},
-        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
-        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
-    ]
-)
-``` -->
-
-```shell
-curl 'https://api.sievedata.com/v1/get_tags?project_name=amazing_project_1' \
+curl 'https://api.sievedata.com/v1/get_project_info?project_name=amazing_project_1' \
     -X GET \
     -H "X-API-Key: YOUR_API_KEY" \
     -H "Content-Type: application/json"
@@ -226,94 +176,105 @@ curl 'https://api.sievedata.com/v1/get_tags?project_name=amazing_project_1' \
 > A sample response would look as follows:
 
 ```json
-{
-    "description": "Successful",
-    "tag_status": {
-        "project_name": "demo_project",
-        "tags": [
-            {
-            "description": "contrast in image",
-            "name": "contrast",
-            "output_kind": "string",
-            "outputs": ["low", "normal"],
-            "status": "up",
-            "type": "metadata"
-            },
-            ...
-            {
-            "description": "glare in image",
-            "name": "glare",
-            "output_kind": "string",
-            "outputs": ["low", "normal", "high", "none"],
-            "status": "received",
-            "type": "metadata"
-            }
-        ]
-    }
-    
+{"description": "Successful",
+ "project_info": {"_id": "98dc895e-6ab5-438b-90fa-4cfc3ffefece",
+  "batch_size": 10,
+  "fps": 5,
+  "levels": [{"entry": "batch_video",
+    "filter_workflow": ["none"],
+    "models": [{"class_restrictions": {"classes": ["person",
+        "bicycle",
+        "car",
+        "motorcycle",
+        "bus",
+        "train",
+        "truck",
+        "traffic light",
+        "fire hydrant",
+        "stop sign",
+        "parking meter",
+        "bird",
+        "cat",
+        "dog"],
+       "keep": True},
+      "model_name": "coco_yolo_tracking_detector"}]},
+   {"entry": "batch_video",
+    "filter_workflow": ["none"],
+    "models": [{"model_name": "consolidate_tracking_data_interval"}]},
+   {"entry": "batch_objects",
+    "filter_workflow": ["none"],
+    "models": [{"model_name": "reassign_object_ids"}]},
+   {"entry": "batch_video",
+    "filter_workflow": ["none"],
+    "models": [{"model_name": "bbox_info_predictor",
+      "model_topic": "bbox_info_predictor_input",
+      "model_version": "v1",
+      "status": "up",
+      "type": "metadata_cf"},
+     {"model_name": "counts_predictor",
+      "model_topic": "counts_predictor_input",
+      "model_version": "v1",
+      "status": "up",
+      "type": "metadata_cf"}]}],
+  "network_optimized": True,
+  "num_samples": 0,
+  "preconfigured_type": "Dashcam",
+  "project_name": "demo_project",
+  "tags": {"class": {"_items": ["person",
+     "bicycle",
+     "car",
+     "motorcycle",
+     "bus",
+     "train",
+     "truck",
+     "traffic light",
+     "fire hydrant",
+     "stop sign",
+     "parking meter",
+     "bird",
+     "cat",
+     "dog"],
+    "_type": "string"},
+   "object_id": {"_type": "string"},
+   "project_name": {"_type": "string"},
+   "temporal": {"bbox": {"position": {"area": {"_type": "number"},
+      "height": {"_type": "number"},
+      "width": {"_type": "number"},
+      "x1": {"_type": "number"},
+      "x2": {"_type": "number"},
+      "y1": {"_type": "number"},
+      "y2": {"_type": "number"}},
+     "speed": {"bottom_left": {"_type": "number"},
+      "bottom_right": {"_type": "number"},
+      "top_left": {"_type": "number"},
+      "top_right": {"_type": "number"}},
+     "velocity": {"x1": {"_type": "number"},
+      "x2": {"_type": "number"},
+      "y1": {"_type": "number"},
+      "y2": {"_type": "number"}}},
+    "center": {"position": {"x": {"_type": "number"},
+      "y": {"_type": "number"}},
+     "speed": {"_type": "number"},
+     "velocity": {"x": {"_type": "number"}, "y": {"_type": "number"}}},
+    "count": {"_type": "number"},
+    "frame_number": {"_type": "number"}},
+   "video_name": {"_type": "string"}}}
 }
+
 ```
 
-This endpoint allows you to view what tags you've submitted thus far, including status on if they're up, what the outputs for them are, name, and description.
+This endpoint allows you to view the project configuration for a particular project you've made.
+This returns the tag schema, the FPS, the pipeline configuration, and other fields of the project.
 
 ### HTTP Request
 
-`GET https://api.sievedata.com/v1/get_tags`
+`GET https://api.sievedata.com/v1/get_project_info`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-
-## Delete Metadata Tags
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.delete_tags(
-    tags=["glare", "weather"]
-)
-``` -->
-
-```shell
-curl https://api.sievedata.com/v1/delete_tags \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "tags": ["glare", "weather"]
-    }'
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "successful",
-    "tags": [
-        {"name": "glare", "description": "1-5 scale of how glary the image is"},
-        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"}
-    ]
-}
-```
-
-This endpoint allows you to specify which metadata tags you want to delete from the project.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/delete_tags`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```tags``` | list | list of tag names to delete
 
 ## Add Custom Model Config
 
@@ -565,7 +526,7 @@ Parameter | Type | Description
 ## View Status of Pushed Jobs
 
 ```shell
-curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1&start_index=0&end_index=1000' \
+curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' \
     -X GET \
     -H "X-API-Key: YOUR_API_KEY" \
     -H "Content-Type: application/json"
@@ -607,7 +568,7 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1&s
 }
 ```
 
-This endpoint allows you to view the properties of all jobs/videos you have submitted in the past. You get the registered size of the video, the status of processing it, the timestamp it was submitted, any user metadata that was supplied, and of course, the video name and job_id. This is batched in the event that you have many jobs, so you can specify the start_index and end_index of the jobs you want returned. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. The timestamps are ordered from most recent to least recent.
+This endpoint allows you to view the properties of all jobs/videos you have submitted in the past. You get the registered size of the video, the status of processing it, the timestamp it was submitted, any user metadata that was supplied, and of course, the video name and job_id. The timestamps are ordered from most recent to least recent.
 
 ### HTTP Request
 
@@ -618,8 +579,6 @@ This endpoint allows you to view the properties of all jobs/videos you have subm
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```start_index``` | (optional) string | the start index of objects to return from the query (defaults to 0)
-```end_index``` | (optional) string | the end index (exclusive) of objects to return from the query (defaults to 5000)
 
 ## Get Status of Specific Job
 
@@ -654,7 +613,7 @@ Parameter | Type | Description
 
 # Querying, Exporting, and Deleting Data
 
-## Query by Metadata
+## Query for Metadata
 
 <!-- ```python
 from sieve.client import SieveClient
@@ -671,63 +630,82 @@ my_proj.get_by_metadata(
 ``` -->
 
 ```shell
-curl 'https://api.sievedata.com/v1/get_metadata?project_name=demo_project&blur=slightly_blurry&lighting=dim&person_detected=True&noise=clear&start_index=0&end_index=5000' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY"
+curl 'https://api.sievedata.com/v1/query' \
+    -X POST \
+    -H "X-API-Key: YOUR_API_KEY" \ 
+    -H "Content-Type: application/json" \
+    -d '{
+	  "video_name": "video_1",
+	  "project_name": "amazing_project_1"
+      "temporal.frame_number": {"$lte": 500, "$gte": 100},
+      "class": {
+        "$in": [
+            "car",
+            "frame
+        ]
+        },
+	}'
 ```
 
 > A sample response would look as follows (truncated):
 
 ```json
-{
-    "description": "Successful. Returned with start index 0 and end index 5000",
-    "metadata":
-        [
-            {
-                "project_name":"demo_project",
-                "aspect_ratio":"22:15",
-                "blur":"slightly_blurry",
-                "contrast":"normal",
-                "frame_number":21260,
-                "group_id":"267fb3eb-90e2-400a-a8db-7b48e48583e5",
-                "image_height":480,
-                "image_width":704,
-                "lighting":"dim",
-                "motion_detected":true,
-                "noise":"clear",
-                "person_detected":true,
-                "sharpness":"not_sharp",
-                "train":false,
-                "storage_path":"gs://sieve-data-frames-api_test_org/PRG1/PRG1-21260.jpg",
-                "video_url":"https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
-                "signed_url":"PLACEHOLDER_SIGNED_URL",
-                "video_name":"PRG1",
-                "per_video_metadata_1": "your_val",
-                "per_video_metadata_2": "your_other_val"
-            },
-            thousands of more samples...
-        ],
-    "next_start": 5000,
-    "total_samples": 113533
-}
+{"description": "Successful. Returned 167 objects",
+ "next_start": 167,
+ "objects": [{"_id": "4af23cae-58ae-49d5-bbb3-2cd23ab69c54",
+   "class": "car",
+   "end_frame": 1248,
+   "object_id": "4af23cae-58ae-49d5-bbb3-2cd23ab69c54",
+   "project_name": "amazing_project_1",
+   "start_frame": 1230,
+   "temporal": [{"bbox": {"position": {"area": 1346.6105655468766,
+       "height": 29.85799212551774,
+       "width": 45.10050642005541,
+       "x1": 448.0669623507817,
+       "x2": 493.1674687708371,
+       "y1": 309.0682736427327,
+       "y2": 338.92626576825046},
+      "speed": {"bottom_left": 4.315388630606474,
+       "bottom_right": 30.15500296597246,
+       "top_left": 10.622436250109503,
+       "top_right": 31.67866437734206},
+      "velocity": {"x1": 2.3676354637587047,
+       "x2": -29.938392116710077,
+       "y1": 10.355213865410631,
+       "y2": -3.607891537161244}},
+     "center": {"position": {"x": 470.6172155608094, "y": 323.9972697054916},
+      "speed": 14.192189586332075,
+    ...
+     "count": 12,
+     "frame_number": 342}],
+   "video_name": "video_1"}],
+ "query_latency": 0.810,
+ "total_samples": 167}
 
     
 ```
 
-This endpoint is for retreiving a set of frames / images based on their defining metadata. Each tag can be specified as a part of the URL along with the matching output class, along with the size of a batch of objects that you want returned. You'll be returned a list of matching samples along with all their metadata. In addition, you will get the next start index in ```next_start``` to specify to get the next batch of objects from the query. If there is no next batch, ```next_start``` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get ```total_samples```, which is the total amount of samples that satisfy your query. If you choose to use us without hosting your video on our platform, ```signed_url``` and ```storage_path``` will not be included in the response. 
+This endpoint is for retreiving a set of objects based on their defining metadata. With the exception of "next_start" which is an integer used to page longer requests, all tags are set in mongo syntax. Currently, we support "$exists", "$eq", "$gte", "$gt", "$lte", "$lt", "$ne", and "$in" for all tags. To get the exact json schema of your project, ping the /get_project_info endpoint and look at the tags field. In addition, you will get the next start index in ```next_start``` to specify to get the next batch of objects from the query. If there is no next batch, ```next_start``` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get ```total_samples```, which is the total amount of samples that satisfy your query. 
 
 ### HTTP Request
 
-`GET https://api.sievedata.com/v1/get_metadata`
+`POST https://api.sievedata.com/v1/query`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```start_index``` | (optional) string | the start index of objects to return from the query (defaults to 0)
-```end_index``` | (optional) string | the end index (exclusive) of objects to return from the query (defaults to 5000)
-```YOUR_TAG``` | (optional) string | one of many tags you've requested. (you can specify as many of these as you want)
+```next_start``` | (optional) int | the amount of objects to skip in query (defaults to 0, used for paging)
+```YOUR_TAG``` | (optional) object or string | one of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
+
+<aside class="notice">
+For more information on how to construct queries in MongoDB syntax to interface with the data, here is a link to the <a href="https://www.mongodb.com/docs/manual/reference/">MongoDB Reference</a>.
+</aside>
+
+<aside class="notice">
+For projects with a field in the tag schema that contains has a "_type" of "text", you can use the <a href="https://www.mongodb.com/docs/manual/core/text-search-operators/">MongoDB Legacy text query engine</a> to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
+</aside>
 
 ## Query For Intervals by Metadata
 
@@ -746,27 +724,38 @@ my_proj.get_by_metadata(
 ``` -->
 
 ```shell
-curl 'https://api.sievedata.com/v1/get_intervals?project_name=demo_project&blur=slightly_blurry&lighting=dim&person_detected=True&noise=clear' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY"
+curl 'https://api.sievedata.com/v1/intervals' \
+    -X POST \
+    -H "X-API-Key: YOUR_API_KEY" \ 
+    -H "Content-Type: application/json" \
+    -d '{
+	  "video_name": "video_1",
+	  "project_name": "amazing_project_1"
+      "class": {
+        "$in": [
+            "car",
+            "frame
+        ]
+        },
+	}'
 ```
 
 > A sample response would look as follows (truncated):
 
 ```json
-[
+{"description": "Successful, returned 1 groups of intervals",
+ "intervals": [
     {
-        "video_name":"PRG1",
+        "video_name":"video_1",
         "intervals":[
-            [0, 343],
-            [400, 599]
-            [758, 1203]
+            [0, 1200],
+            [1300, 1330]
             ...
             [34599, 35900]
         ]
     },
     {
-        "video_name":"PRG3",
+        "video_name":"video_2",
         "intervals":[
             [0, 200],
             [333, 890]
@@ -775,129 +764,34 @@ curl 'https://api.sievedata.com/v1/get_intervals?project_name=demo_project&blur=
         ]
     },
     thousands of more samples...
-]
+    ],
+ "next_start": -1,
+ "query_latency": "0.088"}
 ```
 
-This endpoint is for retreiving the set of intervals (inclusive), grouped by each video, that satisfy the conditions of the metadata filter that you specify. You'll be returned a list of all intervals and associated video name, for all videos in your project.
+This endpoint is for retreiving the set of intervals (inclusive), grouped by each video, that satisfy the conditions of the metadata filter that you specify. You'll be returned a list of all intervals and associated video name, for all videos in your project. The tags are queryable in mongo format, the same as the /query endpoint. 
 
 ### HTTP Request
 
-`GET https://api.sievedata.com/v1/get_intervals`
+`GET https://api.sievedata.com/v1/intervals`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
-```YOUR_TAG``` | (optional) string | one of many tags you've requested. (you can specify as many of these as you want)
+```next_start``` | (optional) int | the amount of objects to skip in query (defaults to 0, used for paging)
+```YOUR_TAG``` | (optional) object or string | one of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
 
 
-## Export Query by Metadata
+<aside class="notice">
+For more information on how to construct queries in MongoDB syntax to interface with the data, here is a link to the <a href="https://www.mongodb.com/docs/manual/reference/">MongoDB Reference</a>.
+</aside>
 
-<!-- ```python
-from sieve.client import SieveClient
+<aside class="notice">
+For projects with a field in the tag schema that contains has a "_type" of "text", you can use the <a href="https://www.mongodb.com/docs/manual/core/text-search-operators/">MongoDB Legacy text query engine</a> to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
+</aside>
 
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.get_by_metadata(
-    {
-        "glare": [2],
-        "weather": ["rainy", "other"]
-    }
-)
-``` -->
-
-```shell
-curl 'https://api.sievedata.com/v1/export_metadata?export_name=some_name&project_name=demo_project&blur=slightly_blurry&lighting=dim&person_detected=True&noise=clear' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY"
-```
-
-> A sample response would look as follows (truncated):
-
-```json
-{
-    "description":"queued for tarring",
-    "metadata_json_url": "PLACEHOLDER_JSON_URL",
-    "num_samples": 49210
-}
-```
-
-This endpoint is for retreiving and exporting a set of frames / images based on their defining metadata. Each tag can be specified as a part of the URL along with the matching output class. You'll be returned a list of matching samples along with all their metadata. You'll be returned a signed URL to a JSON containing a non-truncated version of the metadata for the query. You can either choose to process this yourself or wait for Sieve to automatically process and compress the raw data for you in the backend for a faster download. Use the `get_exports_status` to get information about all your exports, including status, and links to download.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/export_metadata`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```export_name``` | string | the name of the export
-```tags``` | list | a list passed in as URL parameters
-
-## Get Exports
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.get_by_metadata(
-    {
-        "glare": [2],
-        "weather": ["rainy", "other"]
-    }
-)
-``` -->
-
-```shell
-curl 'https://api.sievedata.com/v1/get_exports_status?project_name=CamNet' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY"
-```
-
-> A sample response would look as follows (truncated):
-
-```json
-{
-    "description":"Successful",
-    "exports":[
-        {
-            "name": "people_with_greenery",
-            "json_path":"SIGNED_URL_TO_METADATA_JSON",
-            "status": "failed",
-            "time_created": "12/07/2021, 03:57:59"
-        },
-        {
-            "name":"dim_lighting_and_people",
-            "json_path":"SIGNED_URL_TO_METADATA_JSON",
-            "status":"complete",
-            "tar_path":"SIGNED_URL_TO_ZIPPED_IMAGES",
-            "time_created":"12/07/2021, 01:13:17"
-        }
-    ]
-}
-```
-
-This endpoint is for retreiving information you can use to download your exported query data.
-
-Use `curl sample_tar_path | tar -xz` to download and uncompress your query raw data.
-
-Use `curl sample_metadata_json_path --output sieve-metadata.json` to download the metadata json.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/export_metadata`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
 
 ## Delete Video Data
 
