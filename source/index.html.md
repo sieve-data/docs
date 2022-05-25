@@ -22,9 +22,9 @@ meta:
 
 # Introduction
 
-Welcome to the Sieve API! You can use our API to access Sieve API endpoints, which can help you submit visual data to Sieve and then query that data by many visual attributes that are relevant to your data.
+Welcome to the Sieve API! You can use our API to access Sieve API endpoints, which can help you submit visual data to Sieve and then make queries on that data.
 
-Our API is currently in Beta, so please [reach out to us](https://sievedata.com/) if you're interested in the API and getting onboarded. We're trying to handle as many customers as possible right now.
+If you haven't already, you can [sign up on our home page](https://sievedata.com/).
 
 > API Endpoint
 
@@ -90,7 +90,29 @@ curl https://api.sievedata.com/v1/init_project \
 }
 ```
 
-This endpoint creates a new Sieve project. A new project might be per general problem, per dataset, or however else you want to divide projects. Functionally, all querying will happen within a specific project. Each project has a custom config that we will help you set up. You can try out some sample project configs by signing up for our free demo!
+This endpoint creates a new Sieve project. A new project is defined by a workflow configuration. A workflow is set of rules that specify the different models and algorithms that run on data submitted to the project. If you're using our public free trial, you'll have a constrained set of preconfigured projects to try out though Sieve does support all sorts of custom use cases given the flexibility of Sieve workflows.
+
+If you're interested in custom projects, please
+<a href="https://docs.google.com/forms/d/e/1FAIpQLScXC2lotHC_9PTgYyqzJUsPgfeU2W5sii7sEWcQB1kfNGKQxw/viewform?usp=sf_link" target="_blank">reach out here</a>.
+
+To see sample configs of some pre-configured projects that are available, refer to the list below.
+
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/broadcast-news-media.json" target="_blank">Broadcast / News & Media</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/dashcam.json" target="_blank">Dashcam</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/esports.json" target="_blank">Esports</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/live-social.json" target="_blank">Live Social</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/pet-monitoring.json" target="_blank">Pet Monitoring</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/player-identification.json" target="_blank">Player Jersey Identification</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/security.json" target="_blank">Security</a>
+<br />
+<a href="https://storage.googleapis.com/sieve-preconfigured-projects/configs/street-cams.json" target="_blank">Street Cameras</a>
+
 
 ### HTTP Request
 
@@ -108,7 +130,7 @@ Parameter | Type | Description
 A project name needs to be specified on every API request having to do with project data.
 </aside>
 
-## Get All Projects and User Info
+## Get All User / Organization Info
 
 <!-- ```python
 from sieve.client import SieveClient
@@ -137,19 +159,19 @@ curl https://api.sievedata.com/v1/get_projects \
         "can_set": True,
         "can_store": True,
         "name": "YOUR_NAME",
-        "videos_left": NUM_VIDEOS_LEFT,
         "hours_left": NUM_HOURS_LEFT
     }
 }
 ```
 
-This endpoint retrieves the names of all projects you've created within your organization.
+This endpoint retrieves the names of all projects you've created within your organization along with other information such
+as the number of hours of video left in your API quota.
 
 ### HTTP Request
 
 `GET https://api.sievedata.com/v1/get_projects`
 
-## Get Project Info (Tags, FPS, etc.)
+## Get Project Info
 
 <!-- ```python
 from sieve.client import SieveClient
@@ -276,192 +298,6 @@ Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
 
-## Add Custom Model Config
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.add_tags(
-    tags = [
-        {"name": "glare", "description": "1-5 scale of how glary the image is"},
-        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
-        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
-    ]
-)
-``` -->
-
-```shell
-curl https://api.sievedata.com/v1/add_custom_model_config \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "model_name": "my_model_name",
-        "version_name": "my_version_name",
-        "file_urls": [
-            "file_1",
-            "file_2",
-            "file_n"
-        ]
-    }'
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "Pushed custom model my_model_name with version my_version_name"
-}
-```
-
-This endpoint allows you to configure a new version for a custom model within your project that is controlled by you, allowing you to attach your own config files to that version to be pulled when we run the model.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/add_custom_model_config`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```model_name``` | string | the name of the model you are modifying
-```version_name``` | string | the version of the model you are setting
-```file_urls``` | list | list of file_urls for your config for the model architecture
-
-## Set Active Custom Model Configuration
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.add_tags(
-    tags = [
-        {"name": "glare", "description": "1-5 scale of how glary the image is"},
-        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
-        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
-    ]
-)
-``` -->
-
-```shell
-curl https://api.sievedata.com/v1/set_active_custom_model \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1",
-        "model_name": "my_model_name",
-        "version_name": "my_version_name",
-    }'
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "Set custom model my_model_name to active version my_version_name"
-}
-```
-
-This endpoint allows you to set your active model version for custom models. These versions would've either been added by us or by you with the add_custom_model_config endpoint.
-
-### HTTP Request
-
-`POST https://api.sievedata.com/v1/set_active_custom_model`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-```model_name``` | string | the name of the model you are setting
-```version_name``` | string | the version of the model you are activating
-
-## Get Custom Models 
-
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.add_tags(
-    tags = [
-        {"name": "glare", "description": "1-5 scale of how glary the image is"},
-        {"name": "weather", "description": "is the image foggy, sunny, rainy, or none?"},
-        {"name": "angle", "description": "1 (floor) - 5 (ceiling) classification of how the camera is angled"}
-    ]
-)
-``` -->
-
-```shell
-curl 'https://api.sievedata.com/v1/get_custom_models?project_name=amazing_project_1' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json"
-```
-
-> A sample response would look as follows:
-
-```json
-{
-    "description": "Successful",
-    "tag_status": {
-        "project_name": "demo_project",
-        "custom_models": [
-            {
-            "custom_model_info": {
-                "active_version": "version_1",
-                "versions": {
-                    "version_1": {
-                        "files": [
-                            "file_1",
-                            "file_2.txt",
-                            ...
-                            "file_n.yaml"
-                        ]
-                    },
-                    ...
-                    "version_n": {
-                        "files": [
-                            "file_11",
-                            "file_22.txt",
-                            ...
-                            "file_nn.yaml"
-                        ]
-                    }
-                }
-            },
-            "model_name": "my_custom_model",
-            "outputs": ["low", "normal"],
-            "status": "up",
-            },
-            ...
-        ]
-    }
-    
-}
-```
-
-This endpoint allows you to view the statuses and active configs of all custom models controlled by you that you've shipped to your platform thus far.
-
-### HTTP Request
-
-`GET https://api.sievedata.com/v1/get_custom_models`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ------- | -----------
-```project_name``` | string | the name of the project
-
 # Submitting Data
 
 ## Push Video Data
@@ -508,7 +344,11 @@ curl https://api.sievedata.com/v1/push_video \
 }
 ```
 
-This endpoint allows you to submit video data to Sieve. Every video you submit to Sieve either needs to have a URL that is signed (secure) or public. Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-urls.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the video as a whole, alone with it's associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to port it into our platforrm. Sieve processes cuts videos into their individual frames and uses a set of filters to process them efficiently.
+This endpoint allows you to submit video data to Sieve. Every video you submit to Sieve either needs to have a URL that is signed (secure) or public. Learn more about signed URLs for
+<a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html" target="_blank">AWS</a>
+or
+<a href="https://cloud.google.com/storage/docs/access-control/signed-urls" target="_blank">GCP</a>
+at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the video as a whole, alone with it's associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to access those within Sieve as well.
 
 ### HTTP Request
 
@@ -523,7 +363,7 @@ Parameter | Type | Description
 ```video_name``` | string | valid name for video
 ```user_metadata``` | JSON object with string keys and values (optional) | all per_video user-specified metadata
 
-## View Status of Pushed Jobs
+## Get Status of All Jobs
 
 ```shell
 curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' \
@@ -568,7 +408,7 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' 
 }
 ```
 
-This endpoint allows you to view the properties of all jobs/videos you have submitted in the past. You get the registered size of the video, the status of processing it, the timestamp it was submitted, any user metadata that was supplied, and of course, the video name and job_id. The timestamps are ordered from most recent to least recent.
+This endpoint allows you to view the properties of all jobs you have submitted to a project. A job is a single video you submitted to Sieve. You can retrieve the registered size of the video, its processing status, the timestamp it was submitted, any user metadata that was supplied, and of course, the video name and job_id. The timestamps are ordered from most recent to least recent.
 
 ### HTTP Request
 
@@ -598,7 +438,7 @@ curl 'https://api.sievedata.com/v1/get_job_status?project_name=amazing_project_1
 }
 ```
 
-This endpoint allows you to view the status of a specific job you might have run to see if it's done processing.
+This endpoint allows you to view the status of a specific job.
 
 ### HTTP Request
 
@@ -611,7 +451,31 @@ Parameter | Type | Description
 ```project_name``` | string | the name of the project
 ```job_id``` | string | the job id of a videeo you've submitted
 
-# Querying, Exporting, and Deleting Data
+# Querying Data
+
+You can think of Sieve almost like a database for video data. Push video, and make queries. Below, we introduce key concepts
+to understand the power of Sieve's query system.
+
+<b>Everything in a video is an object.</b> <br />
+A person, a car, a dog, and even the frame itself. Videos are just objects defined by various properties.
+
+![](images/concepts/object-paradigm.png)
+<br />
+
+<b>Objects have different properties that change over time.</b> <br />
+Objects can more specifically be defined by properties that do and don't change over time. For example, every object might have a `class` attribute such as `person`, `car`, or something else which doesn't change. However, other items such as `position`, `speed`, `lighting`, and others do.
+
+![](images/concepts/object-over-time.png)
+
+<b>Sieve is a database for video which allows you to query in a way that makes sense.</b> <br />
+Traditionally, videos could only be "queried" by a timestamp to find the information in that frame. Sieve instead takes an object-first approach.
+Sieve treats everything as an object. Every object has stationary attributes such as `class`, `start_frame`, `end_frame`, `object_id`, and more.
+Every object also has attributes which change over time. This could include information such as `position`, `speed`, `size`, and more.
+
+Video frames are also treated as objects (which has bounding boxes that take up the entire frame). They can also have their own attributes such as
+`lighting`, `resolution`, or other classifications performed on the frame-level.
+
+Sieve automatically tracks objects across frames which is why this information is retrievable in this way.
 
 ## Query for Metadata
 
@@ -685,7 +549,21 @@ curl 'https://api.sievedata.com/v1/query' \
     
 ```
 
-This endpoint is for retreiving a set of objects based on their defining metadata. With the exception of "next_start" which is an integer used to page longer requests, all tags are set in mongo syntax. Currently, we support "$exists", "$eq", "$gte", "$gt", "$lte", "$lt", "$ne", and "$in" for all tags. To get the exact json schema of your project, ping the /get_project_info endpoint and look at the tags field. In addition, you will get the next start index in ```next_start``` to specify to get the next batch of objects from the query. If there is no next batch, ```next_start``` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get ```total_samples```, which is the total amount of samples that satisfy your query. 
+This endpoint allows the retrieval of a set of objects that match a query. Sieve can be queried in way that's similar to MongoDB. Currently, the following MongoDB operations are supported on all tags that exist within an object.
+
+Operation |
+--------- | -----------
+```$exists``` |
+```$gte``` |
+```$gt``` |
+```$lte``` |
+```$lt``` |
+```$ne``` |
+```$in``` |
+
+To see the schema of your project (which will determine how you use the above operations), you can call the [`/get_project_info`](#get-project-info) endpoint.
+
+Because return payload can be large, Sieve batches that payload into multiple pages which can be specificied using the `next_start` param. You will get the next start index in ```next_start``` everytime you make a query which you can include in your next query. If there are no more pages, ```next_start``` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get ```total_samples```, which is the total amount of samples that satisfy your query. 
 
 ### HTTP Request
 
@@ -707,7 +585,7 @@ For more information on how to construct queries in MongoDB syntax to interface 
 For projects with a field in the tag schema that contains has a "_type" of "text", you can use the <a href="https://www.mongodb.com/docs/manual/core/text-search-operators/">MongoDB Legacy text query engine</a> to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
 </aside>
 
-## Query For Intervals by Metadata
+## Query For Intervals
 
 <!-- ```python
 from sieve.client import SieveClient
@@ -769,7 +647,7 @@ curl 'https://api.sievedata.com/v1/intervals' \
  "query_latency": "0.088"}
 ```
 
-This endpoint is for retreiving the set of intervals (inclusive), grouped by each video, that satisfy the conditions of the metadata filter that you specify. You'll be returned a list of all intervals and associated video name, for all videos in your project. The tags are queryable in mongo format, the same as the /query endpoint. 
+This endpoint allows the retrieval of a set of intervals within a video which match a query. Usage works in the same way as the [`/query`](#query-for-metadata) endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
 
 ### HTTP Request
 
@@ -792,6 +670,7 @@ For more information on how to construct queries in MongoDB syntax to interface 
 For projects with a field in the tag schema that contains has a "_type" of "text", you can use the <a href="https://www.mongodb.com/docs/manual/core/text-search-operators/">MongoDB Legacy text query engine</a> to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
 </aside>
 
+# Deleting Data
 
 ## Delete Video Data
 
