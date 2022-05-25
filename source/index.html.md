@@ -561,7 +561,7 @@ Operation |
 ```$ne``` |
 ```$in``` |
 
-To see the schema of your project (which will determine how you use the above operations), you can call the [`/get_project_info`](#get-project-info) endpoint.
+To see the schema of your project (which will determine how you use the above operations), you can call the [`/get_project_info`](#get-project-info) endpoint. Attributes that change over time are encoded under the `temporal` attribute of an object while static attributes exist on the top-level.
 
 Because return payload can be large, Sieve batches that payload into multiple pages which can be specificied using the `next_start` param. You will get the next start index in ```next_start``` everytime you make a query which you can include in your next query. If there are no more pages, ```next_start``` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get ```total_samples```, which is the total amount of samples that satisfy your query. 
 
