@@ -756,7 +756,8 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
 ```json
 {
     "description": "Corrected successfully.",
-    "corrected_object_ids": [12345],
+    "successful_corrections": [12345],
+    "skipped_corrections": []
 }
 ```
 
@@ -812,13 +813,14 @@ curl 'https://api.sievedata.com/v1/feedback/add_object' \
 
 ```json
 {
-    "description": "Added successfully."
+    "description": "Added successfully.",
+    "added_object_ids": [12345]
 }
 ```
 
 This endpoint allows the additions of any objects the system completely missed in a video. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [`/query`](#query-for-metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
 
-The additions must specify the `class` of the object to be added along with atleast one temporal bounding box position.
+The additions must specify the `class` of the object to be added along with at least one temporal bounding box position.
 
 ### HTTP Request
 
