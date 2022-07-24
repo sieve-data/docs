@@ -72,13 +72,13 @@ client.init_project(project_name="amazing_project_1")
 
 ```shell
 curl https://api.sievedata.com/v1/init_project \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1"
-        "config_url": "YOUR_CONFIG_URL"
-    }'
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": "amazing_project_1"
+    "config_url": "YOUR_CONFIG_URL"
+  }'
 ```
 
 > A sample response would look as follows:
@@ -190,9 +190,9 @@ my_proj.add_tags(
 
 ```shell
 curl 'https://api.sievedata.com/v1/get_project_info?project_name=amazing_project_1' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json"
+  -X GET \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json"
 ```
 
 > A sample response would look as follows:
@@ -324,15 +324,15 @@ project.push_data([test_url, test_url1])
 
 ```shell
 curl https://api.sievedata.com/v1/push_video \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": amazing_project_1,
-        "video_url": "https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
-        "video_name": "YOUR_VIDEO_NAME"
-        "user_metadata": {"per_video_metadata_1": "your_val", "per_video_metadata_2": "your_other_val"}
-    }'
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+      "project_name": amazing_project_1,
+      "video_url": "https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
+      "video_name": "YOUR_VIDEO_NAME"
+      "user_metadata": {"per_video_metadata_1": "your_val", "per_video_metadata_2": "your_other_val"}
+  }'
 ```
 
 > A sample response would look as follows:
@@ -367,9 +367,9 @@ Parameter | Type | Description
 
 ```shell
 curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json"
+  -X GET \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json"
 ```
 
 > A sample response would look as follows:
@@ -424,9 +424,9 @@ Parameter | Type | Description
 
 ```shell
 curl 'https://api.sievedata.com/v1/get_job_status?project_name=amazing_project_1&job_id=add3978a-94ac-4585-ab52-8bc5c2295c6f' \
-    -X GET \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json"
+  -X GET \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json"
 ```
 
 > A sample response would look as follows:
@@ -495,19 +495,19 @@ my_proj.get_by_metadata(
 
 ```shell
 curl 'https://api.sievedata.com/v1/query' \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \ 
-    -H "Content-Type: application/json" \
-    -d '{
-	  "video_name": "video_1",
-	  "project_name": "amazing_project_1"
-      "temporal.frame_number": {"$lte": 500, "$gte": 100},
-      "class": {
-        "$in": [
-            "car",
-            "frame
-        ]
-        },
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \ 
+  -H "Content-Type: application/json" \
+  -d '{
+  "video_name": "video_1",
+  "project_name": "amazing_project_1"
+    "temporal.frame_number": {"$lte": 500, "$gte": 100},
+    "class": {
+      "$in": [
+          "car",
+          "frame
+      ]
+    },
 	}'
 ```
 
@@ -674,24 +674,10 @@ For projects with a field in the tag schema that contains has a "_type" of "text
 
 ## Delete Video Data
 
-<!-- ```python
-from sieve.client import SieveClient
-
-client = SieveClient('YOUR_API_KEY')
-my_proj = client.get_project("amazing_project_1")
-
-my_proj.get_by_metadata(
-    {
-        "glare": [2],
-        "weather": ["rainy", "other"]
-    }
-)
-``` -->
-
 ```shell
 curl 'https://api.sievedata.com/v1/delete_video_data?project_name=CamNet&video_name=MyVideo' \
-    -X DELETE \
-    -H "X-API-Key: YOUR_API_KEY"
+  -X DELETE \
+  -H "X-API-Key: YOUR_API_KEY"
 ```
 
 > A sample response would look as follows (truncated):
@@ -712,3 +698,186 @@ Parameter | Type | Description
 --------- | ------- | -----------
 ```project_name``` | string | the name of the project
 ```video_name``` | string | the name of the video
+
+# Feedback Loop
+
+Sieve's system is not only a database for video that you can query, but also a system that can automatically improve over time. No machine learning
+system is perfect, but machine learning systems do have ways of incrementally improving themselves. This is made seamless with Sieve's feedback loop.
+Just provide feedback whenever you'd like, and Sieve's systems will take care of the rest.
+
+## Corrections
+
+> Correct object with id "12345" in project "some_project" and video "some_video" to a new class "person"
+
+```shell
+curl 'https://api.sievedata.com/v1/feedback/correct_object' \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "project_name": "some_project",
+    "video_name": "some_video",
+    "corrections": [
+      {
+        "object_id": "12345",
+        "class": "person"
+      }
+    ]
+  }'
+```
+
+> Correct object with id "12345" in project "some_project" and video "some_video" to a new bounding box position
+
+```shell
+curl 'https://api.sievedata.com/v1/feedback/correct_object' \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "project_name": "some_project",
+    "video_name": "some_video",
+    "corrections": [
+      {
+        "object_id": "12345",
+        "temporal": [
+          {
+            "bbox": {
+              "position": {
+                "x1": 5,
+                "x2": 50,
+                "y1": 5,
+                "y2": 10
+              }
+            },
+            "frame_number": 5
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+> A sample response would look as follows (truncated):
+
+```json
+{
+    "description": "Corrected successfully.",
+    "corrected_object_ids": [12345],
+}
+```
+
+This endpoint allows the correction of any given set of objects in a video as a way to correct mistakes made by the system. Feedback is specified
+in the `corrections` parameter in the same format as the payloads returned by the [`/query`](#query-for-metadata) endpoint. The system will automatically
+make corrections to the data specified and then improve itself automatically based on the feedback.
+
+Eech correction must specify the `object_id` of the object to be corrected. All other fields depend on the project schema.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/feedback/correct_object`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```video_name``` | string | the name of the video
+```corrections``` | list | list of corrections to make
+
+## Additions
+
+> Add new dog object in project "some_project" and video "some_video"
+
+```shell
+curl 'https://api.sievedata.com/v1/feedback/add_object' \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "project_name": "some_project",
+    "video_name": "some_video",
+    "additions": [
+      {
+        "class": "dog",
+        "temporal": [
+          {
+            "bbox": {
+              "position": {
+                "x1": 5,
+                "x2": 50,
+                "y1": 5,
+                "y2": 10
+              }
+            },
+            "frame_number": 5
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+> A sample response would look as follows:
+
+```json
+{
+    "description": "Added successfully."
+}
+```
+
+This endpoint allows the additions of any objects the system completely missed in a video. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [`/query`](#query-for-metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
+
+The additions must specify the `class` of the object to be added along with atleast one temporal bounding box position.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/feedback/add_object`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```video_name``` | string | the name of the video
+```additions``` | list | list of additions to make
+
+## Removals
+
+> Delete objects with id "12345", "56789" and "98765" in project "some_project" and video "some_video"
+
+```shell
+curl 'https://api.sievedata.com/v1/feedback/remove_object' \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "project_name": "some_project",
+    "video_name": "some_video",
+    "removals": [
+      "12345",
+      "56789",
+      "98765"
+    ]
+  }'
+```
+
+> A sample response would look as follows:
+
+```json
+{
+    "description": "Deleted successfully.",
+    "removed_object_ids": ["12345", "56789", "98765"]
+}
+```
+
+This endpoint allows the removal of any objects the system incorrectly detected in a video. Feedback is specified in the `removals` parameter in the same format as the payloads returned by the [`/query`](#query-for-metadata) endpoint. The system will automatically remove the objects specified and then improve itself automatically based on the feedback.
+
+The `removals` parameter is a list of object ids to remove.
+
+### HTTP Request
+
+`POST https://api.sievedata.com/v1/feedback/remove_object`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ------- | -----------
+```project_name``` | string | the name of the project
+```video_name``` | string | the name of the video
+```removals``` | list | list of removals to make
