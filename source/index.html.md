@@ -707,15 +707,13 @@ Just provide feedback whenever you'd like, and Sieve's systems will take care of
 
 ## Corrections
 
-> Correct object with id "12345" in project "some_project" and video "some_video" to a new class "person"
+> Correct object with id "12345"
 
 ```shell
 curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
   -d '{
-    "project_name": "some_project",
-    "video_name": "some_video",
     "corrections": [
       {
         "object_id": "12345",
@@ -725,15 +723,13 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   }'
 ```
 
-> Correct object with id "12345" in project "some_project" and video "some_video" to a new bounding box position
+> Correct object with id "12345" to a new bounding box position
 
 ```shell
 curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
   -d '{
-    "project_name": "some_project",
-    "video_name": "some_video",
     "corrections": [
       {
         "object_id": "12345",
@@ -755,7 +751,7 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   }'
 ```
 
-> A sample response would look as follows (truncated):
+> A sample response would look as follows:
 
 ```json
 {
@@ -768,7 +764,7 @@ This endpoint allows the correction of any given set of objects in a video as a 
 in the `corrections` parameter in the same format as the payloads returned by the [`/query`](#query-for-metadata) endpoint. The system will automatically
 make corrections to the data specified and then improve itself automatically based on the feedback.
 
-Eech correction must specify the `object_id` of the object to be corrected. All other fields depend on the project schema.
+Each correction must specify the `object_id` of the object to be corrected. All other fields depend on the project schema.
 
 ### HTTP Request
 
@@ -778,21 +774,19 @@ Eech correction must specify the `object_id` of the object to be corrected. All 
 
 Parameter | Type | Description
 --------- | ------- | -----------
-```project_name``` | string | the name of the project
-```video_name``` | string | the name of the video
 ```corrections``` | list | list of corrections to make
+```incorporate_new_classes``` | boolean | whether or not the user intends to add new `classes` that don't yet exist in the project. If true, the system accepts any new classes specified but it defaults to false.
+
 
 ## Additions
 
-> Add new dog object in project "some_project" and video "some_video"
+> Add new dog object
 
 ```shell
 curl 'https://api.sievedata.com/v1/feedback/add_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
   -d '{
-    "project_name": "some_project",
-    "video_name": "some_video",
     "additions": [
       {
         "class": "dog",
@@ -834,8 +828,6 @@ The additions must specify the `class` of the object to be added along with atle
 
 Parameter | Type | Description
 --------- | ------- | -----------
-```project_name``` | string | the name of the project
-```video_name``` | string | the name of the video
 ```additions``` | list | list of additions to make
 
 ## Removals
@@ -847,8 +839,6 @@ curl 'https://api.sievedata.com/v1/feedback/remove_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
   -d '{
-    "project_name": "some_project",
-    "video_name": "some_video",
     "removals": [
       "12345",
       "56789",
@@ -878,6 +868,4 @@ The `removals` parameter is a list of object ids to remove.
 
 Parameter | Type | Description
 --------- | ------- | -----------
-```project_name``` | string | the name of the project
-```video_name``` | string | the name of the video
 ```removals``` | list | list of removals to make
