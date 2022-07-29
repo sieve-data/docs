@@ -44,7 +44,7 @@
     {
       "group": "Projects",
       "pages": [
-        "02_projects/initial-project",
+        "02_projects/initialize-project",
         "02_projects/get-user-org-info",
         "02_projects/get-project-info"
       ]
@@ -52,32 +52,33 @@
     {
       "group": "Submitting Data",
       "pages": [
-        "push-video-data",
-        "get-status-of-jobs",
-        "get-status-of-job"
+        "03_submitting_data/push-video-data",
+        "03_submitting_data/push-image-data",
+        "03_submitting_data/get-status-of-jobs",
+        "03_submitting_data/get-status-of-job"
       ]
     },
     {
       "group": "Querying Data",
       "pages": [
-        "querying-overview",
-        "query-metadata",
-        "query-intervals"
+        "04_querying_data/querying-overview",
+        "04_querying_data/query-metadata",
+        "04_querying_data/query-intervals"
       ]
     },
     {
       "group": "Deleting Data",
       "pages": [
-        "deleting-data"
+        "05_deleting_data/eleting-data"
       ]
     },
     {
       "group": "Feedback Loop",
       "pages": [
-        "feedback-overview",
-        "corrections",
-        "additions",
-        "removals"
+        "06_feedback_loop/feedback-overview",
+        "06_feedback_loop/corrections",
+        "06_feedback_loop/additions",
+        "06_feedback_loop/removals"
       ]
     },
     {
