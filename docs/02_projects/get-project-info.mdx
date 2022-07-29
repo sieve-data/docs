@@ -13,7 +13,7 @@ This endpoint allows you to view the project configuration for a particular proj
 ### Request
 
 ```shell Terminal
-curl https://api.sievedata.com/v1/get_projects \
+curl https://api.sievedata.com/v1/get_project_info \
     -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -26,18 +26,192 @@ curl https://api.sievedata.com/v1/get_projects \
 
 ```json
 {
-    "description": "successful",
-    "projects": [
-        "amazing_project_1",
-        "amazing_project_2",
-        "amazing_project_x"
-    ],
-    "customer_info": {
-        "API-Key": "YOUR_API_KEY",
-        "can_set": True,
-        "can_store": True,
-        "name": "YOUR_NAME",
-        "hours_left": NUM_HOURS_LEFT
+    "description": "Successful",
+    "project_info": {
+        "_id": "87bdbae7-0415-4c08-930b-fd6d0a7d3315",
+        "batch_size": 5,
+        "fps": 3,
+        "levels": [
+            {
+            "entry": "batch_video",
+            "filter_workflow": [
+                "none"
+            ],
+            "models": [
+                {
+                "class_restrictions": {
+                    "classes": [
+                    "person"
+                    ],
+                    "keep": true
+                },
+                "model_name": "coco_yolo_tracking_detector"
+                }
+            ]
+            },
+            {
+            "entry": "batch_video",
+            "filter_workflow": [
+                "none"
+            ],
+            "models": [
+                {
+                "model_name": "consolidate_tracking_data_interval"
+                }
+            ]
+            },
+            {
+            "entry": "batch_objects",
+            "filter_workflow": [
+                "none"
+            ],
+            "models": [
+                {
+                "model_name": "reassign_object_ids"
+                }
+            ]
+            },
+            {
+            "entry": "batch_video",
+            "filter_workflow": [
+                "none"
+            ],
+            "models": [
+                {
+                "class_restrictions": {
+                    "classes": [
+                    "person"
+                    ],
+                    "keep": true
+                },
+                "model_name": "text_detector"
+                },
+                {
+                "class_restrictions": {
+                    "classes": [
+                    "person"
+                    ],
+                    "keep": true
+                },
+                "model_name": "bbox_info_predictor"
+                },
+                {
+                "class_restrictions": {
+                    "classes": [
+                    "person"
+                    ],
+                    "keep": true
+                },
+                "model_name": "counts_predictor"
+                }
+            ]
+            },
+            {
+            "entry": "batch_objects",
+            "filter_workflow": [
+                "none"
+            ],
+            "models": [
+                {
+                "model_name": "player_number_predictor"
+                }
+            ]
+            }
+        ],
+        "network_optimized": true,
+        "num_samples": 0,
+        "preconfigured_type": "Player Identification",
+        "project_name": "bball_numbers",
+        "tags": {
+            "class": {
+            "_items": [
+                "person"
+            ],
+            "_type": "string"
+            },
+            "object_id": {
+            "_type": "string"
+            },
+            "player_number": {
+            "_type": "number"
+            },
+            "project_name": {
+            "_type": "string"
+            },
+            "temporal": {
+            "bbox": {
+                "position": {
+                "x1": {
+                    "_type": "number"
+                },
+                "x2": {
+                    "_type": "number"
+                },
+                "y1": {
+                    "_type": "number"
+                },
+                "y2": {
+                    "_type": "number"
+                }
+                },
+                "speed": {
+                "bottom_left": {
+                    "_type": "number"
+                },
+                "bottom_right": {
+                    "_type": "number"
+                },
+                "top_left": {
+                    "_type": "number"
+                },
+                "top_right": {
+                    "_type": "number"
+                }
+                },
+                "velocity": {
+                "x1": {
+                    "_type": "number"
+                },
+                "x2": {
+                    "_type": "number"
+                },
+                "y1": {
+                    "_type": "number"
+                },
+                "y2": {
+                    "_type": "number"
+                }
+                }
+            },
+            "center": {
+                "position": {
+                "x": {
+                    "_type": "number"
+                },
+                "y": {
+                    "_type": "number"
+                }
+                },
+                "speed": {
+                "_type": "number"
+                },
+                "velocity": {
+                "x": {
+                    "_type": "number"
+                },
+                "y": {
+                    "_type": "number"
+                }
+                }
+            },
+            "frame_number": {
+                "_type": "number"
+            }
+            },
+            "video_name": {
+            "_type": "string"
+            }
+        }
     }
 }
 ```
