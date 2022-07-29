@@ -35,50 +35,45 @@
   ],
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Introduction",
       "pages": [
-        "01_getting_started/introduction",
-        "01_getting_started/authentication"
+        "introduction/welcome",
+        "introduction/authentication"
       ]
     },
     {
       "group": "Projects",
       "pages": [
-        "02_projects/initialize-project",
-        "02_projects/get-user-org-info",
-        "02_projects/get-project-info"
+        "projects/initialize-project",
+        "projects/get-user-org-info",
+        "projects/get-project-info"
       ]
     },
     {
-      "group": "Submitting Data",
+      "group": "Data",
       "pages": [
-        "03_submitting_data/push-video-data",
-        "03_submitting_data/push-image-data",
-        "03_submitting_data/get-status-of-jobs",
-        "03_submitting_data/get-status-of-job"
+        "data/push-video",
+        "data/push-image",
+        "data/get-all-jobs",
+        "data/get-job-status",
+        "data/delete"
       ]
     },
     {
-      "group": "Querying Data",
+      "group": "Query",
       "pages": [
-        "04_querying_data/querying-overview",
-        "04_querying_data/query-metadata",
-        "04_querying_data/query-intervals"
-      ]
-    },
-    {
-      "group": "Deleting Data",
-      "pages": [
-        "05_deleting_data/deleting-data"
+        "query/overview",
+        "query/metadata",
+        "query/intervals"
       ]
     },
     {
       "group": "Feedback Loop",
       "pages": [
-        "06_feedback_loop/feedback-overview",
-        "06_feedback_loop/corrections",
-        "06_feedback_loop/additions",
-        "06_feedback_loop/removals"
+        "feedback/overview",
+        "feedback/corrections",
+        "feedback/additions",
+        "feedback/removals"
       ]
     },
     {
