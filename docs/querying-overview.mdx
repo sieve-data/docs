@@ -1,0 +1,36 @@
+---
+title: "Overview"
+description: "How querying data works"
+---
+
+You can think of Sieve almost like a database for video data. Push video, and make queries. Below, we introduce key concepts to understand the power of Sieve's query system.
+
+## How querying data works
+
+### Everything in a video is an object
+
+A person, a car, a dog, and even the frame itself. Videos are just objects defined by various properties.
+
+<Example>
+  <div class="flex items-center justify-center">
+    <img class="w-full" src="/img/video-object.png" />
+  </div>
+</Example>
+
+### Objects have different properties that change over time
+
+Objects can more specifically be defined by properties that do and don't change over time. For example, every object might have a `class` attribute such as `person`, `car`, or something else which doesn't change. However, other items such as `position`, `speed`, `lighting`, and others do.
+
+<Example>
+  <div class="flex items-center justify-center">
+    <img class="w-full" src="/img/object-properties.png" />
+  </div>
+</Example>
+
+### Query in a way that makes sense.
+
+Traditionally, videos could only be "queried" by a timestamp to find the information in that frame. Sieve instead takes an object-first approach. Sieve treats everything as an object. Every object has stationary attributes such as `class`, `start_frame`, `end_frame`, `object_id`, and more. Every object also has attributes which change over time. This could include information such as `position`, `speed`, `size`, and more.
+
+Video frames are also treated as objects (which has bounding boxes that take up the entire frame). They can also have their own attributes such as `lighting`, `resolution`, or other classifications performed on the frame-level.
+
+Sieve automatically tracks objects across frames which is why this information is retrievable in this way.

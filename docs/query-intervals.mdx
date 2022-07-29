@@ -1,0 +1,70 @@
+---
+title: "Query for Intervals"
+description: "Retrieve a set of objects that match a query"
+---
+
+import { Request } from '@/components/Request'
+import { TipInfo } from '@/components/Tip'
+
+<Request method="GET">https://api.sievedata.com/v1/intervals</Request>
+
+This endpoint allows the retrieval of a set of intervals within a video which match a query. Usage works in the same way as the /query endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
+
+## Query for Intervals
+
+### Request
+
+```shell Terminal
+curl 'https://api.sievedata.com/v1/intervals' \
+    -X POST \
+    -H "X-API-Key: YOUR_API_KEY" \ 
+    -H "Content-Type: application/json" \
+    -d '{
+      "video_name": "video_1",
+      "project_name": "amazing_project_1"
+      "class": {
+        "$in": [
+            "car",
+            "frame
+        ]
+        },
+    }'
+```
+
+
+| Property | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
+| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
+
+### Sample response
+
+```json
+{"description": "Successful, returned 1 groups of intervals",
+ "intervals": [
+    {
+        "video_name":"video_1",
+        "intervals":[
+            [0, 1200],
+            [1300, 1330]
+            ...
+            [34599, 35900]
+        ]
+    },
+    {
+        "video_name":"video_2",
+        "intervals":[
+            [0, 200],
+            [333, 890]
+            ...
+            [25000, 26432]
+        ]
+    },
+    thousands of more samples...
+    ],
+ "next_start": -1,
+ "query_latency": "0.088"}
+```
+
+**Note**: For projects with a field in the tag schema that contains has a "_type" of "text", you can use the [MongoDB Legacy text query engine](https://www.mongodb.com/docs/manual/core/text-search-operators/) to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!

@@ -1,0 +1,100 @@
+{
+  "name": "Sieve",
+  "logo": "./logo.svg",
+  "favicon": "./favicon.png",
+  "colors": {
+    "primary": "#8d62ee",
+    "light": "#c4b5fd",
+    "dark": "#7240ff",
+    "ultraLight": "#ddd6fe",
+    "ultraDark": "#5b21b6"
+  },
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://app.sievedata.com/"
+  },
+  "topbarLinks": [
+    {
+      "name": "Community",
+      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Community",
+      "icon": "slack",
+      "color": "#0284c7",
+      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+    },
+    {
+      "name": "Playground",
+      "icon": "circle-play",
+      "color": "#22c55e",
+      "url": "https://playground.sievedata.com/"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "01_getting_started/introduction",
+        "01_getting_started/authentication"
+      ]
+    },
+    {
+      "group": "Projects",
+      "pages": [
+        "02_projects/initial-project",
+        "02_projects/get-user-org-info",
+        "02_projects/get-project-info"
+      ]
+    },
+    {
+      "group": "Submitting Data",
+      "pages": [
+        "push-video-data",
+        "get-status-of-jobs",
+        "get-status-of-job"
+      ]
+    },
+    {
+      "group": "Querying Data",
+      "pages": [
+        "querying-overview",
+        "query-metadata",
+        "query-intervals"
+      ]
+    },
+    {
+      "group": "Deleting Data",
+      "pages": [
+        "deleting-data"
+      ]
+    },
+    {
+      "group": "Feedback Loop",
+      "pages": [
+        "feedback-overview",
+        "corrections",
+        "additions",
+        "removals"
+      ]
+    },
+    {
+      "group": "Errors",
+      "pages": [
+        "error-codes"
+      ]
+    }
+  ],
+  "footerSocials": [
+    {
+      "type": "website",
+      "url": "https://www.sievedata.com"
+    },
+    {
+      "type": "slack",
+      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+    }
+  ]
+}
