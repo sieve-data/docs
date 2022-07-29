@@ -38,15 +38,15 @@
       "group": "Introduction",
       "pages": [
         "introduction/welcome",
-        "introduction/authentication"
+        "introduction/authentication",
+        "introduction/user-info"
       ]
     },
     {
       "group": "Projects",
       "pages": [
-        "projects/initialize-project",
-        "projects/get-user-org-info",
-        "projects/get-project-info"
+        "projects/initialize",
+        "projects/info"
       ]
     },
     {
