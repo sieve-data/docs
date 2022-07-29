@@ -1,7 +1,7 @@
 {
   "name": "Sieve",
-  "logo": "./logo.svg",
-  "favicon": "./favicon.png",
+  "logo": "/logo.svg",
+  "favicon": "/favicon.png",
   "colors": {
     "primary": "#8d62ee",
     "light": "#c4b5fd",
