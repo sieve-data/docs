@@ -1,0 +1,44 @@
+---
+title: "Removals"
+---
+
+import { Request } from '@/components/Request'
+
+<Request method="POST">https://api.sievedata.com/v1/feedback/remove_object</Request>
+
+This endpoint allows the removal of any objects the system incorrectly detected in a video. Feedback is specified in the `removals` parameter in the same format as the payloads returned by the [/query](/query-metadata) endpoint. The system will automatically remove the objects specified and then improve itself automatically based on the feedback.
+
+The `removals` parameter is a list of object ids to remove.
+
+## Removals
+
+### Request
+
+Delete objects with id "12345", "56789" and "98765" in project "some_project" and video "some_video"
+
+```shell Terminal
+curl 'https://api.sievedata.com/v1/feedback/remove_object' \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "removals": [
+      "12345",
+      "56789",
+      "98765"
+    ]
+  }'
+```
+
+
+| Property | Type | Description |
+| ---- | ----- | ---- |
+| `removals` | list | List of removals to make |
+
+### Sample response
+
+```json
+{
+    "description": "Deleted successfully.",
+    "removed_object_ids": ["12345", "56789", "98765"]
+}
+```

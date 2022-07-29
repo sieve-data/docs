@@ -1,0 +1,35 @@
+---
+title: "Get Status of Specific Job"
+---
+
+import { Request } from '@/components/Request'
+
+<Request method="GET">https://api.sievedata.com/v1/get_job_status</Request>
+
+This endpoint allows you to view the status of a specific job.
+
+## Get Status of Specific Job
+
+### Request
+
+```shell Terminal
+curl 'https://api.sievedata.com/v1/get_job_status?project_name=amazing_project_1&job_id=add3978a-94ac-4585-ab52-8bc5c2295c6f' \
+    -X GET \
+    -H "X-API-Key: YOUR_API_KEY" \
+    -H "Content-Type: application/json"
+```
+
+
+| Property | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `job_id` | string | The job id of a videeo you've submitted |
+
+### Sample response
+
+```json
+{
+    "description": "Successful",
+    "status": "finished"
+}
+```
