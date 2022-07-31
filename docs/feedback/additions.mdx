@@ -24,6 +24,7 @@ The additions must specify the `class` of the object to be added along with at l
 curl 'https://api.sievedata.com/v1/feedback/add_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
   -d '{
     "additions": [
       {

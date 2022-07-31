@@ -14,25 +14,25 @@ Get the names of all projects you've created, and information such as the number
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/get_projects \
-    -H "X-API-Key: YOUR_API_KEY"
+  -H "X-API-Key: YOUR_API_KEY"
 ```
 
 ### Sample response
 
 ```json
 {
-    "description": "successful",
-    "projects": [
-        "amazing_project_1",
-        "amazing_project_2",
-        "amazing_project_x"
-    ],
-    "customer_info": {
-        "API-Key": "YOUR_API_KEY",
-        "can_set": True,
-        "can_store": True,
-        "name": "YOUR_NAME",
-        "hours_left": NUM_HOURS_LEFT
-    }
+  "description": "successful",
+  "projects": [
+    "amazing_project_1",
+    "amazing_project_2",
+    "amazing_project_x"
+  ],
+  "customer_info": {
+    "API-Key": "YOUR_API_KEY",
+    "can_set": True,
+    "can_store": True,
+    "name": "YOUR_NAME",
+    "hours_left": NUM_HOURS_LEFT
+  }
 }
 ```

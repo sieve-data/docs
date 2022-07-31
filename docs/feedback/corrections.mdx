@@ -27,6 +27,7 @@ Correct object with id "12345"
 curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
   -d '{
     "corrections": [
       {

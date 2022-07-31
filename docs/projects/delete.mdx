@@ -1,0 +1,37 @@
+---
+title: "Delete Project"
+---
+
+import { Request } from '@/components/Request'
+
+<Request method="POST">https://api.sievedata.com/v1/delete_project</Request>
+
+## URL Parameters
+
+### Parameters
+
+| Parameter | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `delete_data` | string | Whether or not to delete the raw data included in the project |
+
+### Request
+
+```bash Terminal
+curl 'https://api.sievedata.com/v1/delete_project' \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "project_name": "news_media",
+    "delete_data": true
+  }'
+```
+
+### Sample Response
+
+```json
+{
+  "description": "Deleted project news_media.",
+}
+```
