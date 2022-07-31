@@ -46,7 +46,8 @@
       "group": "Projects",
       "pages": [
         "projects/initialize",
-        "projects/info"
+        "projects/info",
+        "projects/delete"
       ]
     },
     {
