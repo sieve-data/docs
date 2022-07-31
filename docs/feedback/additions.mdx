@@ -6,7 +6,7 @@ import { Request } from '@/components/Request'
 
 <Request method="POST">https://api.sievedata.com/v1/feedback/add_object</Request>
 
-This endpoint allows the additions of any objects the system completely missed in a video. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [/query](/query-metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
+This endpoint allows the additions of any objects the system completely missed in a video. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
 
 The additions must specify the `class` of the object to be added along with at least one temporal bounding box position.
 
