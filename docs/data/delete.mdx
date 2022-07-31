@@ -8,6 +8,13 @@ import { Request } from '@/components/Request'
 
 ## Delete Video Data
 
+### Parameters
+
+| Parameter | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `video_name` | string | The name of the video |
+
 ### Request
 
 ```bash Terminal
@@ -16,13 +23,7 @@ curl 'https://api.sievedata.com/v1/delete_video_data?project_name=CamNet&video_n
     -H "X-API-Key: YOUR_API_KEY"
 ```
 
-
-| Property | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `video_name` | string | The name of the video |
-
-### Sample response
+### Sample Response
 
 ```json
 {

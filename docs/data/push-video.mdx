@@ -6,36 +6,34 @@ import { Request } from '@/components/Request'
 
 <Request method="POST">https://api.sievedata.com/v1/push_video</Request>
 
-This endpoint allows you to submit video data to Sieve. Every video you submit to Sieve either needs to have a URL that is signed (secure) or public.
+Submit video data to Sieve. Sieve ingests videos in the form of URLs, which is either public or signed (private and secure).
 
 Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the video as a whole, along with its associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to access those within Sieve as well.
 
-## Push Video Data
-
-### Request
-
-```bash Terminal
-curl https://api.sievedata.com/v1/push_video \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": amazing_project_1,
-        "video_url": "https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
-        "video_name": "YOUR_VIDEO_NAME"
-        "user_metadata": {"per_video_metadata_1": "your_val", "per_video_metadata_2": "your_other_val"}
-    }'
-```
-
-
-| Property | Type | Description |
+### Parameters
+| Parameter | Type | Description |
 | ---- | ----- | ---- |
 | `project_name` | string | The name of the project |
 | `video_url` | string | Valid URL to video |
 | `video_name` | string | Valid name for video |
 | `user_metadata` | JSON object with string keys and values (optional) | All user-specified metadata |
 
-### Sample response
+### Request
+
+```bash Terminal
+curl https://api.sievedata.com/v1/push_video \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": amazing_project_1,
+    "video_url": "https://storage.googleapis.com/sieve-data-video-test-bucket/PRG1.avi",
+    "video_name": "YOUR_VIDEO_NAME"
+    "user_metadata": {"per_video_metadata_1": "your_val", "per_video_metadata_2": "your_other_val"}
+  }'
+```
+
+### Sample Response
 
 ```json
 {
