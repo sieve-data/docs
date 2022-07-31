@@ -6,13 +6,18 @@ import { Request } from '@/components/Request'
 
 <Request method="POST">https://api.sievedata.com/v1/feedback/correct_object</Request>
 
-This endpoint allows the correction of any given set of objects in a video as a way to correct mistakes made by the system. Feedback is specified in the `corrections` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically make corrections to the data specified and then improve itself automatically based on the feedback.
+Submit a correction of any given set of objects in a video as a way to correct mistakes made by the system. Feedback is specified in the `corrections` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically make corrections to the data specified and then improve itself automatically based on the feedback.
 
 Each correction must specify the `object_id` of the object to be corrected. All other fields depend on the project schema.
 
-## Corrections
+## Parameters
 
-### Request Examples
+| Parameter | Type | Description |
+| ---- | ----- | ---- |
+| `corrections` | list | List of corrections to make |
+| `incorporate_new_classes` | boolean | Whether or not the user intends to add new `classes` that don't yet exist in the project. If true, the system accepts any new classes specified but it defaults to false. |
+
+### Request
 
 Correct object with id "12345"
 
@@ -58,13 +63,7 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   }'
 ```
 
-
-| Property | Type | Description |
-| ---- | ----- | ---- |
-| `corrections` | list | List of corrections to make |
-| `incorporate_new_classes` | boolean | Whether or not the user intends to add new `classes` that don't yet exist in the project. If true, the system accepts any new classes specified but it defaults to false. |
-
-### Sample response
+### Sample Response
 
 ```json
 {

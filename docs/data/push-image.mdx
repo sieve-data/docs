@@ -6,59 +6,58 @@ import { Request } from '@/components/Request'
 
 <Request method="POST">https://api.sievedata.com/v1/push_image</Request>
 
-This endpoint allows you to submit image data to Sieve. Images are supported via Sieve system by treating them as videos with single frames. Every image you submit to Sieve either needs to have a URL that is signed (secure) or public. You can either submit a single image or a list of images.
+Submit image data to Sieve. Images are supported via Sieve's system by treating them as videos with single frames. Sieve ingests images in the form of URLs, which is either public or signed (private and secure). You can either submit a single image or a list of images.
 
-Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the video as a whole, alone with it's associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to access those within Sieve as well.
+Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the image as a whole, along with it's associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to access those within Sieve as well.
 
-## Push Image Data
-
-### Request
-
-```bash Terminal
-curl https://api.sievedata.com/v1/push_image \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": amazing_project_1,
-        "image_url": "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258",
-        "image_name": "bean"
-    }'
-```
-
-```bash Terminal
-curl https://api.sievedata.com/v1/push_image \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": amazing_project_1,
-        "image_url": [
-            "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258",
-            "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258"
-        ]
-        "image_name": ["bean", "bean1"]
-    }'
-```
-
-| Property | Type | Description |
+### Parameters
+| Parameter | Type | Description |
 | ---- | ----- | ---- |
 | `project_name` | string | The name of the project |
 | `image_url` | string or list | Valid URL to video |
 | `image_name` | string or list | Valid name for video |
 
-### Sample response
+### Request
+
+```bash Terminal
+curl https://api.sievedata.com/v1/push_image \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": amazing_project_1,
+    "image_url": "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258",
+    "image_name": "bean"
+  }'
+```
+
+```bash Terminal
+curl https://api.sievedata.com/v1/push_image \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": amazing_project_1,
+    "image_url": [
+      "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258",
+      "https://cdn.bleacherreport.net/images_root/slides/photos/000/368/570/102184753_original.jpg?1283212258"
+    ]
+    "image_name": ["bean", "bean1"]
+  }'
+```
+
+### Sample Response
 
 ```json
 {
-    "description": "Published image to queuing",
-    "job_id": "cb66397e-0284-4820-bdef-e9c071a39b37"
+  "description": "Published image to queuing",
+  "job_id": "cb66397e-0284-4820-bdef-e9c071a39b37"
 }
 ```
 
 ```json
 {
-    "description": "Published images to queuing",
-    "job_id": ["cb66397e-0284-4820-bdef-e9c071a39b37", "cb66397e-0284-4820-bdef-e9c071a39b38"]
+  "description": "Published images to queuing",
+  "job_id": ["cb66397e-0284-4820-bdef-e9c071a39b37", "cb66397e-0284-4820-bdef-e9c071a39b38"]
 }
 ```

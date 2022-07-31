@@ -7,39 +7,40 @@ import { TipInfo } from '@/components/Tip'
 
 <Request method="POST">https://api.sievedata.com/v1/init_project</Request>
 
-This endpoint creates a new Sieve project. A new project is defined by a workflow configuration. A workflow is set of rules that specify the different models and algorithms that run on data submitted to the project. If you're using our public free trial, you'll have a constrained set of preconfigured projects to try out though Sieve does support all sorts of custom use cases given the flexibility of Sieve workflows.
+Create a new Sieve project, which is defined by a workflow configuration. A workflow is set of rules that specify the different models and algorithms that run on data submitted to the project. If you're using the public free trial, you'll have a constrained set of preconfigured projects to try out though Sieve does support all sorts of custom use cases given the flexibility of Sieve workflows.
 
-If you're interested in custom projects, please reach out [here](https://docs.google.com/forms/d/e/1FAIpQLScXC2lotHC_9PTgYyqzJUsPgfeU2W5sii7sEWcQB1kfNGKQxw/viewform).
+If you're interested in custom projects or models, please reach out [here](https://docs.google.com/forms/d/e/1FAIpQLScXC2lotHC_9PTgYyqzJUsPgfeU2W5sii7sEWcQB1kfNGKQxw/viewform).
 
-## Initialize a New Project
+### Parameters
+
+| Parameter | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `config_url` | string (optional) | URL to config JSON |
+| `config` | object (optional) | Config JSON |
+
+<TipInfo>Either a `config` or a `config_url` must be specified</TipInfo>
 
 ### Request
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/init_project \
-    -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "project_name": "amazing_project_1"
-        "config_url": "YOUR_CONFIG_URL"
-    }'
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": "amazing_project_1"
+    "config_url": "YOUR_CONFIG_URL"
+  }'
 ```
-
-| Param | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `config_url` | string (optional) | URL to custom config json |
-| `config` | object (optional) | Custom config json |
-
 <TipInfo>A project name needs to be specified on every API request having to do with project data.</TipInfo>
 
-### Sample response
+### Sample Response
 
 ```json
 {
-    "description": "Created project amazing_project_1",
-    "project_id": "18ff75d5-8f7d-4c7b-b3ed-7c66615d9808"
+  "description": "Created project amazing_project_1",
+  "project_id": "18ff75d5-8f7d-4c7b-b3ed-7c66615d9808"
 }
 ```
 

@@ -8,9 +8,15 @@ import { TipInfo } from '@/components/Tip'
 
 <Request method="POST">https://api.sievedata.com/v1/intervals</Request>
 
-This endpoint allows the retrieval of a set of intervals within a video which match a query. Usage works in the same way as the /query endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
+Retrieve a set of intervals within a video which match a query. Usage works in the same way as the [/query](/query/metadata) endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
 
-## Query for Intervals
+### Parameters
+
+| Property | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
+| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
 
 ### Request
 
@@ -27,18 +33,11 @@ curl 'https://api.sievedata.com/v1/intervals' \
             "car",
             "frame
         ]
-        },
+      },
     }'
 ```
 
-
-| Property | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
-| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
-
-### Sample response
+### Sample Response
 
 ```json
 {"description": "Successful, returned 1 groups of intervals",

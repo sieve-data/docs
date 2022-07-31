@@ -8,7 +8,7 @@ import { TipInfo } from '@/components/Tip'
 
 <Request method="POST">https://api.sievedata.com/v1/query</Request>
 
-This endpoint allows the retrieval of a set of objects that match a query. Sieve can be queried in way that's similar to MongoDB. Currently, the following [MongoDB operations](https://www.mongodb.com/docs/manual/reference/operator/query/#comparison) are supported on all tags that exist within an object.
+Retrieve a set of objects that match a query. Sieve can be queried in way that's similar to MongoDB. Currently, the following [MongoDB operations](https://www.mongodb.com/docs/manual/reference/operator/query/#comparison) are supported on all tags that exist within an object.
 
 ## Query for Metadata
 
@@ -22,9 +22,17 @@ This endpoint allows the retrieval of a set of objects that match a query. Sieve
 - [$ne](https://www.mongodb.com/docs/manual/reference/operator/query/ne/)
 - [$in](https://www.mongodb.com/docs/manual/reference/operator/query/in/)
 
-To see the schema of your project (which will determine how you use the above operations), you can call the [/get_project_info](/get-project) endpoint. Attributes that change over time are encoded under the `temporal` attribute of an object while static attributes exist on the top-level.
+To see the schema of your project (which will determine how you use the above operations), you can call the [/get_project_info](/projects/info) endpoint. Attributes that change over time are encoded under the `temporal` attribute of an object while static attributes exist on the top-level.
 
 Because return payload can be large, Sieve batches that payload into multiple pages which can be specificied using the `next_start` param. You will get the next start index in `next_start` everytime you make a query which you can include in your next query. If there are no more pages, `next_start` will be -1. The max batch size possible is 7500 objects, and the default batch size is 5000 objects. You also will get `total_samples`, which is the total amount of samples that satisfy your query.
+
+### Parameters
+
+| Property | Type | Description |
+| ---- | ----- | ---- |
+| `project_name` | string | The name of the project |
+| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
+| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
 
 ### Request
 
@@ -46,14 +54,7 @@ curl 'https://api.sievedata.com/v1/query' \
       }'
 ```
 
-
-| Property | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
-| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
-
-### Sample response
+### Sample Response
 
 ```json
 {"description": "Successful. Returned 167 objects",
