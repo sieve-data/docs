@@ -24,6 +24,8 @@ curl 'https://api.sievedata.com/v1/feedback/add_object' \
   -H "X-API-Key: YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
+    "project_name": "YOUR_PROJECT_NAME"
+    "video_name": "YOUR_VIDEO_NAME"
     "additions": [
       {
         "class": "dog",
@@ -49,7 +51,7 @@ curl 'https://api.sievedata.com/v1/feedback/add_object' \
 
 ```json
 {
-    "description": "Added successfully.",
-    "added_object_ids": [12345]
+    "description": "successfully added 1 object.",
+    "successful_additions": [12345],
 }
 ```
