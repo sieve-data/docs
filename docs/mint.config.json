@@ -82,6 +82,13 @@
       "pages": [
         "error-codes"
       ]
+    },
+    {
+      "group": "Technical Blogs",
+      "pages": [
+        "technical-blogs/green-screen-video-object-segmentation-and-removal",
+        "technical-blogs/custom-video-object-counting"
+      ]
     }
   ],
   "footerSocials": [
