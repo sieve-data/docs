@@ -17,21 +17,21 @@ Building a modular green screen feature can mean many things. Let’s define a s
 
 One promising approach is Modular Interactive Video Object Segmentation ([MiVOS](https://hkchengrex.github.io/MiVOS/)). It’s from a CVPR paper released in late 2021.
 
-[https://camo.githubusercontent.com/cc1db1c9fe7a4cf5fe144330e6ba069db3be880c606a6626607a342629964847/68747470733a2f2f696d6775722e636f6d2f5131636b32544a2e676966](https://camo.githubusercontent.com/cc1db1c9fe7a4cf5fe144330e6ba069db3be880c606a6626607a342629964847/68747470733a2f2f696d6775722e636f6d2f5131636b32544a2e676966)
+![https://camo.githubusercontent.com/cc1db1c9fe7a4cf5fe144330e6ba069db3be880c606a6626607a342629964847/68747470733a2f2f696d6775722e636f6d2f5131636b32544a2e676966](https://camo.githubusercontent.com/cc1db1c9fe7a4cf5fe144330e6ba069db3be880c606a6626607a342629964847/68747470733a2f2f696d6775722e636f6d2f5131636b32544a2e676966)
 
-At first glance, this looks like everything we want. Users can click on any object and some of the out-of-the-box results seem to work at a high-quality. The issue comes up when we evaluate cost and smoothness. MiVOS is a large model that can’t be parallelized and is expensive to run. This means that a mask will have to be recalculated after each click (which takes a couple of seconds) and will require extremely expensive cloud hardware to run. This fails the cost and smoothness test.
+At first glance, this looks like everything we want. Users can click on any object and some of the out-of-the-box results seem to work at a high-quality. The issue comes up when we evaluate cost and smoothness. MiVOS is a large model that can’t be parallelized and is expensive to run, not to mention constant network calls. This means that a mask will have to be recalculated after each click (which takes a couple of seconds) and will require extremely expensive cloud hardware to run. This fails the cost and smoothness test.
 
 #### Approach 2: PointRend
 
-Another promising approach is to use a simpler model called [PointRend](https://github.com/facebookresearch/detectron2/tree/main/projects/PointRend). It was released in 2019 and boast a more pixel-perfect results compared to other, more traditional instance segmentation models such as DeeplabV3, DeeplabV3+, etc.
+Another promising approach is to use a simpler model called [PointRend](https://github.com/facebookresearch/detectron2/tree/main/projects/PointRend). It was released in 2019 and boasts a more pixel-perfect result compared to other, more traditional instance segmentation models such as DeeplabV3, DeeplabV3+, etc.
 
 ![https://github.com/ayoolaolafenwa/PixelLib/raw/master/Images/compare2.jpg](https://github.com/ayoolaolafenwa/PixelLib/raw/master/Images/compare2.jpg)
 
-Now the interesting thing about this model is that it’s an image-based model. That means that it can be setup in such as way as to process every frame in a given video in parallel. At the end, we can finally run a tracking algorithm such as SORT or DeepSORT to associate mask outputs to a given object. The way to think about this setup is almost like a MapReduce problem, where we “map” PointRend to every frame and then run an object tracking step at the end to reduce the results into given “objects” in a video.
+The interesting thing about this model is that it’s an image-based model. That means that it can be setup in parallel, where thousands of machines process individual frames at the same time -- rather than processing frames one after another. After the object masks are generated in parallel, we can run a tracking algorithm such as SORT or DeepSORT to associate bounding boxes to a given object. The way to think about this setup is almost like a MapReduce problem, where we “map” PointRend to every frame (by running it on thousands of machines in parallel) and then run an object tracking step at the end to reduce the results into given “objects” in a video.
 
 ### Shipping Green Screen with Sieve
 
-Now we’ve gone over the approach to building a green screen effect using state of the art computer vision, but how does one set this up in practice? Typically, this is the hardest part of the problem because of all the cloud infrastructure, GPUs, and parallel processing involved but Sieve’s platform has made this extremely easy to do.
+Now we’ve gone over the approach to building a green screen effect using state of the art computer vision, but how does one set this up in practice? Typically, this is the hardest part of the problem because of all the cloud infrastructure, GPUs, and parallel processing involved (scaling to 1000s of parallel machines) but Sieve’s platform has made this extremely easy to do.
 
 **Get an API Key**
 
@@ -77,6 +77,6 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=object_removal' \
 
 Make queries to Sieve using the [metadata endpoint](https://docs.sievedata.com/query/metadata) to get object and mask information, and visualize all results.
 
-[https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm](https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm)
+<iframe src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.web" title="Dancing Object Masks"></iframe>
 
 Large vision AI models like PointRend are increasingly being used for a variety of tasks. Inevitably, there are many other use cases in video editing that can be powered with AI. At Sieve, we believe providing a simple experience to building video AI features can help companies easily enhance their products with minimal work required. To start using Sieve for any video AI use case, get in touch with our team.
