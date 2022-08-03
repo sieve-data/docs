@@ -1,6 +1,6 @@
 ---
 title: "How to build video effects like Green Screen using AI"
-description: "A technical guide and example of how to build AI-based video effects features"
+description: "A overview and guide of useful AI models and how to deploy them to build video effects like Green Screen"
 ---
 
 <Example>
@@ -53,7 +53,7 @@ Visit [Sieve dashboard](https://app.sievedata.com/) to sign up and click “Copy
 
 **Create a pre-configured green screen Project**
 
-```Terminal bash
+```bash Terminal
 curl 'https://api.sievedata.com/v1/init_project' \
   -X POST \
   -H "Content-Type: application/json" \
@@ -66,7 +66,7 @@ curl 'https://api.sievedata.com/v1/init_project' \
 
 **Push a Sample Video**
 
-```Terminal bash
+```bash Terminal
 curl https://api.sievedata.com/v1/push_video \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
@@ -80,7 +80,7 @@ curl https://api.sievedata.com/v1/push_video \
 
 **Poll Job Results**
 
-```Terminal bash
+```bash Terminal
 curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=object_removal' \
   -X GET \
   -H "X-API-Key: YOUR_API_KEY" \
@@ -93,7 +93,7 @@ Make queries to [Sieve](https://www.sievedata.com/) using the [metadata endpoint
 
 <Example>
   <div class="flex items-center justify-center">
-    <iframe class="h-full" src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm" title="Dancing Object Masks"></iframe>
+    <iframe src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm" className="w-full aspect-video rounded-lg shadow-lg"></iframe>
   </div>
 </Example>
 
