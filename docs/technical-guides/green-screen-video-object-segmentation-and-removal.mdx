@@ -3,6 +3,12 @@ title: "How to build video effects like Green Screen using AI"
 description: "A technical guide and example of how to build AI-based video effects features"
 ---
 
+<Example>
+  <div class="flex items-center justify-center">
+    <img class="w-full" src="https://camo.githubusercontent.com/fcab9b95f7cb63fe497c9c645e1a7c001c5f42e2c7ebc0ec9367e3503fcb63dd/68747470733a2f2f696d6775722e636f6d2f707972594b434a2e676966" />
+  </div>
+</Example>
+
 Recent research in Computer Vision (CV) has led to widespread advances in all sorts of use cases and creative media / video editing is no exception. Companies like Adobe are releasing features such as [motion tracking](https://www.adobe.com/products/aftereffects/motion-tracking.html) and [content-aware fills](https://helpx.adobe.com/after-effects/using/content-aware-fill.html) within Adobe After Effects while companies like RunwayML are releasing [green screen](https://runwayml.com/green-screen/) and [inpainting](https://runwayml.com/inpainting/). While it’s become evident that these features add immense value to users and could enhance a given product offering, the implementation of these features are only gated to a few companies that have large machine learning teams with the necessary resources to pull it off. The reality is that video infrastructure is hard — and when you pair that with AI / ML infrastructure, it becomes an extremely daunting task. As such, this post will go over using [Sieve](https://www.sievedata.com/) to build a complex video editing feature like video object removal / video green screen.
 
 ### Simplify the Problem
@@ -87,7 +93,7 @@ Make queries to [Sieve](https://www.sievedata.com/) using the [metadata endpoint
 
 <Example>
   <div class="flex items-center justify-center">
-    <iframe class="w-full" src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm" title="Dancing Object Masks"></iframe>
+    <iframe class="h-full" src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm" title="Dancing Object Masks"></iframe>
   </div>
 </Example>
 
