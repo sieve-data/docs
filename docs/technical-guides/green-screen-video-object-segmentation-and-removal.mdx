@@ -3,7 +3,7 @@ title: "How to build video effects like Green Screen using AI"
 description: "A technical guide and example of how to build AI-based video effects features"
 ---
 
-Recent research in Computer Vision (CV) has led to widespread advances in all sorts of use cases and creative media / video editing is no exception. Companies like Adobe are releasing features such as [motion tracking](https://www.adobe.com/products/aftereffects/motion-tracking.html) and [content-aware fills](https://helpx.adobe.com/after-effects/using/content-aware-fill.html) within Adobe After Effects while companies like RunwayML are releasing [green screen](https://runwayml.com/green-screen/) and [inpainting](https://runwayml.com/inpainting/). While it’s become evident that these features add immense value to users and could enhance a given product offering, the implementation of these features are only gated to a few companies that have large machine learning teams with the necessary resources to pull it off. The reality is that video infrastructure is hard — and when you pair that with AI / ML infrastructure, it becomes an extremely daunting task. As such, this post will go over using Sieve to build a complex video editing feature like video object removal / video green screen.
+Recent research in Computer Vision (CV) has led to widespread advances in all sorts of use cases and creative media / video editing is no exception. Companies like Adobe are releasing features such as [motion tracking](https://www.adobe.com/products/aftereffects/motion-tracking.html) and [content-aware fills](https://helpx.adobe.com/after-effects/using/content-aware-fill.html) within Adobe After Effects while companies like RunwayML are releasing [green screen](https://runwayml.com/green-screen/) and [inpainting](https://runwayml.com/inpainting/). While it’s become evident that these features add immense value to users and could enhance a given product offering, the implementation of these features are only gated to a few companies that have large machine learning teams with the necessary resources to pull it off. The reality is that video infrastructure is hard — and when you pair that with AI / ML infrastructure, it becomes an extremely daunting task. As such, this post will go over using [Sieve](https://www.sievedata.com/) to build a complex video editing feature like video object removal / video green screen.
 
 ### Simplify the Problem
 
@@ -31,7 +31,7 @@ The interesting thing about this model is that it’s an image-based model. That
 
 ### Shipping Green Screen with Sieve
 
-Now we’ve gone over the approach to building a green screen effect using state of the art computer vision, but how does one set this up in practice? Typically, this is the hardest part of the problem because of all the cloud infrastructure, GPUs, and parallel processing involved (scaling to 1000s of parallel machines) but Sieve’s platform has made this extremely easy to do.
+Now we’ve gone over the approach to building a green screen effect using state of the art computer vision, but how does one set this up in practice? Typically, this is the hardest part of the problem because of all the cloud infrastructure, GPUs, and parallel processing involved (scaling to 1000s of parallel machines) but [Sieve’s platform](https://www.sievedata.com/) has made this extremely easy to do.
 
 **Get an API Key**
 
@@ -75,8 +75,8 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=object_removal' \
 
 **Visualize Results**
 
-Make queries to Sieve using the [metadata endpoint](https://docs.sievedata.com/query/metadata) to get object and mask information, and visualize all results.
+Make queries to [Sieve](https://www.sievedata.com/) using the [metadata endpoint](https://docs.sievedata.com/query/metadata) to get object and mask information, and visualize all results.
 
 <iframe src="https://storage.googleapis.com/sieve-data-video-test-bucket/dancing.webm" title="Dancing Object Masks"></iframe>
 
-Large vision AI models like PointRend are increasingly being used for a variety of tasks. Inevitably, there are many other use cases in video editing that can be powered with AI. At Sieve, we believe providing a simple experience to building video AI features can help companies easily enhance their products with minimal work required. To start using Sieve for any video AI use case, get in touch with our team.
+Large vision AI models like PointRend are increasingly being used for a variety of tasks. Inevitably, there are many other use cases in video editing that can be powered with AI. At [Sieve](https://www.sievedata.com/), we believe providing a simple experience to building video AI features can help companies easily enhance their products with minimal work required. To start using Sieve for any video AI use case, [get in touch with our team](https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform?usp=sf_link).
