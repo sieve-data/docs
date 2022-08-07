@@ -10,13 +10,17 @@
     "ultraDark": "#5b21b6"
   },
   "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://app.sievedata.com/"
+    "name": "Request Demo",
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform?usp=sf_link"
   },
   "topbarLinks": [
     {
       "name": "Community",
       "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+    },
+    {
+      "name": "Use Now",
+      "url": "https://app.sievedata.com/"
     }
   ],
   "anchors": [
