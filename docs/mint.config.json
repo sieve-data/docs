@@ -21,6 +21,12 @@
   ],
   "anchors": [
     {
+      "name": "Blogs",
+      "icon": "book-bookmark",
+      "color": "#8d62ee",
+      "url": "technical-blogs"
+    },
+    {
       "name": "Community",
       "icon": "slack",
       "color": "#0284c7",
