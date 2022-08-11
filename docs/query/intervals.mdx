@@ -3,10 +3,7 @@ title: "Intervals"
 description: "Retrieve a set of objects that match a query"
 ---
 
-import { Request } from '@/components/Request'
-import { TipInfo } from '@/components/Tip'
-
-<Request method="POST">https://api.sievedata.com/v1/intervals</Request>
+<RequestSimple method="POST">https://api.sievedata.com/v1/intervals</RequestSimple>
 
 Retrieve a set of intervals within a video which match a query. Usage works in the same way as the [/query](/query/metadata) endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
 

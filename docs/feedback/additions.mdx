@@ -2,9 +2,7 @@
 title: "Additions"
 ---
 
-import { Request } from '@/components/Request'
-
-<Request method="POST">https://api.sievedata.com/v1/feedback/add_object</Request>
+<RequestSimple method="POST">https://api.sievedata.com/v1/feedback/add_object</RequestSimple>
 
 Submit the additions of any objects the system completely missed. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
 

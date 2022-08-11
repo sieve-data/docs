@@ -2,9 +2,7 @@
 title: "Get Status of Specific Job"
 ---
 
-import { Request } from '@/components/Request'
-
-<Request method="GET">https://api.sievedata.com/v1/get_job_status</Request>
+<RequestSimple method="GET">https://api.sievedata.com/v1/get_job_status</RequestSimple>
 
 Get the status of a specific job. The status is either `queued`, `processing`, `finished`, or `failed`.
 

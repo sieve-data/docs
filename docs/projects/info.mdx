@@ -2,9 +2,7 @@
 title: "Get Project Info"
 ---
 
-import { Request } from '@/components/Request'
-
-<Request method="GET">https://api.sievedata.com/v1/get_project_info</Request>
+<RequestSimple method="GET">https://api.sievedata.com/v1/get_project_info</RequestSimple>
 
 Get all info about a given project including `fps` which defines the frame rate your project runs at, `batch_size` which defines to processing parallelism, `tagThis returns the tag schema, the FPS, the pipeline configuration, and other fields of the project.
 

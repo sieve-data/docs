@@ -3,10 +3,7 @@ title: "Metadata"
 description: "Retrieve a set of objects that match a query"
 ---
 
-import { Request } from '@/components/Request'
-import { TipInfo } from '@/components/Tip'
-
-<Request method="POST">https://api.sievedata.com/v1/query</Request>
+<RequestSimple method="POST">https://api.sievedata.com/v1/query</RequestSimple>
 
 Retrieve a set of objects that match a query. Sieve can be queried in way that's similar to MongoDB. Currently, the following [MongoDB operations](https://www.mongodb.com/docs/manual/reference/operator/query/#comparison) are supported on all tags that exist within an object.
 

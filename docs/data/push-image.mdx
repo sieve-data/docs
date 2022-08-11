@@ -2,9 +2,7 @@
 title: "Push Image Data"
 ---
 
-import { Request } from '@/components/Request'
-
-<Request method="POST">https://api.sievedata.com/v1/push_image</Request>
+<RequestSimple method="POST">https://api.sievedata.com/v1/push_image</RequestSimple>
 
 Submit image data to Sieve. Images are supported via Sieve's system by treating them as videos with single frames. Sieve ingests images in the form of URLs, which is either public or signed (private and secure). You can either submit a single image or a list of images.
 

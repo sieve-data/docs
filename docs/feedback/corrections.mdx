@@ -2,9 +2,7 @@
 title: "Corrections"
 ---
 
-import { Request } from '@/components/Request'
-
-<Request method="POST">https://api.sievedata.com/v1/feedback/correct_object</Request>
+<RequestSimple method="POST">https://api.sievedata.com/v1/feedback/correct_object</RequestSimple>
 
 Submit a correction of any given set of objects in a video as a way to correct mistakes made by the system. Feedback is specified in the `corrections` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically make corrections to the data specified and then improve itself automatically based on the feedback.
 
