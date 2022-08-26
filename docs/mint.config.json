@@ -54,11 +54,7 @@
     },
     {
       "group": "Projects",
-      "pages": [
-        "projects/initialize",
-        "projects/info",
-        "projects/delete"
-      ]
+      "pages": ["projects/initialize", "projects/info", "projects/delete"]
     },
     {
       "group": "Data",
@@ -72,11 +68,7 @@
     },
     {
       "group": "Query",
-      "pages": [
-        "query/overview",
-        "query/metadata",
-        "query/intervals"
-      ]
+      "pages": ["query/overview", "query/metadata", "query/intervals"]
     },
     {
       "group": "Feedback Loop",
@@ -89,9 +81,7 @@
     },
     {
       "group": "Errors",
-      "pages": [
-        "error-codes"
-      ]
+      "pages": ["error-codes"]
     },
     {
       "group": "Technical Blogs",
@@ -101,14 +91,8 @@
       ]
     }
   ],
-  "footerSocials": [
-    {
-      "type": "website",
-      "url": "https://www.sievedata.com"
-    },
-    {
-      "type": "slack",
-      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-    }
-  ]
+  "footerSocials": {
+    "website": "https://www.sievedata.com",
+    "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+  }
 }
