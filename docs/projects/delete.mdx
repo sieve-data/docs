@@ -5,11 +5,11 @@ api: "POST https://api.sievedata.com/v1/delete_project"
 
 ### Parameters
 
-<Param body="project_name" type="string">
+<Param body="project_name" type="string" required>
   The name of the project
 </Param>
 
-<Param body="delete_data" type="string">
+<Param body="delete_data" type="string" required>
   Whether or not to delete the raw data included in the project
 </Param>
 
