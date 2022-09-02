@@ -1,8 +1,7 @@
 ---
 title: "Initialize a New Project"
+api: "POST https://api.sievedata.com/v1/init_project"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/init_project</RequestSimple>
 
 Create a new Sieve project, which is defined by a workflow configuration. A workflow is set of rules that specify the different models and algorithms that run on data submitted to the project. If you're using the public free trial, you'll have a constrained set of preconfigured projects to try out though Sieve does support all sorts of custom use cases given the flexibility of Sieve workflows.
 
@@ -10,15 +9,21 @@ If you're interested in custom projects or models, please reach out [here](https
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `config_url` | string (optional) | URL to config JSON |
-| `config` | object (optional) | Config JSON |
+<Param body="project_name" type="string" required>
+  The name of the project
+</Param>
+
+<Param body="config_url" type="string">
+  URL to config JSON
+</Param>
+
+<Param body="config" type="string">
+  Config JSON
+</Param>
 
 <TipInfo>Either a `config` or a `config_url` must be specified</TipInfo>
 
-### Request
+<RequestExample>
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/init_project \
@@ -30,16 +35,24 @@ curl https://api.sievedata.com/v1/init_project \
     "config_url": "YOUR_CONFIG_URL"
   }'
 ```
-<TipInfo>A project name needs to be specified on every API request having to do with project data.</TipInfo>
 
-### Sample Response
+</RequestExample>
 
-```json
+<TipInfo>
+  A project name needs to be specified on every API request having to do with
+  project data.
+</TipInfo>
+
+<ResponseExample>
+
+```json Example
 {
   "description": "Created project amazing_project_1",
   "project_id": "18ff75d5-8f7d-4c7b-b3ed-7c66615d9808"
 }
 ```
+
+</ResponseExample>
 
 ### Sample of some pre-configured projects
 

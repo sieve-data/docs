@@ -1,8 +1,7 @@
 ---
 title: "Corrections"
+api: "POST https://api.sievedata.com/v1/feedback/correct_object"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/feedback/correct_object</RequestSimple>
 
 Submit a correction of any given set of objects in a video as a way to correct mistakes made by the system. Feedback is specified in the `corrections` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically make corrections to the data specified and then improve itself automatically based on the feedback.
 
@@ -10,14 +9,17 @@ Each correction must specify the `object_id` of the object to be corrected. All 
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `corrections` | list | List of corrections to make |
-| `incorporate_new_classes` | boolean | Whether or not the user intends to add new `classes` that don't yet exist in the project. If true, the system accepts any new classes specified but it defaults to false. |
+<Param body="corrections" type="list" required>
+  List of corrections to make
+</Param>
 
-### Request
+<Param body="incorporate_new_classes" type="boolean" required>
+  Whether or not the user intends to add new `classes` that don't yet exist in
+  the project. If true, the system accepts any new classes specified but it
+  defaults to false.
+</Param>
 
-Correct object with id "12345"
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/feedback/correct_object' \
@@ -34,9 +36,7 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   }'
 ```
 
-Correct object with id "12345" to a new bounding box position
-
-```bash Terminal
+```bash New bounding box position
 curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   -X POST \
   -H "X-API-Key: YOUR_API_KEY" \
@@ -62,12 +62,16 @@ curl 'https://api.sievedata.com/v1/feedback/correct_object' \
   }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
-    "description": "All objects corrected successfully.",
-    "successful_corrections": [12345],
-    "skipped_corrections": []
+  "description": "All objects corrected successfully.",
+  "successful_corrections": [12345],
+  "skipped_corrections": []
 }
 ```
+
+</ResponseExample>

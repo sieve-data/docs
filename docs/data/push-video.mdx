@@ -1,8 +1,7 @@
 ---
 title: "Push Video Data"
+api: "POST https://api.sievedata.com/v1/push_video"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/push_video</RequestSimple>
 
 Submit video data to Sieve. Sieve ingests videos in the form of URLs, which is either public or signed (private and secure).
 
@@ -10,14 +9,23 @@ Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/late
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `video_url` | string | Valid URL to video |
-| `video_name` | string | Valid name for video |
-| `user_metadata` | JSON object with string keys and values (optional) | All user-specified metadata |
+<Param body="project_name" type="string">
+  The name of the project
+</Param>
 
-### Request
+<Param body="video_url" type="string">
+  Valid URL to video
+</Param>
+
+<Param body="video_name" type="string">
+  Valid name for video
+</Param>
+
+<Param body="user_metadata" type="JSON object with string keys and values">
+  All user-specified metadata
+</Param>
+
+<RequestExample>
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/push_video \
@@ -32,11 +40,15 @@ curl https://api.sievedata.com/v1/push_video \
   }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
-    "description": "Published video to queuing",
-    "job_id": "cb66397e-0284-4820-bdef-e9c071a39b37"
+  "description": "Published video to queuing",
+  "job_id": "cb66397e-0284-4820-bdef-e9c071a39b37"
 }
 ```
+
+</ResponseExample>

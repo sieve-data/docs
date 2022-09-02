@@ -1,21 +1,22 @@
 ---
 title: "Get Account Information"
+api: "GET https://api.sievedata.com/v1/get_projects"
 ---
-
-<RequestSimple method="GET">https://api.sievedata.com/v1/get_projects</RequestSimple>
 
 Get the names of all projects you've created, and information such as the number of hours of video left in your API quota.
 
-### Request
+<RequestExample>
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/get_projects \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
-### Sample response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
   "description": "successful",
   "projects": [
@@ -32,3 +33,5 @@ curl https://api.sievedata.com/v1/get_projects \
   }
 }
 ```
+
+</ResponseExample>

@@ -1,17 +1,19 @@
 ---
 title: "Delete Video Data"
+api: "POST https://api.sievedata.com/v1/delete_video_data"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/delete_video_data</RequestSimple>
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `video_name` | string | The name of the video |
+<Param body="project_name" type="string">
+  The name of the project
+</Param>
 
-### Request
+<Param body="video_name" type="string">
+  The name of the video
+</Param>
+
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/delete_video_data?project_name=CamNet&video_name=MyVideo' \
@@ -19,10 +21,14 @@ curl 'https://api.sievedata.com/v1/delete_video_data?project_name=CamNet&video_n
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
-  "description":"Deleted video data of MyVideo in project CamNet successfully.",
+  "description": "Deleted video data of MyVideo in project CamNet successfully."
 }
 ```
+
+</ResponseExample>

@@ -1,26 +1,32 @@
 ---
 title: "Intervals"
 description: "Retrieve a set of objects that match a query"
+api: "POST https://api.sievedata.com/v1/intervals"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/intervals</RequestSimple>
 
 Retrieve a set of intervals within a video which match a query. Usage works in the same way as the [/query](/query/metadata) endpoint. The only difference is the return payload which will be a list of all intervals that match your query within each video you've submitted to your project.
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `next_start` | (optional) int | The amount of objects to skip in query (defaults to 0, used for paging) |
-| `YOUR_TAG` | (optional) object or string | One of many tags in your schema. (you can specify as many of these as you want). These can be queried for in mongo format.
+<Param body="project_name" type="string" required>
+  The name of the project
+</Param>
 
-### Request
+<Param body="next_start" type="int">
+  The amount of objects to skip in query (defaults to 0, used for paging)
+</Param>
+
+<Param body="YOUR_TAG" type="object | string">
+  One of many tags in your schema. (you can specify as many of these as you
+  want). These can be queried for in mongo format.
+</Param>
+
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/intervals' \
     -X POST \
-    -H "X-API-Key: YOUR_API_KEY" \ 
+    -H "X-API-Key: YOUR_API_KEY" \
     -H "Content-Type: application/json" \
     -d '{
       "video_name": "video_1",
@@ -34,9 +40,11 @@ curl 'https://api.sievedata.com/v1/intervals' \
     }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {"description": "Successful, returned 1 groups of intervals",
  "intervals": [
     {
@@ -63,4 +71,6 @@ curl 'https://api.sievedata.com/v1/intervals' \
  "query_latency": "0.088"}
 ```
 
-**Note**: For projects with a field in the tag schema that contains has a "_type" of "text", you can use the [MongoDB Legacy text query engine](https://www.mongodb.com/docs/manual/core/text-search-operators/) to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
+</ResponseExample>
+
+**Note**: For projects with a field in the tag schema that contains has a "\_type" of "text", you can use the [MongoDB Legacy text query engine](https://www.mongodb.com/docs/manual/core/text-search-operators/) to search for text information throughout the project. For more information, get started with a text enabled project like E-Sports or Live Social today!
