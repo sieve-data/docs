@@ -1,18 +1,17 @@
 ---
 title: "Get Status of All Jobs"
+api: "GET https://api.sievedata.com/v1/get_all_jobs"
 ---
-
-<RequestSimple method="GET">https://api.sievedata.com/v1/get_all_jobs</RequestSimple>
 
 This endpoint allows you to view the properties of all jobs you have submitted to a project. A job is a single video you submitted to Sieve. You can retrieve the registered size of the video, its processing status, the timestamp it was submitted, any user metadata that was supplied, and of course, the video name and job_id. The timestamps are ordered from most recent to least recent.
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
+<Param query="project_name" type="string" required>
+  The name of the project
+</Param>
 
-### Request
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' \
@@ -21,9 +20,11 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' 
   -H "Content-Type: application/json"
 ```
 
-### Sample response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
   "description": "Successful",
   "jobs": [
@@ -56,3 +57,5 @@ curl 'https://api.sievedata.com/v1/get_all_jobs?project_name=amazing_project_1' 
   "total_jobs": 24
 }
 ```
+
+</ResponseExample>

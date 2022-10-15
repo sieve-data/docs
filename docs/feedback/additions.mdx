@@ -1,8 +1,7 @@
 ---
 title: "Additions"
+api: "POST https://api.sievedata.com/v1/feedback/add_object"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/feedback/add_object</RequestSimple>
 
 Submit the additions of any objects the system completely missed. Feedback is specified in the `additions` parameter in the same format as the payloads returned by the [/query](/query/metadata) endpoint. The system will automatically add the objects specified and then improve itself automatically based on the feedback.
 
@@ -10,11 +9,11 @@ The additions must specify the `class` of the object to be added along with at l
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `additions` | list | List of additions to make |
+<Param body="additions" type="list" required>
+  List of additions to make
+</Param>
 
-### Request
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/feedback/add_object' \
@@ -45,11 +44,15 @@ curl 'https://api.sievedata.com/v1/feedback/add_object' \
   }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
-    "description": "successfully added 1 object.",
-    "successful_additions": [12345],
+  "description": "successfully added 1 object.",
+  "successful_additions": [12345]
 }
 ```
+
+</ResponseExample>

@@ -1,17 +1,19 @@
 ---
 title: "Delete Project"
+api: "POST https://api.sievedata.com/v1/delete_project"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/delete_project</RequestSimple>
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `delete_data` | string | Whether or not to delete the raw data included in the project |
+<Param body="project_name" type="string" required>
+  The name of the project
+</Param>
 
-### Request
+<Param body="delete_data" type="string" required>
+  Whether or not to delete the raw data included in the project
+</Param>
+
+<RequestExample>
 
 ```bash Terminal
 curl 'https://api.sievedata.com/v1/delete_project' \
@@ -24,10 +26,14 @@ curl 'https://api.sievedata.com/v1/delete_project' \
   }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
-  "description": "Deleted project news_media.",
+  "description": "Deleted project news_media."
 }
 ```
+
+</ResponseExample>

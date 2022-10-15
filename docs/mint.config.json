@@ -13,6 +13,12 @@
     "name": "Request Demo",
     "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform?usp=sf_link"
   },
+  "api": {
+    "auth": {
+      "method": "key",
+      "name": "X-API-Key"
+    }
+  },
   "topbarLinks": [
     {
       "name": "Community",

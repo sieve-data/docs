@@ -1,27 +1,28 @@
 ---
 title: "Get Project Info"
+api: "GET https://api.sievedata.com/v1/get_project_info"
 ---
-
-<RequestSimple method="GET">https://api.sievedata.com/v1/get_project_info</RequestSimple>
 
 Get all info about a given project including `fps` which defines the frame rate your project runs at, `batch_size` which defines to processing parallelism, `tagThis returns the tag schema, the FPS, the pipeline configuration, and other fields of the project.
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
+<Param query="project_name" type="string" required>
+  The name of the project
+</Param>
 
-### Request
+<RequestExample>
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/get_project_info \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
   "description": "Successful",
   "project_info": {
@@ -212,3 +213,5 @@ curl https://api.sievedata.com/v1/get_project_info \
   }
 }
 ```
+
+</ResponseExample>
