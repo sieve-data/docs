@@ -1,0 +1,20 @@
+---
+title: "Delete Project"
+api: "DELETE /projects/{project_name}"
+---
+
+<ParamField path="project_name" type="string" required>
+  name of Sieve project
+</ParamField>
+
+This endpoint allows you to delete a Sieve project and all of its associated data.
+
+<ResponseExample>
+```json
+{
+  "description": "Project deleted",
+  "project_name": "some_name",
+  "deleted": true
+}
+```
+</ResponseExample>

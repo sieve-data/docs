@@ -1,0 +1,37 @@
+---
+title: "Get Job"
+api: "GET /projects/{project_name}/jobs/{job_id}"
+---
+
+<ParamField path="project_name" type="string" required>
+  name of Sieve project
+</ParamField>
+
+<ParamField path="job_id" type="string" required>
+  id of job
+</ParamField>
+
+This endpoint allows you to get information about a given job.
+
+<ResponseExample>
+```json
+{
+  "error": "",
+  "fps": 11.97,
+  "fraction_done": 1,
+  "height": 360,
+  "job_id": "7b03ab15-a846-46bb-9d2a-71f413b8ace1",
+  "size_bytes": 1609568,
+  "size_frames": 122,
+  "source_name": "asdf",
+  "source_type": "video",
+  "source_url": "some_url",
+  "status": "finished",
+  "time_finished": "Sun, 16 Oct 2022 19:35:30 GMT",
+  "time_started": "Sun, 16 Oct 2022 19:31:16 GMT",
+  "time_submitted": "Sun, 16 Oct 2022 19:31:16 GMT",
+  "user_metadata": {},
+  "width": 640
+}
+```
+</ResponseExample>

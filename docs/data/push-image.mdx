@@ -1,8 +1,7 @@
 ---
 title: "Push Image Data"
+api: "POST https://api.sievedata.com/v1/push_image"
 ---
-
-<RequestSimple method="POST">https://api.sievedata.com/v1/push_image</RequestSimple>
 
 Submit image data to Sieve. Images are supported via Sieve's system by treating them as videos with single frames. Sieve ingests images in the form of URLs, which is either public or signed (private and secure). You can either submit a single image or a list of images.
 
@@ -10,13 +9,19 @@ Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/late
 
 ### Parameters
 
-| Parameter | Type | Description |
-| ---- | ----- | ---- |
-| `project_name` | string | The name of the project |
-| `image_url` | string or list | Valid URL to video |
-| `image_name` | string or list | Valid name for video |
+<Param body="project_name" type="string" required>
+  The name of the project
+</Param>
 
-### Request
+<Param body="image_url" type="string or list" required>
+  Valid URL to video
+</Param>
+
+<Param body="image_name" type="string or list" required>
+  Valid name for video
+</Param>
+
+<RequestExample>
 
 ```bash Terminal
 curl https://api.sievedata.com/v1/push_image \
@@ -45,18 +50,25 @@ curl https://api.sievedata.com/v1/push_image \
   }'
 ```
 
-### Sample Response
+</RequestExample>
 
-```json
+<ResponseExample>
+
+```json Example
 {
   "description": "Published image to queuing",
   "job_id": "cb66397e-0284-4820-bdef-e9c071a39b37"
 }
 ```
 
-```json
+```json Example (List)
 {
   "description": "Published images to queuing",
-  "job_id": ["cb66397e-0284-4820-bdef-e9c071a39b37", "cb66397e-0284-4820-bdef-e9c071a39b38"]
+  "job_id": [
+    "cb66397e-0284-4820-bdef-e9c071a39b37",
+    "cb66397e-0284-4820-bdef-e9c071a39b38"
+  ]
 }
 ```
+
+</ResponseExample>

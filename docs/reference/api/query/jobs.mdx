@@ -1,0 +1,61 @@
+---
+title: "Query Jobs"
+api: "POST /query/jobs"
+---
+
+<ParamField body="project_name" type="string" required>
+  name of Sieve project
+</ParamField>
+
+This endpoint lets you retrieve a list of jobs that match a given query.
+
+<CodeGroup>
+```json People
+{
+  "class": "person",
+  "project_name": "my_project",
+  "source_name": "some_source"
+}
+```
+```json Jumping People
+{
+  "class": "person",
+  "temporal.velocity.y": {
+    "$gt": 10
+  },
+  "project_name": "my_project",
+  "source_name": "some_source"
+}
+```
+</CodeGroup>
+#### Operations
+
+- [$exists](https://www.mongodb.com/docs/manual/reference/operator/query/exists/)
+- [$gte](https://www.mongodb.com/docs/manual/reference/operator/query/gte/)
+- [$gt](https://www.mongodb.com/docs/manual/reference/operator/query/gt/)
+- [$lte](https://www.mongodb.com/docs/manual/reference/operator/query/lte/)
+- [$lt](https://www.mongodb.com/docs/manual/reference/operator/query/lt/)
+- [$ne](https://www.mongodb.com/docs/manual/reference/operator/query/ne/)
+- [$in](https://www.mongodb.com/docs/manual/reference/operator/query/in/)
+
+<ResponseExample>
+```json
+{
+  "data": [
+    {
+      "job_id": "02a5704a-971a-4e28-8758-e9198d4d687d",
+      "source_name": "3hour_1"
+    },
+    {
+      "job_id": "03422d44-c21a-46b3-8629-37775fcccf36",
+      "source_name": "33stress_test2022-10-13 15:29:38.096804"
+    },
+    {
+      "job_id": "06cb5fd9-77e4-4e7e-b723-698ea81d60a5",
+      "source_name": "clip5"
+    },
+    ...
+  ]
+}
+```
+</ResponseExample>
