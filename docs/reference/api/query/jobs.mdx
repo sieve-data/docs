@@ -1,17 +1,13 @@
 ---
-title: "Query Intervals"
-api: "POST /query/intervals"
+title: "Query Jobs"
+api: "POST /query/jobs"
 ---
 
 <ParamField body="project_name" type="string" required>
   name of Sieve project
 </ParamField>
 
-<ParamField body="source_name" type="string" required>
-  name of source
-</ParamField>
-
-This endpoint lets you retrieve a list of intervals within a source that match a given query.
+This endpoint lets you retrieve a list of jobs that match a given query.
 
 <CodeGroup>
 ```json People
@@ -45,16 +41,21 @@ This endpoint lets you retrieve a list of intervals within a source that match a
 <ResponseExample>
 ```json
 {
-  "description": "Successful, returned intervals",
-  "intervals": [
-    [
-      0,
-      69
-    ]
-  ],
-  "project_name": "some_project",
-  "query_latency": "0.098",
-  "source_name": "some_source"
+  "data": [
+    {
+      "job_id": "02a5704a-971a-4e28-8758-e9198d4d687d",
+      "source_name": "3hour_1"
+    },
+    {
+      "job_id": "03422d44-c21a-46b3-8629-37775fcccf36",
+      "source_name": "33stress_test2022-10-13 15:29:38.096804"
+    },
+    {
+      "job_id": "06cb5fd9-77e4-4e7e-b723-698ea81d60a5",
+      "source_name": "clip5"
+    },
+    ...
+  ]
 }
 ```
 </ResponseExample>

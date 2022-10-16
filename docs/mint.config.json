@@ -103,7 +103,7 @@
         {
           "group": "Query",
           "pages": [
-            "reference/api/api/query/metadata",
+            "reference/api/query/metadata",
             "reference/api/query/intervals",
             "reference/api/query/jobs"
           ]
