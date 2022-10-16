@@ -1,0 +1,19 @@
+---
+title: "Removals"
+api: "POST /feedback/remove_object"
+---
+
+<ParamField body="data" type="list" required>
+  a list of object_ids to remove
+</ParamField>
+
+Each removal is a string specifying the `object_id` of the object to remove.
+
+<ResponseExample>
+```json
+{
+  "successful_removals": ["some_id"],
+  "skipped_removals": []
+}
+```
+</ResponseExample>

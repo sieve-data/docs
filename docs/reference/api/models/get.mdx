@@ -1,0 +1,50 @@
+---
+title: "Get Model"
+api: "GET /models/{model_name}"
+---
+
+<ParamField path="model_name" type="string" required>
+  name of Sieve model
+</ParamField>
+
+This endpoint returns information about a given model as a list of model objects, each of which represent a specific version of that model.
+
+<ResponseExample>
+```json
+{
+  "data": [
+    {
+      "_id": "4e22e6cb-ee5a-4f16-aecc-6581113247b7",
+      "created_at": "2022-10-14T20:19:05Z",
+      "image": "",
+      "logs": "...",
+      "name": "face-gender-recognizer",
+      "outputs": {
+        "tags": null
+      },
+      "private": true,
+      "status": "error",
+      "version": "0.0.0.0.11",
+      "weights": null,
+      "weights_directory": ""
+    },
+    {
+      "_id": "bb60af02-141c-4e08-a7e6-931f97247e2b",
+      "created_at": "2022-10-14T20:16:16Z",
+      "image": "",
+      "logs": "...",
+      "name": "face-gender-recognizer",
+      "outputs": {
+        "tags": null
+      },
+      "private": true,
+      "status": "error",
+      "version": "0.0.0.0.1",
+      "weights": null,
+      "weights_directory": ""
+    }
+  ],
+  "description": "Successful"
+}
+```
+</ResponseExample>

@@ -1,0 +1,31 @@
+---
+title: "Get Project"
+api: "GET /projects/{project_name}"
+---
+
+<ParamField path="project_name" type="string" required>
+  name of Sieve project
+</ParamField>
+
+This endpoint allows you to get a Sieve project and all of its associated data.
+
+<ResponseExample>
+```json
+{
+  "fps": 30,
+  "layers": [
+    {
+      "iteration": "video",
+      "models": [
+        {
+          "model_id": "some_model_id",
+          "model_name": "some_model_name"
+        }
+      ]
+    }
+  ],
+  "project_name": "your_project_name",
+  "store_data": true
+}
+```
+</ResponseExample>

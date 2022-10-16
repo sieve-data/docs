@@ -1,0 +1,42 @@
+---
+title: "Corrections"
+api: "POST /feedback/correct_object"
+---
+
+<ParamField body="data" type="list" required>
+  a list of corrections
+</ParamField>
+
+Each correction is a dictionary with the modifications you want to make to a given object.
+
+<CodeGroup>
+```json New Car
+{
+  "object_id": "some_id",
+  "class": "car"
+}
+```
+```json Position Change
+{
+  "object_id": "some_id",
+  "temporal": [
+    "frame_number": 0,
+    "bounding_box": {
+      "x1": 0,
+      "y1": 0,
+      "x2": 100,
+      "y2": 100
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<ResponseExample>
+```json
+{
+  "successful_corrections": ["some_id"],
+  "skipped_corrections": []
+}
+```
+</ResponseExample>

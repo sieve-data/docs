@@ -1,0 +1,36 @@
+---
+title: "Additions"
+api: "POST /feedback/add_object"
+---
+
+<ParamField body="additions" type="list" required>
+  a list of additions
+</ParamField>
+
+Each addition is a dictionary with the information you want to add to a given object.
+
+<CodeGroup>
+```json New Car
+{
+  "object_id": "some_id",
+  "class": "car",
+  "temporal": [
+    "frame_number": 0,
+    "bounding_box": {
+      "x1": 0,
+      "y1": 0,
+      "x2": 100,
+      "y2": 100
+    }
+  ]
+}
+```
+</CodeGroup>
+
+<ResponseExample>
+```json
+{
+  "successful_additions": ["some_id"],
+}
+```
+</ResponseExample>

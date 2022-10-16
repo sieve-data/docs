@@ -1,0 +1,42 @@
+---
+title: "List Projects"
+api: "GET /projects"
+---
+
+
+This endpoint allows you to get all the projects in your account.
+
+<ResponseExample>
+```json
+{
+  "data": [
+    {
+      "fps": 5,
+      "layers": [
+        {
+          "iteration": "video",
+          "models": [
+            {
+              "model_id": "2c4dba18-6c1f-4df1-992b-bf04fc3674ab",
+              "model_name": "person-machine-predictor",
+            }
+          ]
+        },
+        {
+          "iteration": "video",
+          "models": [
+            {
+              "model_id": "a0027d60-e4f3-42eb-937f-59482ad72aa3",
+              "model_name": "relationship-predictor",
+            }
+          ]
+        }
+      ],
+      "project_name": "zone_motion",
+      "store_data": true
+    }
+  ],
+  "description": "Successful"
+}
+```
+</ResponseExample>
