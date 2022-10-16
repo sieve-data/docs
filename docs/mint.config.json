@@ -10,7 +10,7 @@
     "ultraDark": "#5b21b6"
   },
   "topbarCtaButton": {
-    "name": "Request Demo",
+    "name": "Request Access",
     "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform?usp=sf_link"
   },
   "api": {
@@ -26,10 +26,6 @@
     {
       "name": "Community",
       "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-    },
-    {
-      "name": "Use Now",
-      "url": "https://app.sievedata.com/"
     }
   ],
   "anchors": [
@@ -44,17 +40,11 @@
       "icon": "slack",
       "color": "#0284c7",
       "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-    },
-    {
-      "name": "Playground",
-      "icon": "circle-play",
-      "color": "#22c55e",
-      "url": "https://playground.sievedata.com/"
     }
   ],
   "navigation": [
     {
-      "group": "Introduction",
+      "group": "Guide",
       "pages": [
         "guide/introduction",
         {
@@ -66,12 +56,6 @@
             "guide/concepts/projects"
           ]
         }
-      ]
-    },
-    {
-      "group": "Concepts",
-      "pages": [
-        "concepts/welcome"
       ]
     },
     {
