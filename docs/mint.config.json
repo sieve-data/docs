@@ -47,6 +47,7 @@
       "group": "Guide",
       "pages": [
         "guide/introduction",
+        "guide/quickstart",
         {
           "group": "Concepts",
           "pages": [

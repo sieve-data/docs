@@ -1,0 +1,64 @@
+---
+title: "Quickstart"
+description: "Get started with Sieve in a few minutes"
+---
+
+## Create an account
+<Info>
+  Sieve is currently invite-only. If you would like to try Sieve, please [request access](https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform).
+</Info>
+
+## Install the client package
+```bash
+pip install https://storage.googleapis.com/sieve-client-package/sievedata-0.0.1.3-py3-none-any.whl
+export SIEVE_API_URL=https://v1-api.sievedata.com
+export SIEVE_API_KEY=YOUR_KEY
+```
+
+## Create your first project
+<CodeGroup>
+```python Python
+from sieve.api.client import SieveClient, SieveProject
+from sieve.types.api import *
+cli = SieveClient()
+
+proj = SieveProject(
+    name="object_detection",
+    fps=5,
+    store_data=True,
+    workflow=SieveWorkflow([
+        SieveLayer(
+            iteration_type=SieveLayerIterationType.video,
+            models=[
+                SieveModel(
+                    name="yolo-object-detector",
+                    model_customer_name="developer-sievedata-com",
+                )
+            ]
+        )
+    ])
+)
+proj.create()
+```
+```bash Bash
+: '
+# Sample workflow for object detection
+fps: 5
+store_data: true
+layers:
+- iteration: "video"
+  models: 
+  - model_name: yolo-object-detector
+    model_customer_name: developer-sievedata-com
+'
+sieve projects object_detection create -wf workflow.yaml
+```
+</CodeGroup>
+
+## Push your first video
+```bash
+sieve projects object_detection push --source-url https://storage.googleapis.com/sieve-test-videos-central/01-lebron-dwade.mp4 --source-name test_video
+```
+
+## View results and make queries
+Visit the [dashboard](https://sievedata.com/app) to view your results, make queries, and more!
