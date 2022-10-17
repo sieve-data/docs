@@ -40,6 +40,19 @@ proj = SieveProject(
 )
 proj.create()
 ```
+```bash Bash
+: '
+# Sample workflow for object detection
+fps: 5
+store_data: true
+layers:
+- iteration: "video"
+  models: 
+  - model_name: yolo-object-detector
+    model_customer_name: developer-sievedata-com
+'
+sieve projects object_detection create -wf workflow.yaml
+```
 </CodeGroup>
 
 ## Push your first video
