@@ -31,8 +31,7 @@ proj = SieveProject(
             iteration_type=SieveLayerIterationType.video,
             models=[
                 SieveModel(
-                    name="yolo-object-detector",
-                    model_customer_name="developer-sievedata-com",
+                    name="developer-sievedata-com/yolo-object-detector",
                 )
             ]
         )
@@ -48,8 +47,7 @@ store_data: true
 layers:
 - iteration: "video"
   models: 
-  - model_name: yolo-object-detector
-    model_customer_name: developer-sievedata-com
+  - model_name: developer-sievedata-com/yolo-object-detector
 '
 sieve projects object_detection create -wf workflow.yaml
 ```
