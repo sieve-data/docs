@@ -17,6 +17,7 @@ export SIEVE_API_KEY=YOUR_KEY
 ```
 
 ## Create your first project
+The project below is based on models that Sieve has deployed already. These are open models that you may modify yourself and are available [here](http://github.com/sieve-community). Sieve is the best way to deploy them on video and make structured queries.
 <CodeGroup>
 ```python Python
 from sieve.api.client import SieveClient, SieveProject
@@ -24,7 +25,7 @@ from sieve.types.api import *
 cli = SieveClient()
 
 proj = SieveProject(
-    name="eee",
+    name="test_project",
     fps=5,
     store_data=True,
     workflow=SieveWorkflow([
