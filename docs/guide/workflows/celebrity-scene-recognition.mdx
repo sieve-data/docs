@@ -68,13 +68,14 @@ layers:
   models:
   - model_name: developer-sievedata-com/celebrity-predictor
 '
-sieve projects object_detection create -wf workflow.yaml
+sieve projects test_project create -wf workflow.yaml
 ```
 </CodeGroup>
 
 ## Push your first video
 ```bash
-sieve projects object_detection push --source-url https://storage.googleapis.com/sieve-test-videos-central/01-lebron-dwade.mp4 --source-name test_video
+sieve projects test_project push --source-url https://storage.googleapis.com/sieve-public-videos/celebrity-videos/elon_podcast.mp4 --source-name elon_pod
+sieve projects test_project push --source-url https://storage.googleapis.com/sieve-public-videos/celebrity-videos/neil.mp4 --source-name degrasse_tyson
 ```
 
 ## View results and make queries
@@ -86,9 +87,23 @@ Visit the [dashboard](https://sievedata.com/app) to view your results, make quer
   "class": "face"
 }
 ````
-```bash Get Lebron James
+```bash Get Instances of Elon Musk
 {
-  "celebrity": "Lebron_James_[m.01jz6d]"
+  "celebrity": "Elon_Musk_[m.03nzf1]"
+}
+````
+```bash Get Instances of Neil Degrasse Tyson
+{
+  "celebrity": "Neil_Degrasse_Tyson_[m.06b26l]"
+}
+````
+```bash Get Instances of Kim K
+{
+  "celebrity": "Kim_Kardashian_[m.0261x8t]"
+}
+```bash Get Instances of Kim K
+{
+  "celebrity": "Kanye_West_[m.02l840]"
 }
 ````
 </CodeGroup>
