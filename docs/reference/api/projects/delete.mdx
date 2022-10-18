@@ -9,11 +9,18 @@ api: "DELETE /projects/{project_name}"
 
 This endpoint allows you to delete a Sieve project and all of its associated data.
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/projects/bob" \
+  -X DELETE \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {
   "description": "Project deleted",
-  "project_name": "some_name",
+  "project_name": "bob",
   "deleted": true
 }
 ```

@@ -9,6 +9,13 @@ api: "GET /projects/{project_name}/jobs"
 
 This endpoint allows you to get information all the jobs in a project.
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/projects/bob/jobs" \
+  -X GET \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {

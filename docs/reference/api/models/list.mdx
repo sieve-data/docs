@@ -5,6 +5,13 @@ api: "GET /models"
 
 This endpoint returns information about all models as a list of model objects, each of which represent a specific version of that model.
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/models" \
+  -X GET \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {

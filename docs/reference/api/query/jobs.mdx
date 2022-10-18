@@ -38,6 +38,18 @@ This endpoint lets you retrieve a list of jobs that match a given query.
 - [$ne](https://www.mongodb.com/docs/manual/reference/operator/query/ne/)
 - [$in](https://www.mongodb.com/docs/manual/reference/operator/query/in/)
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/query/jobs" \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "class": "person",
+    "project_name": "my_project"
+  }'
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {

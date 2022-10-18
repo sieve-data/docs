@@ -42,6 +42,22 @@ This endpoint lets you retrieve a list of intervals within a source that match a
 - [$ne](https://www.mongodb.com/docs/manual/reference/operator/query/ne/)
 - [$in](https://www.mongodb.com/docs/manual/reference/operator/query/in/)
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/query/intervals" \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "class": "person",
+    "temporal_objects.velocity.y": {
+      "$gt": 10
+    },
+    "project_name": "my_project",
+    "source_name": "some_source"
+  }'
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {

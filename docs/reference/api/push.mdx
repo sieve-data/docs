@@ -24,10 +24,23 @@ Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/late
 
 Sieve is also experimentally testing streaming video ingestion. If you would like to test this feature, please reach out to us!
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/push" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d {
+    "project_name": "mom",
+    "source_name": "LeBum",
+    "source_url": "https://storage.googleapis.com/sieve-test-videos-central/01-lebron-dwade.mp4"
+  }
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {
-  "Description": "Pushed video fsadfa to queue",
+  "Description": "Pushed video LeBum to queue",
   "job_id": "45375e64-ace3-4a7c-8341-9a38e2ec5d25"
 }
 ```
