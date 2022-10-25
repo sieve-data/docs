@@ -105,6 +105,36 @@
       ]
     },
     {
+      "group": "SDK Reference",
+      "pages": [
+        "reference/sdk/intro",
+        {
+          "group": "Objects",
+          "pages": [
+            "reference/sdk/objects/base",
+            "reference/sdk/objects/objects",
+            "reference/sdk/objects/frame",
+            "reference/sdk/objects/outputs",
+            "reference/sdk/objects/misc"
+          ]
+        },
+        {
+          "group": "Predictors",
+          "pages": [
+            "reference/sdk/predictors/base",
+            "reference/sdk/predictors/trainable"
+          ]
+        },
+        {
+          "group": "Feedback",
+          "pages": [
+            "reference/sdk/feedback/types",
+            "reference/sdk/feedback/dataset"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Errors",
       "pages": ["error-codes"]
     },

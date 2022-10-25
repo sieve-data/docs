@@ -1,0 +1,75 @@
+---
+title: "Miscellaneous Type Definitions" 
+---
+
+# Miscellaneous Type Definitions
+
+There are some classes that don't fit into the other categories, but are useful to note down.
+
+<CodeGroup>
+
+```python Point 
+
+class Point(SieveBaseModel, validate_assignment=True):
+    """
+    A point is a 2D point in space
+    """
+    x: float
+    y: float
+    def get_array(self):
+        """
+        Returns the point as a numpy array
+        """
+
+    def from_array(array: np.ndarray):
+        """
+        Creates a point from a numpy array
+        """
+
+    def get_list(self):
+        """
+        Returns the point as a list
+        """
+```
+
+```python BoundingBox
+
+class BoundingBox(SieveBaseModel, validate_assignment=True):
+    """
+    A bounding box is a 2D box in space that denotes the location of an object
+    """
+    x1: float
+    y1: float
+    x2: float
+    y2: float
+
+    def get_list(self):
+        """
+        Returns the bounding box as a list
+        """
+
+    def get_array(self):
+        """
+        Returns the bounding box as a numpy array
+        """
+
+    def from_array(array: np.ndarray):
+        """
+        Creates a bounding box from a numpy array
+        """
+
+    def center(self) -> Point:
+        """
+        Returns the center of the bounding box
+        """
+```
+
+```python UserMetadata
+
+class UserMetadata(SieveBaseModel, validate_assignment=True):
+    """
+    User metadata is a group of key-value pairs that can be used to store arbitrary data passed in by the user
+    """
+```
+
+</CodeGroup>        

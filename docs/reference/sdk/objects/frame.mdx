@@ -1,0 +1,128 @@
+---
+title: "Frame Definitions"
+---
+
+## Frame
+
+There are a couple ways of accessing both frame metadata, raw frame data, and have access to frame URLs themselves
+
+<CodeGroup>
+
+```python FrameStaticObject
+
+# from sieve.types import FrameStaticObject
+
+class FrameStaticObject(StaticObject, extra=Extra.allow):
+    """
+    A frame static object is a special static data containing static attributes of the frame like fps, width, height, etc.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        FPS: float,
+        WIDTH: int,
+        HEIGHT: int,
+        SOURCE_URL: str,
+        SOURCE_TYPE: str,
+        CLASS: str
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        SOURCE_TYPE: None,
+        CLASS: "frame",
+        SOURCE_URL: None
+    }
+
+```
+```python FrameObject
+
+# from sieve.types import FrameObject
+
+class FrameObject(Object, FrameStaticObject, extra=Extra.allow):
+    """
+    A frame object is a special object that contains all the information about a frame
+    """
+    fields: ClassVar[Dict[str, type]] = {
+        TEMPORAL: List[FrameTemporalObject]
+    }
+
+```
+
+```python FrameObjectSlice
+
+class FrameObjectSlice(FrameObject, ObjectSlice, extra=Extra.allow):
+    """
+    A frame object slice is a special single object that contains all the information about a frame + a single temporal object
+    """
+    fields: ClassVar[Dict[str, type]] = {
+        TEMPORAL: List[FrameTemporalObject]
+    }
+
+```
+
+</CodeGroup>
+
+## Frame Temporal
+
+Frame temporals are used to store information about a single frame.
+
+<CodeGroup>
+
+```python FrameTemporal
+
+class FrameTemporal(Temporal, arbitrary_types_allowed=True):
+    """
+    A frame temporal is a temporal class that contains image data
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        FRAME_NUMBER: int,
+        FRAME_DATA: bytes,
+        FRAME_FORMAT: str
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        FRAME_FORMAT: ".png"
+    }
+
+    def get_array(self):
+        """
+        Returns the stored image as a numpy array
+        """
+```
+
+</CodeGroup>
+
+
+## Frame Fetcher
+
+Frame Fetchers are used to fetch frames from a source. They are useful for random accesses in video, where downloading
+frames is defined by the user.
+
+<CodeGroup>
+
+```python FrameFetcher
+
+class FrameFetcher(SieveBaseModel, extra=Extra.allow, arbitrary_types_allowed=True):
+    """
+    A video is a special class that allows you to directly access the video and image data
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        FPS: float,
+        WIDTH: int,
+        HEIGHT: int,
+        SOURCE_URL: str,
+        SOURCE_TYPE: str,
+        NUM_CHANNELS: int
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        NUM_CHANNELS: 3
+    }
+
+    def get_frame(self, frame_number: int) -> np.ndarray:
+        """
+        Returns a raw frame for a given frame_number
+        """
+
+```
