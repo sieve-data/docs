@@ -1,0 +1,207 @@
+---
+title: "Output Definitions"
+---
+
+## Outputs
+To make it easy to define outputs for your models, we've defined a couple simple paradigms that allow you
+to easily output data and for us to transform that data into the Object format
+
+### Output Base Class
+
+<CodeGroup>
+
+```python Output
+
+# from sieve.types.outputs import Output
+
+class Output(SieveBaseModel, extra=Extra.allow):
+    """Base class for all outputs"""
+    
+    fields: ClassVar[Dict[str, type]] = {
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+    }
+
+    def to_object(self) -> Object:
+        pass
+
+    def from_object(obj: Object) -> 'Output':
+        pass
+```
+
+</CodeGroup>
+
+### Temporal Output types
+
+These output types are used with Temporal predictors, for things like object detection and defining new
+temporal variables
+
+<CodeGroup>
+
+```python TemporalOutput
+
+# from sieve.types.outputs import TemporalOutput
+
+class TemporalOutput(Output):
+    """Base class for all temporal outputs"""
+    
+    fields: ClassVar[Dict[str, type]] = {
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+    }
+
+    def to_object(self) -> SingleObject:
+        pass
+
+    def from_object(obj: SingleObject) -> 'TemporalOutput':
+        pass
+
+```
+
+```python Detection
+
+# from sieve.types.outputs import Detection
+
+class Detection(TemporalOutput):
+
+    """
+    A detection is a way of representing something that you have detected in a frame, and transforming it into an object.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        OBJECT_ID: str,
+        BOUNDING_BOX: BoundingBox,
+        SCORE: float,
+        FRAME_NUMBER: int,
+        CLASS: str,
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        OBJECT_ID: None,
+        CLASS: "unknown",
+        SCORE: 1.0
+    }
+
+    def to_object(self) -> SingleObject:
+        temporal_dict = {
+            FRAME_NUMBER: self.get_attribute(FRAME_NUMBER),
+            BOUNDING_BOX: self.get_attribute(BOUNDING_BOX),
+            SCORE: self.get_attribute(SCORE),
+        }
+        temporal = TemporalObject(**temporal_dict)
+        object_dict = {
+            OBJECT_ID: self.get_attribute(OBJECT_ID),
+            CLASS: self.get_attribute(CLASS),
+            TEMPORAL: [temporal]
+        }
+        return SingleObject(**object_dict)
+
+    def from_object(obj: Object) -> 'Detection':
+        temporal_dict = obj.get_attribute(TEMPORAL)[-1]
+        detection_dict = {
+            OBJECT_ID: obj.get_attribute(OBJECT_ID),
+            CLASS: obj.get_attribute(CLASS),
+            FRAME_NUMBER: temporal_dict.get(FRAME_NUMBER),
+            BOUNDING_BOX: temporal_dict.get(BOUNDING_BOX),
+            SCORE: temporal_dict.get(SCORE),
+        }
+        return Detection(**detection_dict)
+```
+
+```python TemporalClassification
+
+# from sieve.types.outputs import TemporalClassification
+
+class TemporalClassification(TemporalOutput):
+    """
+    A temporal classification is an easy way of attaching a temporal attribute to an object.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        OBJECT: Object,
+    }
+
+    def to_object(self) -> Object:
+        object_dict = self.get_attribute(OBJECT).dict()
+        
+        #Get all attributes other than OBJECT
+        other_attributes = {k: v for k, v in self.dict().items() if k != OBJECT}
+
+        #Add other attributes to the object
+        last_temporal: TemporalObject = object_dict.get(TEMPORAL)[-1]
+        last_temporal.update(other_attributes)
+
+        return Object(**object_dict)
+
+    def from_object(obj: Object) -> 'TemporalClassification':
+        temporal_dict = obj.get_attribute(TEMPORAL)[-1].dict()
+        temporal_dict[OBJECT] = obj
+        return TemporalClassification(**temporal_dict)
+```
+
+</CodeGroup>
+
+### Static Output types 
+
+These output types are used with Static predictors, for things like attaching new static attributes to objects
+
+<CodeGroup>
+
+```python StaticOutput
+
+# from sieve.types.outputs import StaticOutput
+
+"""Base class for all temporal outputs"""
+    
+    fields: ClassVar[Dict[str, type]] = {
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+    }
+
+    def to_object(self) -> StaticObject:
+        pass
+
+    def from_object(obj: StaticObject) -> 'TemporalOutput':
+        pass
+
+```
+
+```python StaticClassification
+
+# from sieve.types.outputs import StaticClassification
+
+class StaticClassification(StaticOutput):
+
+    """
+    A static classification is a way of attaching a static attribute to an object.
+    """
+
+    fields: ClassVar[Dict[str, Field]] = {
+        OBJECT: Object,
+    }
+
+    def to_object(self) -> StaticObject:
+        object_dict = self.get_attribute(OBJECT).dict()
+
+        #Delete temporal attribute
+        if TEMPORAL in object_dict:
+            del object_dict[TEMPORAL]
+        
+        #Get all attributes other than OBJECT
+        other_attributes = {k: v for k, v in self.dict().items() if k != OBJECT}
+
+        #Add other attributes to the object
+        object_dict.update(other_attributes)
+
+        return StaticObject(**object_dict)
+
+    def from_object(obj: Object) -> 'StaticClassification':
+        object_dict = obj.dict()
+        object_dict[OBJECT] = obj
+        return StaticClassification(**object_dict)
+```
+
+</CodeGroup>

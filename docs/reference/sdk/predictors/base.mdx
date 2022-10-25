@@ -1,0 +1,89 @@
+---
+title: "Standard Predictors"
+---
+
+To define your models, we have a couple of default predictors based off of Cog's BasePredictor you can use,
+that plug into our infrastructure and allow you to test on yours.
+
+<CodeGroup>
+
+```python SievePredictor
+
+# from sieve.predictors import SievePredictor
+
+class SievePredictor(BasePredictor):
+    """
+    A SievePredictor is a predictor that can be used with the Sieve framework
+    """
+    ALLOWED_INPUT_TYPES = []
+    ALLOWED_OUTPUT_TYPES = []
+    artifacts_directory = None
+
+    def setup(self):
+        """
+        This method is called once before the first prediction is made.
+        """
+        pass
+
+    def get_artifacts_directory(self):
+        return self.artifacts_directory
+
+    def predict(self, **kwargs) -> Any:
+        pass
+    
+```
+
+```python TemporalPredictor
+
+# from sieve.predictors import TemporalPredictor
+
+class TemporalPredictor(BasePredictor):
+    """
+    A temporal predictor is a predictor that processes a objects with a temporal component over the last n frames.
+    The allowed input and output types for the predict function are listed.
+    """
+    ALLOWED_INPUT_TYPES = [
+        FrameObjectSlice,
+        UserMetadata, 
+        List[ObjectSlice],
+        List[SingleObject],
+        FrameSingleObject,
+        FrameFetcher
+    ]
+
+    ALLOWED_OUTPUT_TYPES = [
+        List[SingleObject],
+        SingleObject,
+        FrameSingleObject,
+        TemporalOutput
+    ]
+    
+```
+
+```python ObjectPredictor
+
+# from sieve.predictors import ObjectPredictor
+
+class ObjectPredictor(BasePredictor):
+    """
+    An object predictor is a predictor that processes a objects with a temporal component over the last n frames.
+    The allowed input and output types for the predict function are listed.
+    """
+    ALLOWED_INPUT_TYPES = [
+        FrameObjectSlice,
+        Object,
+        UserMetadata,
+        FrameFetcher
+    ]
+
+    ALLOWED_OUTPUT_TYPES = [
+        Object,
+        StaticObject,
+        ObjectSlice,
+        SingleObject,
+        StaticOutput
+    ]
+    
+```
+
+</CodeGroup>

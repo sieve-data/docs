@@ -1,0 +1,156 @@
+---
+title: "Object Definitions"
+---
+
+## Object
+In the concepts section, we went over how objects work and the motivation behind them. Below, here are some ways objects are defined in python by Sieve.
+
+<CodeGroup>
+
+```python StaticObject
+
+# from sieve.types import StaticObject
+
+class StaticObject(SieveBaseModel, extra=Extra.allow):
+    """
+    A static object contains all static information about an object that does not change over time.
+    This includes, at minimum, the object's class and its attributes.
+
+    In the event you only wanted to retrieve or store static variables, this is a low overhead way to do so.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        OBJECT_ID: str,
+        CLASS: str,
+        START_FRAME: int,
+        END_FRAME: int,
+        SKIP_FRAMES: int
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        OBJECT_ID: None,
+        SKIP_FRAMES: 1
+    }
+```
+
+```python Object
+
+# from sieve.types import Object
+
+class Object(StaticObject, extra=Extra.allow):
+    """
+    An object contains all information about an object that is tracked over time.
+    This includes, at minimum, the object's bounding box and its velocity.
+    It also contains all static information about the object, such as its class and object id.
+
+    This is a direct implementation of the object definition on the concepts page.
+    """
+
+    fields : ClassVar[Dict[str, type]] = {
+        TEMPORAL: List[Temporal]
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        TEMPORAL: []
+    }
+
+    def get_temporal(self, frame_number: int = None) -> Temporal: 
+        """
+        Get the temporal object at a specific frame number
+        """
+    
+    def get_static_attribute(self, key: str):
+        """
+        Get the static attribute of the object
+        """
+
+    def get_temporal_attribute(self, key: str, frame_number: int):
+        """
+        Get the temporal attribute of the object at a specific frame number
+        """
+
+    def set_temporal(self, temporal: Temporal, interpolate: bool = False):
+        """
+        Set the temporal object at a specific frame number
+        
+        If interpolate is True, then the object's BoundingBox will be interpolated between the previous and next frame
+        """
+    
+    def append_temporal(self, temporal: Temporal):
+        """
+        Append a newly detected temporal object to the end of the object's temporal list
+        """
+
+    def slice(self, start_frame: int = None, end_frame: int = None, frame_number: int = None):
+        """
+        Slice the temporal object to only include the frames between start_frame and end_frame, return an ObjectSlice
+        """
+```
+
+```python ObjectSlice
+
+# from sieve.types import ObjectSlice
+
+class ObjectSlice(Object, extra = Extra.allow):
+    """
+    This is an object that contains the static info of an object and
+    a subsection, or "slice" of its temporal info.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        SLICE_END_FRAME: int,
+        SLICE_START_FRAME: int,
+    }
+
+```
+
+```python SingleObject
+
+# from sieve.types import SingleObject
+class SingleObject(ObjectSlice, extra = Extra.allow):
+    """
+    This is an object that only contains a single temporal instance.
+
+    Use this when you want to get the static information of an object,
+    along with the temporal information at a specific frame.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        FRAME_NUMBER: int
+    }
+
+```
+
+</CodeGroup>
+
+## Temporal
+
+Temporal is a class that contains all the information about an object at a specific frame, including its bounding box, frame_number, and velocity.
+This is a way for us to gather all temporal attributes of an object at a given moment in time in one place. It essentially functions as an AttrDict
+with some extra functionality, a few required fields, and the methods of the SieveBaseModel.
+
+<CodeGroup>
+
+```python Temporal
+
+# from sieve.types import Temporal
+
+class Temporal(SieveBaseModel, extra=Extra.allow):
+    """
+    A temporal contains all information about an object at a specific frame.
+    This includes, at minimum, the object's bounding box and its velocity.
+    """
+
+    fields: ClassVar[Dict[str, type]] = {
+        BOUNDING_BOX: BoundingBox,
+        FRAME_NUMBER: int,
+        VELOCITY: Velocity
+    }
+
+    defaults: ClassVar[Dict[str, Field]] = {
+        VELOCITY: None
+    }
+
+```
+
+</CodeGroup>
