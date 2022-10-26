@@ -1,0 +1,240 @@
+---
+title: "Model Development"
+description: "Create your first Sieve model in minutes!"
+---
+
+## Prerequisites
+
+Before you start, make sure you've installed all required libraries, and setup your environment as noted in the [Quickstart](/guide/quickstart) guide. It is recommended to go through the quickstart completely.
+It is also recommended to go through the [SDK documentation](/reference/sdk/intro), and to reference it when needed.
+
+## The workflow we'll make - Face/Age Identification
+Our workflow that we'll make in this tutorial will be identifying faces and ages of people in video. First, we'll detect faces in video, and then we'll try to assign an age to those faces.
+
+## Creating a model - Face Detection
+For our first model, we'll detect faces in a frame. We'll use the [RetinaFace](https://github.com/serengil/retinaface) model for this.
+
+Let's create a directory that contains our predictor.py and sieve.yaml code. We'll call it `face_detection`.
+
+```bash
+mkdir models
+cd models
+mkdir face_detection
+cd face_detection
+touch sieve.yaml
+touch predictor.py
+```
+
+### predictor.py
+For our predictor, we'll use the TemporalPredictor paradigm. This paradigm is used for models that take in the last n frames or objects detected in the last n frames, to either perform a temporal
+classification on those objects (for example, assigning an acceleration to detected vehicles) or to detect brand new objects, like in this case a face. Below, we've pasted in some skeleton code for
+our Face Predictor. 
+
+```python
+from sieve import TemporalPredictor
+
+class FaceDetector(TemporalPredictor):
+    def setup(self):
+        pass
+
+    def predict(self, frame: FrameSingleObject) -> List[Detection]:
+        pass
+
+```
+
+The `setup` method is called once when the model is loaded. This is where we'll load our model. The `predict` method is called every time a new frame is received. This is where we'll run our model. 
+For any predict function, we must denote valid inputs and outputs, which is what the Sieve backend expects when handling your data input and output. For a TemporalPredictor, you can find more information
+about the allowed inputs and outputs [here](/reference/sdk/predictors/base). 
+
+For this model, we need a single frame as input, and a list of detections that can describe new objects as output. We'll use the `FrameSingleObject` input, and the `Detection` output. You can view 
+the full list of inputs and outputs in the SDK reference. The `FrameSingleObject` allows us to fetch a single raw frame from the input stream at the frame number we are processing at, and the 
+`Detection` output allows us to quickly describe a new object in the frame. You can view more information about the `FrameSingleObject` input [here](/reference/sdk/objects/frame), and the `Detection` output [here](/reference/sdk/objects/outputs)
+
+In our setup function, let's load our yolo model using pytorch and the ultralytics yolo library:
+
+```python
+from typing import List
+from sieve.types import FrameSingleObject, BoundingBox
+from sieve.predictors import TemporalPredictor
+from sieve.types.outputs import Detection
+
+from retinaface import RetinaFace
+import cv2
+
+class FaceDetector(TemporalPredictor):
+    def setup(self):
+        self.model = RetinaFace
+        a = cv2.imread('dummy.png')
+        self.model.detect_faces(a) #This provides a warmup for the model
+
+    def predict(self, frame: FrameSingleObject) -> List[Detection]:
+        pass
+
+```
+
+Then, in our predict function, let's get the frame array, run it through our model, and for each face, create a new detection object, passing in the score, the bounding box, and the class name "face".
+
+```python
+from typing import List
+from sieve.types import FrameSingleObject, BoundingBox
+from sieve.predictors import TemporalPredictor
+from sieve.types.outputs import Detection
+from retinaface import RetinaFace
+from sieve.types.constants import FRAME_NUMBER, BOUNDING_BOX, SCORE, CLASS
+import cv2
+
+class FaceDetector(TemporalPredictor):
+
+    def setup(self):
+        self.model = RetinaFace
+        a = cv2.imread('dummy.png')
+        self.model.detect_faces(a) #This provides a warmup for the model
+    
+    def predict(self, frame: FrameSingleObject) -> List[Detection]:
+        # Get the frame array
+        frame_number = frame.get_temporal().frame_number
+        frame_data = frame.get_temporal().get_array()
+
+        # Run the model
+        faces = self.model.detect_faces(frame_data)
+
+        output_objects = []
+
+        if type(faces) == tuple: #Edge case where no faces are detected
+            return output_objects
+
+        #Iterate through each face and create a new detection object
+        for k, face in faces.items():
+            out_cls = "face"
+            out_bbox = BoundingBox.from_array(face['facial_area'])
+            out_score = face['score']
+            out_dict = {
+                FRAME_NUMBER: frame_number,
+                BOUNDING_BOX: out_bbox,
+                SCORE: out_score,
+                CLASS: out_cls
+            }
+
+            output_objects.append(
+                Detection(
+                    **out_dict
+                )
+            )
+        
+        return output_objects
+
+```
+
+In the Sieve backend, we look through the detections and automatically track them across frames, aggregating them to create our "Objects", giving each object a unique ID. In this case, our 
+objects are just tracked faces.
+
+### sieve.yaml
+
+Now that we've written our predictor, we need to tell the Sieve backend how to use it. We'll do this by writing a `sieve.yaml` file. 
+
+```yaml
+
+model_version: "0.0.0.0.334"
+build:
+  gpu: true
+  system_packages:
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+  python_version: "3.8"
+  python_packages:
+    - "retina-face==0.0.12"
+predict: "predictor.py:FaceDetector"
+model_name: "face-detector"
+private: false
+iteration: "video"
+
+
+```
+
+We've added some prerequisite packages to the `system_packages` and `python_packages` section required by our model. 
+In `predict` we denote the file and class that we want to use. In `model_name` we give our model a name. In `private` we set this model to be private, meaning that only the user who created it can use it. In `iteration` we set the iteration to be `video`, meaning that we want to run our model sequentially over the course of the video.
+Since this model has GPU compatible deep learning, we set `gpu` to `true`. 
+
+### Note: Source Code
+
+You can find the full source code for this model [here](https://github.com/sieve-community/face-detection)
+
+### Uploading the model
+To upload the model to the Sieve backend, we can use the Sieve CLI. 
+
+```bash
+cd face-models/face-detection
+sieve model
+```
+Assuming the command is successful, you can view your model build progress in the [dashboard](https://sievedata.com/app) under "Models".
+Once the model build is successful, we can create our project below.
+
+## Create the project
+<CodeGroup>
+```python Python
+from sieve.api.client import SieveClient, SieveProject
+from sieve.types.api import *
+cli = SieveClient()
+
+proj = SieveProject(
+    name="face_age_identification",
+    fps=5,
+    store_data=True,
+    workflow=SieveWorkflow([
+        SieveLayer(
+            iteration_type=SieveLayerIterationType.video,
+            models=[
+                SieveModel(
+                    name="face-detector",
+                )
+            ]
+        )
+    ])
+)
+proj.create()
+```
+```bash Bash
+: '
+# Sample workflow for face_age_identification
+fps: 5
+store_data: true
+layers:
+- iteration: "video"
+  models: 
+  - model_name: face-detector
+
+'
+sieve projects face_age_identification create -wf workflow.yaml
+```
+</CodeGroup>
+
+## Push your video
+```bash
+sieve projects face_age_identification push --source-url https://storage.googleapis.com/sieve-test-videos-central/01-lebron-dwade.mp4 --source-name test_video
+```
+
+Alternatively you could also push a video view the [dashboard](https://sievedata.com/app) under "Overview" -> "Projects" -> face_age_identification -> "Push Data" on the top right. This will also allow you to 
+upload a video from your local machine.
+
+## View results and make queries
+Visit the [dashboard](https://sievedata.com/app) to view your results and make queries from your basic model
+
+<CodeGroup>
+```bash Get all faces
+{
+  "class": "face"
+}
+````
+```bash Get all faces moving right or left
+{
+  "temporal.velocity.x": {"$gte": 0.5},
+  "class": "face"
+}
+````
+</CodeGroup>
+
+Now we're able to track the faces, let's assign an age to them, and modify our workflow to include this new model!
+
+## Creating our second model - Age Identification
+
+Coming Soon!

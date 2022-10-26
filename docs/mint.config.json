@@ -48,6 +48,7 @@
       "pages": [
         "guide/introduction",
         "guide/quickstart",
+        "guide/model-development",
         {
           "group": "Concepts",
           "pages": [
