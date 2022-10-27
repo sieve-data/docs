@@ -1,17 +1,16 @@
 ---
-title: "Model Development"
+title: "Quickstart"
 description: "Create your first Sieve model in minutes!"
 ---
 
 ## Prerequisites
 
-Before you start, make sure you've installed all required libraries, and setup your environment as noted in the [Quickstart](/guide/quickstart) guide. It is recommended to go through the quickstart completely.
-It is also recommended to go through the [SDK documentation](/reference/sdk/intro), and to reference it when needed.
+Before you start, make sure you've installed all required libraries, and setup your environment as noted in the [quickstart](/guide/quickstart) guide. It is recommended to go through the quickstart completely.
 
-## The workflow we'll make - Face/Age Identification
-Our workflow that we'll make in this tutorial will be identifying faces and ages of people in video. First, we'll detect faces in video, and then we'll try to assign an age to those faces.
+## Face and Age Identification
+The workflow that we'll make in this tutorial will be identifying faces and ages of people in video. First, we'll detect faces in video, and then we'll try to assign an age to those faces.
 
-## Creating a model - Face Detection
+## Creating a model
 For our first model, we'll detect faces in a frame. We'll use the [RetinaFace](https://github.com/serengil/retinaface) model for this.
 
 Let's create a directory that contains our predictor.py and sieve.yaml code. We'll call it `face_detection`.
