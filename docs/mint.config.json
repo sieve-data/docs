@@ -48,11 +48,18 @@
       "pages": [
         "guide/introduction",
         "guide/quickstart",
+        "guide/model-development",
         {
           "group": "Concepts",
           "pages": [
             "guide/concepts/objects",
-            "guide/concepts/models",
+            {
+              "group": "Models",
+              "pages": [
+                "guide/concepts/models/overview",
+                "guide/concepts/models/quickstart"
+              ]
+            },
             "guide/concepts/workflows",
             "guide/concepts/projects"
           ]
@@ -107,7 +114,6 @@
     {
       "group": "SDK Reference",
       "pages": [
-        "reference/sdk/intro",
         {
           "group": "Objects",
           "pages": [
