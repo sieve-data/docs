@@ -103,6 +103,7 @@
         {
           "group": "Feedback",
           "pages": [
+            "reference/api/feedback/intro",
             "reference/api/feedback/add",
             "reference/api/feedback/correct",
             "reference/api/feedback/remove",

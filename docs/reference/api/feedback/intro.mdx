@@ -1,0 +1,20 @@
+---
+title: "Intro"
+---
+
+When submitted by the user, feedback is stored internally with this structure:
+
+| Property | Description |
+| -------- | ----------- |
+| `project_name` | The name of the project that you're submitting feedback within |
+| `source_name` | The name of the video or image that you're submitting feedback for |
+| `feedback_id` | A string ID that we generate that's unique to each group of feedback you've submitted | 
+| `type` | "addition" if you're adding a new object, "correction" if you're correcting some attribute of an object detected by our system, and "removal" if you're telling the system that it falsely detected an object|
+| `timestamp` | When the feedback was added |
+| `data` | all other data related to your feedback submission, which follows the [object](/guide/concepts/objects) format |
+
+For learning how to submit feedback, please view [additions](/reference/api/feedback/add), [corrections](/reference/api/feedback/correct), or [removals](/reference/api/feedback/remove).
+
+For searching through your feedback, please view [search](/reference/api/feedback/search).
+
+For deleting a subset of your feedback, please view [delete](/reference/api/feedback/delete).
