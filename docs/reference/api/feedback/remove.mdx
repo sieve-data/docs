@@ -9,6 +9,21 @@ api: "POST /feedback/remove_object"
 
 Each removal is a string specifying the `object_id` of the object to remove.
 
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/feedback/remove_object" \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "data": [
+          "some_existing_id",
+          "some_other_existing_id",
+          ...
+        ]
+      }'
+```
+</RequestExample>
 <ResponseExample>
 ```json
 {

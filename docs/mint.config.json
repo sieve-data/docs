@@ -61,7 +61,8 @@
               ]
             },
             "guide/concepts/workflows",
-            "guide/concepts/projects"
+            "guide/concepts/projects",
+            "guide/concepts/feedback"
           ]
         }
       ]
@@ -107,7 +108,8 @@
             "reference/api/feedback/add",
             "reference/api/feedback/correct",
             "reference/api/feedback/remove",
-            "reference/api/feedback/search"
+            "reference/api/feedback/search",
+            "reference/api/feedback/delete"
           ]
         }
       ]

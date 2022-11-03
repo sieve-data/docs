@@ -10,15 +10,15 @@ api: "POST /feedback/correct_object"
 Each correction is a dictionary with the modifications you want to make to a given object.
 
 <CodeGroup>
-```json New Car
+```json Add Brand to Car
 {
-  "object_id": "some_id",
-  "class": "car"
+  "object_id": "some_existing_id",
+  "brand": "Toyota"
 }
 ```
 ```json Position Change
 {
-  "object_id": "some_id",
+  "object_id": "some_other_existing_id",
   "temporal": [
     "frame_number": 0,
     "bounding_box": {
@@ -31,6 +31,36 @@ Each correction is a dictionary with the modifications you want to make to a giv
 }
 ```
 </CodeGroup>
+
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/feedback/correct_object" \
+  -X POST \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "data": [
+          {
+            "object_id": "some_existing_id",
+            "brand": "Toyota"
+          },
+          {
+            "object_id": "some_other_existing_id",
+            "temporal": [
+              "frame_number": 0,
+              "bounding_box": {
+                "x1": 0,
+                "y1": 0,
+                "x2": 100,
+                "y2": 100
+              }
+            ]
+          }
+          ...
+        ]
+      }'
+```
+</RequestExample>
 
 <ResponseExample>
 ```json
