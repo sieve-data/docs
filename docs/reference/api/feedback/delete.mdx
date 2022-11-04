@@ -1,0 +1,55 @@
+---
+title: "Delete"
+api: "DELETE /feedback/delete"
+---
+
+This endpoint lets you delete all stored feedback you've submitted that matches a certain query. 
+The query is specified in the body of the request based on the [feedback structure](/reference/api/feedback/intro). 
+
+**Note: There is no "undo" button on Sieve, so be careful when deleting**
+
+<CodeGroup>
+```json Specify Project and People
+{
+  "data.class": "person",
+  "project_name": "my_project"
+}
+```
+```json Specific Feedback ID
+{
+  "feedback_id": "my_id"
+}
+```
+</CodeGroup>
+
+#### Operations
+
+- [$exists](https://www.mongodb.com/docs/manual/reference/operator/query/exists/)
+- [$gte](https://www.mongodb.com/docs/manual/reference/operator/query/gte/)
+- [$gt](https://www.mongodb.com/docs/manual/reference/operator/query/gt/)
+- [$lte](https://www.mongodb.com/docs/manual/reference/operator/query/lte/)
+- [$lt](https://www.mongodb.com/docs/manual/reference/operator/query/lt/)
+- [$ne](https://www.mongodb.com/docs/manual/reference/operator/query/ne/)
+- [$in](https://www.mongodb.com/docs/manual/reference/operator/query/in/)
+
+<RequestExample>
+```bash Request
+curl "https://v1-api.sievedata.com/v1/feedback/delete" \
+  -X DELETE \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data.class": "person",
+    "project_name": "my_project"
+  }'
+```
+</RequestExample>
+<ResponseExample>
+```json
+{
+  "deleted_count": 79,
+  "query_latency": '0.668',
+  "description": "Successful"
+}
+```
+</ResponseExample>
