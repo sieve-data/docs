@@ -10,8 +10,8 @@
     "ultraDark": "#5b21b6"
   },
   "topbarCtaButton": {
-    "name": "Request Access",
-    "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform?usp=sf_link"
+    "name": "Create a new account",
+    "url": "https://www.sievedata.com/dashboard"
   },
   "api": {
     "auth": {
@@ -19,140 +19,85 @@
       "name": "X-API-Key"
     },
     "baseUrl": [
-      "https://v1-api.sievedata.com/v1"
+      "https://mango.sievedata.com/v1"
     ]
   },
   "topbarLinks": [
     {
-      "name": "Community",
-      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+      "name": "Dashboard",
+      "url": "https://www.sievedata.com/dashboard"
     }
   ],
   "anchors": [
     {
-      "name": "Blogs",
-      "icon": "book-bookmark",
-      "color": "#8d62ee",
-      "url": "technical-blogs"
-    },
-    {
       "name": "Community",
       "icon": "slack",
-      "color": "#0284c7",
       "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+    },
+    {
+      "name": "Book a Demo",
+      "icon": "phone",
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform"
     }
   ],
   "navigation": [
     {
       "group": "Guide",
       "pages": [
-        "guide/introduction",
-        "guide/quickstart",
-        "guide/model-development",
-        {
-          "group": "Concepts",
-          "pages": [
-            "guide/concepts/objects",
-            {
-              "group": "Models",
-              "pages": [
-                "guide/concepts/models/overview",
-                "guide/concepts/models/quickstart"
-              ]
-            },
-            "guide/concepts/workflows",
-            "guide/concepts/projects",
-            "guide/concepts/feedback"
-          ]
-        }
+        "guide/intro",
+        "guide/quickstart/intro",
+        "guide/quickstart/template-workflows",
+        "guide/quickstart/custom-workflows",
+        "guide/quickstart/building-blocks"
       ]
     },
     {
       "group": "API Reference",
       "pages": [
-        "reference/api/user",
+        "reference/api/intro",
         "reference/api/push",
-        {
-          "group": "Projects",
-          "pages": [
-            "reference/api/projects/create",
-            "reference/api/projects/delete",
-            "reference/api/projects/list",
-            "reference/api/projects/get",
-            "reference/api/projects/update",
-            "reference/api/projects/jobs/get",
-            "reference/api/projects/jobs/list",
-            "reference/api/projects/jobs/search"
-          ]
-        },
-        {
-          "group": "Models",
-          "pages": [
-            "reference/api/models/list",
-            "reference/api/models/get",
-            "reference/api/models/search"
-          ]
-        },
-        {
-          "group": "Query",
-          "pages": [
-            "reference/api/query/metadata",
-            "reference/api/query/intervals",
-            "reference/api/query/jobs"
-          ]
-        },
-        {
-          "group": "Feedback",
-          "pages": [
-            "reference/api/feedback/intro",
-            "reference/api/feedback/add",
-            "reference/api/feedback/correct",
-            "reference/api/feedback/remove",
-            "reference/api/feedback/search",
-            "reference/api/feedback/delete"
-          ]
-        }
+        "reference/api/jobs/get",
+        "reference/api/jobs/list",
+        "reference/api/workflows/get",
+        "reference/api/workflows/delete",
+        "reference/api/workflows/list",
+        "reference/api/models/get",
+        "reference/api/models/list",
+        "reference/api/models/search"
+      ]
+    },
+    {
+      "group": "CLI Reference",
+      "pages": [
+        "reference/cli/intro",
+        "reference/cli/workflow",
+        "reference/cli/model",
+        "reference/cli/job",
+        "reference/cli/push",
+        "reference/cli/deploy"
       ]
     },
     {
       "group": "SDK Reference",
       "pages": [
-        {
-          "group": "Objects",
-          "pages": [
-            "reference/sdk/objects/base",
-            "reference/sdk/objects/objects",
-            "reference/sdk/objects/frame",
-            "reference/sdk/objects/outputs",
-            "reference/sdk/objects/misc"
-          ]
-        },
-        {
-          "group": "Predictors",
-          "pages": [
-            "reference/sdk/predictors/base",
-            "reference/sdk/predictors/trainable"
-          ]
-        },
-        {
-          "group": "Feedback",
-          "pages": [
-            "reference/sdk/feedback/types",
-            "reference/sdk/feedback/dataset"
-          ]
-        }
+        "reference/sdk/intro",
+        "reference/sdk/function",
+        "reference/sdk/model",
+        "reference/sdk/reference",
+        "reference/sdk/workflow",
+        "reference/sdk/types/struct",
+        "reference/sdk/types/file",
+        "reference/sdk/types/array",
+        "reference/sdk/types/video",
+        "reference/sdk/types/image",
+        "reference/sdk/types/audio",
+        "reference/sdk/push",
+        "reference/sdk/deploy"
       ]
     },
     {
       "group": "Errors",
       "pages": ["error-codes"]
-    },
-    {
-      "group": "Technical Blogs",
-      "pages": [
-        "technical-blogs/green-screen-video-object-segmentation-and-removal",
-        "technical-blogs/custom-video-object-counting"
-      ]
     }
   ],
   "footerSocials": {

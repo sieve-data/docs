@@ -1,0 +1,149 @@
+---
+title: "sieve.function"
+---
+
+```python
+def function(
+  name: str,
+  gpu: bool = False,
+  python_packages: List[str] = [],
+  python_version: str = "3.8",
+  system_packages: List[str] = [],
+  cuda_version: str = None,
+  machine_type: str = None,
+  iterator_input: bool = False,
+  persist_output: bool = False,
+  run_commands: List[str] = []
+)
+```
+
+A `sieve.function` is a Python function that can be deployed to Sieve. The only diference between a `sieve.function` and a `sieve.Model` is that a `sieve.Model` contains both a `__setup__` and a `__predict__` function, while a `sieve.function` only contains a single function. Models are typically used for heavy machine learning models that require a longer `setup` step.
+
+### Dummy Example
+
+```python
+import sieve
+
+@sieve.function(name="sample_function")
+def sample_function(echo: str) -> str:
+  return echo
+```
+
+### Video Splitting Example
+
+The example below shows how to use `sieve.function` to split a video into frames.
+
+```python
+import sieve
+
+@sieve.function(
+  name="video-splitter",
+  gpu = False,
+  python_packages=[
+    "ffmpeg-python==0.2.0"
+  ],
+  system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+  python_version="3.8"
+)
+def VideoSplitter(video: sieve.Video) -> sieve.Image:
+  # use ffmpeg to extract all frames in video as bmp files and return the path to the folder
+  import tempfile
+  temp_dir = tempfile.mkdtemp()
+
+  import subprocess
+  subprocess.call([
+    'ffmpeg',
+    '-i', video.path,
+    f'{temp_dir}/%09d.jpg'
+  ])
+  import os
+  filenames = os.listdir(temp_dir)
+  filenames.sort()
+  for i, filename in enumerate(filenames):
+    print(os.path.join(temp_dir, filename), i)
+    yield sieve.Image(path=os.path.join(temp_dir, filename), frame_number=i, fps=video.fps)
+```
+
+## Arguments
+
+- `name` Name of the function.
+- `gpu` Whether the function should run on a GPU. Defaults to `False`.
+- `python_packages` List of Python packages to install. Defaults to `[]`.
+- `python_version` Python version to use. Defaults to `"3.8"`.
+- `system_packages` List of system packages to install. Defaults to `[]`.
+- `cuda_version` CUDA version to use. Defaults to `None`.
+- `machine_type` Machine type to use. Defaults to `None`.
+- `iterator_input` Whether the function takes in an iterator. Defaults to `False`.
+- `persist_output` Whether the function's output should be persisted. Defaults to `False`.
+- `run_commands` List of commands to run when the function is built. Defaults to `[]`.
+
+### name
+```python
+def name(self) -> str:
+```
+
+Name of the function.
+
+### gpu
+```python
+def gpu(self) -> bool:
+```
+
+Whether the function should run on a GPU.
+
+### python_packages
+```python
+def python_packages(self) -> List[str]:
+```
+
+List of Python packages to install.
+
+### python_version
+```python
+def python_version(self) -> str:
+```
+
+Python version to use.
+
+### system_packages
+```python
+def system_packages(self) -> List[str]:
+```
+
+List of system packages to install.
+
+### cuda_version
+```python
+def cuda_version(self) -> str:
+```
+
+CUDA version to use.
+
+### machine_type
+```python
+def machine_type(self) -> str:
+```
+
+Machine type to use.
+
+### iterator_input
+```python
+def iterator_input(self) -> bool:
+```
+
+Whether the function takes in an iterator.
+
+### persist_output
+```python
+def persist_output(self) -> bool:
+```
+
+Whether the function's output should be persisted to permanent storage for later retrieval.
+
+### run_commands
+```python
+def run_commands(self) -> List[str]:
+```
+
+List of commands to run when the function is built.
+

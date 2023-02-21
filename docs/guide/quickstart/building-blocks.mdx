@@ -1,0 +1,94 @@
+---
+title: "Using Existing Building Blocks"
+description: "Learn how you can use existing building blocks to create a workflow."
+---
+
+First, please make sure you have signed up for a Sieve account as per the [quickstart](/guide/quickstart/intro) guide.
+
+## Install the Sieve CLI
+
+```bash
+pip install https://mango.sievedata.com/v1/client_package/sievedata-0.0.1.1.2-py3-none-any.whl
+```
+
+Then, export your Sieve API key as an environment variable. You can find your API key in the [Sieve dashboard](https://www.sievedata.com/dashboard/settings).
+
+```bash
+export SIEVE_API_KEY=YOUR_API_KEY
+```
+
+Sieve allows users to reference existing building blocks in their workflows. Below are a few sample building blocks that you can use to create a workflow.
+
+### [Video Splitter](https://www.sievedata.com/dashboard/models/sieve-developer/video-splitter): `sieve-developer/video-splitter`
+Splits a `sieve.Video` into a stream of `sieve.Image` objects with extra metadata such as `frame_number` and `fps` accessible as `img.fps` and `img.frame_number`.
+
+### [YOLOv5 Object Detector](https://www.sievedata.com/dashboard/models/sieve-developer/yolo): `sieve-developer/yolo`
+Detects objects in an image using YOLOv5. Returns a list of dictionaries with the following keys: `box`, `class_name`, `score`, and `frame_number`.
+
+### [SORT Object Tracker](https://www.sievedata.com/dashboard/models/sieve-developer/sort): `sieve-developer/sort`
+Takes a list of boxes in a video and returns a dictionary of "objects" indexed by ID, where each value of the dictionary is a list of boxes for that object.
+
+A page to view all available building blocks is still under development. In the meantime, you can view all available building blocks used in template workflows [here](https://www.sievedata.com/dashboard/templates) or check out models in the [examples](https://github.com/sieve-community/examples) repository which have all been deployed under the `sieve-developer` user.
+
+## Create a Workflow
+
+Create a new folder and add the files below.
+<CodeGroup>
+
+
+```python Object Tracking
+import sieve
+from typing import Dict, Tuple
+from yolo import Yolo
+from tracker import SORT
+from splitter import VideoSplitter
+from visualizer import draw_boxes
+
+@sieve.workflow(name="yolo_object_tracking")
+def yolosplit(video: sieve.Video) -> Dict:
+    images = sieve.reference("sieve-developer/video-splitter")(video)
+    yolo_outputs = sieve.reference("sieve-developer/yolo")(images)
+    return sieve.reference("sieve-developer/sort")(yolo_outputs)
+```
+
+```python Video Lip Syncing
+import sieve
+
+# Wav2Lip takes in a video, audio, and a a set of faces that are tracked over time.
+@sieve.workflow(name="video_lipsyncing")
+def wav2lip(video: sieve.Video, audio: sieve.Audio):
+    images = sieve.reference("sieve-developer/video-splitter")(video)
+    faces = sieve.reference("sieve-developer/mediapipe-face-detector")(images)
+    tracked_faces = sieve.reference("sieve-developer/sort")(faces)
+    return sieve.reference("sieve-developer/wav2lip")(video, audio, tracked_faces)
+```
+
+```python Background Removal
+import sieve
+from typing import Dict
+
+@sieve.workflow(name="video_background_mask")
+def background_mask(video: sieve.Video) -> Dict:
+    images = sieve.reference("sieve-developer/video-splitter")(video)
+    masks = sieve.reference("sieve-developer/u2netp_mask")(images)
+    return sieve.reference("sieve-developer/frame-combiner")(masks)
+
+@sieve.workflow(name="video_background_blur")
+def background_blur(video: sieve.Video) -> Dict:
+    images = sieve.reference("sieve-developer/video-splitter")(video)
+    blurs = sieve.reference("sieve-developer/u2netp_blur")(images)
+    return sieve.reference("sieve-developer/frame-combiner")(blurs)
+```
+</CodeGroup>
+
+## Deploy the Workflow
+
+Create some of the files above in a separate folder. Now go into the folder and run the following command. You can monitor the status via your terminal or on the [Sieve dashboard](https://www.sievedata.com/dashboard).
+
+```bash
+sieve deploy
+```
+
+## Run the Workflow
+
+There are many ways to trigger the workflow. See [this](/guide/quickstart/custom-workflows#run-the-workflow) section for more details.

@@ -1,0 +1,24 @@
+---
+title: "Running a Template Workflow"
+description: "This guide shows you how to run a pre-built template workflow on Sieve."
+---
+
+First, please make sure you have signed up for a Sieve account as per the [quickstart](/guide/quickstart/intro) guide.
+
+1. Navigate to the [Sieve Templates](https://www.sievedata.com/dashboard/templates) page on the Sieve dashboard.
+<Frame caption="Sieve Templates Page">
+  <img src="/img/templates.png" />
+</Frame>
+2. Click on the template you would like to clone.
+3. Choose a name for your new workflow and click "Clone".
+<Frame caption="Clone Workflow Page">
+  <img src="/img/clone.png" />
+</Frame>
+4. Run the workflow.
+    - **Dashboard**: Go to the worklow page. You will see a form to push data to the workflow. To try it out, enter some sample data and click "Send Request".
+    - **API**: You can run the workflow using the API. See the [API Reference](/reference/api/push) for more details.
+    - **CLI**: You can run the workflow using the CLI. See the [CLI Reference](/reference/cli/push) for more details.
+5. Get the results.
+    - **Dashboard**: Go to the workflow page. You will see a job list with the latest job at the top. Click on the job to see the results.
+    - **API**: You can get the results using the API. See the [API Reference](/reference/api/jobs/get) for more details. You will have to poll the API to get the results.
+    - **CLI**: You can get the results using the CLI. See the [CLI Reference](/reference/cli/jobs/get) for more details.

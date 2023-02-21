@@ -1,57 +1,70 @@
 ---
 title: "Get Model"
-api: "GET /models/{model_name}"
+api: "GET /models/{model_id}"
 ---
 
-<ParamField path="model_name" type="string" required>
+This endpoint returns a JSON object that describes a given model given its ID.
+
+### Request
+<ParamField path="model_id" type="string" required>
   name of Sieve model
 </ParamField>
 
-This endpoint returns information about a given model as a list of model objects, each of which represent a specific version of that model.
+### Response
+<ResponseField name="id" type="string">
+  The id of the model.
+</ResponseField>
+<ResponseField name="name" type="string">
+  The name of the model.
+</ResponseField>
+<ResponseField name="status" type="string">
+  The status of the model. The possible values are "ready", "queued", "building", and "failed".
+</ResponseField>
+<ResponseField name="inputs" type="dict">
+  The inputs of the model as a dictionary of name and type.
+</ResponseField>
+<ResponseField name="outputs" type="dict">
+  The outputs of the model as a dictionary of name and type.
+</ResponseField>
 
-<RequestExample>
-```bash Request
-curl "https://v1-api.sievedata.com/v1/models/face-gender-recognizer" \
-  -X GET \
-  -H "X-API-Key: YOUR_API_KEY"
-```
-</RequestExample>
 <ResponseExample>
 ```json
 {
-  "data": [
+  "id": "9c701df7-13e3-4d97-a344-693d615bede9",
+  "name": "whisper",
+  "version": "54cd08e8-8f77-49f1-9824-b969aab8bf7d",
+  "organization_id": "c0ec7825-0fcb-444e-b0b9-9660c40fa0f4",
+  "status": "ready",
+  "permissions": {
+    "private": false,
+    "ids": null
+  },
+  "gpu": "true",
+  "full_config": null,
+  "time": {
+    "queued": "2023-02-09T19:26:04.455000",
+    "started": "2023-02-09T19:26:04.467000",
+    "completed": "2023-02-09T19:27:23.462000"
+  },
+  "machine_type": "",
+  "type": "model",
+  "is_iterator_input": false,
+  "is_iterator_output": true,
+  "outputs": [
     {
-      "_id": "4e22e6cb-ee5a-4f16-aecc-6581113247b7",
-      "created_at": "2022-10-14T20:19:05Z",
-      "image": "",
-      "logs": "...",
-      "name": "face-gender-recognizer",
-      "outputs": {
-        "tags": null
-      },
-      "private": true,
-      "status": "error",
-      "version": "0.0.0.0.11",
-      "weights": null,
-      "weights_directory": ""
-    },
-    {
-      "_id": "bb60af02-141c-4e08-a7e6-931f97247e2b",
-      "created_at": "2022-10-14T20:16:16Z",
-      "image": "",
-      "logs": "...",
-      "name": "face-gender-recognizer",
-      "outputs": {
-        "tags": null
-      },
-      "private": true,
-      "status": "error",
-      "version": "0.0.0.0.1",
-      "weights": null,
-      "weights_directory": ""
+      "type": "typing.Dict"
     }
   ],
-  "description": "Successful"
+  "inputs": [
+    {
+      "type": "sieve.types.file.Audio",
+      "name": "audio"
+    }
+  ],
+  "minimum_running_replicas": 2,
+  "description": "",
+  "code_url": "",
+  "author": "sieve-developer"
 }
 ```
 </ResponseExample>
