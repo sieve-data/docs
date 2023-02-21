@@ -3,45 +3,47 @@ title: "Push Data"
 api: "POST /push"
 ---
 
-<ParamField body="project_name" type="string" required>
-  name of Sieve project
+<ParamField body="workflow_name" type="string" required>
+  name of Sieve workflow
 </ParamField>
 
-<ParamField body="source_name" type="string" required>
-  name to assign to the image or video source
+<ParamField body="inputs" type="dict" required>
+  a dictionary representing the inputs to the workflow
 </ParamField>
 
-<ParamField body="source_url" type="string" required>
-  direct URL to data source
-</ParamField>
+This endpoint triggers a workflow with a given set of inputs. The structure of the inputs should match the inputs types specified in the workflow definition.
 
-This endpoint allows you to push a data source to Sieve. Conceptually, a data source is a single image or video you'd like to process through a given
-project's defined workflow. You can give it a unique name which you use to access it later. Or you can access it by the `job_id` that's returned to you.
-
-Sieve ingests images and videos in the form of URLs, which are either public or signed (private and secure).
-
-Learn more about signed URLs for [AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) or [GCP](https://cloud.google.com/storage/docs/access-control/signed-urls) at the respective links. In addition, you need to supply a unique video name for each video. Optionally, you can also submit custom metadata for the video as a whole, along with its associated value. For example, if you have internal indexes or fields you want to track with our platform, this would be an easy way for you to access those within Sieve as well.
-
-Sieve is also experimentally testing streaming video ingestion. If you would like to test this feature, please reach out to us!
-
-<RequestExample>
-```bash Request
-curl "https://v1-api.sievedata.com/v1/push" \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: YOUR_API_KEY" \
-  -d {
-    "project_name": "mom",
-    "source_name": "LeBum",
-    "source_url": "https://storage.googleapis.com/sieve-test-videos-central/01-lebron-dwade.mp4"
+## Example
+A workflow that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following request:
+```json
+{
+  "workflow_name": "sample_workflow",
+  "inputs": {
+    "video": {
+      "url": "{SOME_VIDEO_URL}"
+    },
+    "image": {
+      "url": "{SOME_IMAGE_URL}"
+    }
   }
+}
 ```
-</RequestExample>
+
+A workflow that takes in a `str` named `prompt` would be triggered with the following request:
+```json
+{
+  "workflow_name": "sample_workflow",
+  "inputs": {
+    "prompt": "some string"
+  }
+}
+```
+
 <ResponseExample>
 ```json
 {
-  "Description": "Pushed video LeBum to queue",
-  "job_id": "45375e64-ace3-4a7c-8341-9a38e2ec5d25"
+  "id": "c49b2fa2-f236-43d8-b2f3-03eceff16d71",
+  "description": "Pushed c49b2fa2-f236-43d8-b2f3-03eceff16d71 to queue"
 }
 ```
 </ResponseExample>

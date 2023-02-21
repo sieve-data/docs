@@ -1,0 +1,53 @@
+---
+title: "Introduction"
+description: "What is Sieve?"
+---
+
+Sieve is a tool that makes it fast and easy to build and deploy video AI applications without having to think about boilerplate code, models, or infrastructure.
+
+## Features
+- Run a pre-built template workflow in the matter of an API call.
+- Define your own workflows, models, and their dependencies in code.
+- Reference pre-existing models and functions in your own workflows in a single line of code. 
+- Run hyper-parallel workloads in the cloud with GPU acceleration.
+
+## Quickstart
+
+- Sign up for a free account on the [Sieve website](https://www.sievedata.com/).
+- Get you API key from the [settings page](https://www.sievedata.com/dashboard/settings).
+
+From there, you can decide what you'd like to do next:
+
+<CardGroup cols={3}>
+  <Card
+    title="Run a Template Workflow"
+    href="/guide/quickstart/template-workflows"
+    icon="timer"
+    color="#ea5a0c"
+  >
+    Run a pre-built template workflow in the matter of an API call.
+  </Card>
+  <Card
+    href="/guide/quickstart/building-blocks"
+    title="Create a workflow from a set of building blocks"
+    icon="server"
+    color="#0285c7"
+  >
+    Use pre-existing models to build a new workflow.
+  </Card>
+  <Card
+    href="/guide/quickstart/custom-workflows"
+    title="Build a workflow from scratch"
+    icon="square-terminal"
+    color="#16a34a"
+  >
+    Deploy your own models to create a new workflow.
+  </Card>
+</CardGroup>
+
+## How it Works
+At its core Sieve is a workflow orchestration engine, that's extremely easy to use. It treats all data as a stream, which makes it well suited for video processing though it can be used for any type of data.
+
+On top of the workflow orchestrator, Sieve offers many out-of-the-box templates, models, and functions that make it easy to build and deploy custom workflows. This means that to get started, you don't have to worry about writing any code and can use Sieve as a simple API.
+
+However, it can also act as a complete serverless ML runtime for anyone trying to deploy their own models and workflows.

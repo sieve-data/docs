@@ -1,0 +1,27 @@
+---
+title: "sieve deploy"
+---
+
+Deploy workflows and models to Sieve.
+
+## Usage
+```bash
+sieve deploy [OPTIONS] PATH
+```
+
+## Options
+- `--help` Show this message and exit.
+
+## Arguments
+- `PATH` Path to files containing workflows and models to deploy.
+
+## Example
+Deploy a workflow defined in `test.py`:
+```bash
+sieve deploy test.py
+```
+
+Deploy every workflow and model defined in a directory:
+```bash
+sieve deploy
+```
