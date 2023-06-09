@@ -63,7 +63,8 @@
         "reference/api/workflows/list",
         "reference/api/models/get",
         "reference/api/models/list",
-        "reference/api/models/search"
+        "reference/api/models/metrics",
+        "reference/api/models/requests"
       ]
     },
     {

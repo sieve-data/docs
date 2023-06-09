@@ -3,15 +3,19 @@ title: "Push Data"
 api: "POST /push"
 ---
 
-<ParamField body="workflow_name" type="string" required>
+<ParamField body="workflow_name" type="string">
   name of Sieve workflow
+</ParamField>
+
+<ParamField body="model_id" type="string">
+  ID of Sieve model
 </ParamField>
 
 <ParamField body="inputs" type="dict" required>
   a dictionary representing the inputs to the workflow
 </ParamField>
 
-This endpoint triggers a workflow with a given set of inputs. The structure of the inputs should match the inputs types specified in the workflow definition.
+This endpoint triggers either a workflow or a model with a given set of inputs. The structure of the inputs should match the inputs types specified in the workflow or model definition.
 
 ## Example
 A workflow that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following request:
@@ -29,10 +33,10 @@ A workflow that takes in a `sieve.Video` named `video` and a `sieve.Image` named
 }
 ```
 
-A workflow that takes in a `str` named `prompt` would be triggered with the following request:
+A model that takes in a `str` named `prompt` would be triggered with the following request:
 ```json
 {
-  "workflow_name": "sample_workflow",
+  "model_id": "570e75d6-008f-4a5a-93ec-fede6a8675eb",
   "inputs": {
     "prompt": "some string"
   }
