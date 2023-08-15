@@ -12,7 +12,6 @@ def function(
   cuda_version: str = None,
   machine_type: str = None,
   iterator_input: bool = False,
-  persist_output: bool = False,
   run_commands: List[str] = []
 )
 ```
@@ -74,7 +73,6 @@ def VideoSplitter(video: sieve.Video) -> sieve.Image:
 - `cuda_version` CUDA version to use. Defaults to `None`.
 - `machine_type` Machine type to use. Defaults to `None`.
 - `iterator_input` Whether the function takes in an iterator. Defaults to `False`.
-- `persist_output` Whether the function's output should be persisted. Defaults to `False`.
 - `run_commands` List of commands to run when the function is built. Defaults to `[]`.
 
 ### name
@@ -133,17 +131,9 @@ def iterator_input(self) -> bool:
 
 Whether the function takes in an iterator.
 
-### persist_output
-```python
-def persist_output(self) -> bool:
-```
-
-Whether the function's output should be persisted to permanent storage for later retrieval.
-
 ### run_commands
 ```python
 def run_commands(self) -> List[str]:
 ```
 
 List of commands to run when the function is built.
-
