@@ -1,108 +1,116 @@
 {
-  "name": "Sieve",
-  "logo": "/logo.svg",
-  "favicon": "/favicon.png",
-  "colors": {
-    "primary": "#8d62ee",
-    "light": "#c4b5fd",
-    "dark": "#7240ff",
-    "ultraLight": "#ddd6fe",
-    "ultraDark": "#5b21b6"
-  },
-  "topbarCtaButton": {
-    "name": "Create a new account",
-    "url": "https://www.sievedata.com/dashboard"
-  },
-  "api": {
-    "auth": {
-      "method": "key",
-      "name": "X-API-Key"
+    "name": "Sieve",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#8d62ee",
+        "light": "#c4b5fd",
+        "dark": "#7240ff",
+        "ultraLight": "#ddd6fe",
+        "ultraDark": "#5b21b6"
     },
-    "baseUrl": [
-      "https://mango.sievedata.com/v1"
-    ]
-  },
-  "topbarLinks": [
-    {
-      "name": "Dashboard",
-      "url": "https://www.sievedata.com/dashboard"
+    "topbarCtaButton": {
+        "name": "Create a new account",
+        "url": "https://www.sievedata.com/dashboard"
+    },
+    "api": {
+        "auth": {
+            "method": "key",
+            "name": "X-API-Key"
+        },
+        "baseUrl": [
+            "https://mango.sievedata.com/v1"
+        ]
+    },
+    "topbarLinks": [
+        {
+            "name": "Dashboard",
+            "url": "https://www.sievedata.com/dashboard"
+        }
+    ],
+    "anchors": [
+        {
+            "name": "Community",
+            "icon": "slack",
+            "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+        },
+        {
+            "name": "Book a Demo",
+            "icon": "phone",
+            "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Guide",
+            "pages": [
+                "guide/intro",
+                "guide/running-apps/intro",
+                "guide/custom-apps/intro",
+                {
+                    "group": "Examples",
+                    "pages": [
+                        "guide/examples/noise-removal",
+                        "guide/examples/object-tracking",
+                        "guide/examples/video-localization"
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "API Reference",
+            "pages": [
+                "reference/api/intro",
+                "reference/api/push",
+                "reference/api/jobs/get",
+                "reference/api/jobs/list",
+                "reference/api/workflows/get",
+                "reference/api/workflows/delete",
+                "reference/api/workflows/list",
+                "reference/api/models/get",
+                "reference/api/models/list",
+                "reference/api/models/metrics",
+                "reference/api/models/requests"
+            ]
+        },
+        {
+            "group": "CLI Reference",
+            "pages": [
+                "reference/cli/intro",
+                "reference/cli/workflow",
+                "reference/cli/model",
+                "reference/cli/job",
+                "reference/cli/push",
+                "reference/cli/deploy"
+            ]
+        },
+        {
+            "group": "SDK Reference",
+            "pages": [
+                "reference/sdk/intro",
+                "reference/sdk/function",
+                "reference/sdk/model",
+                "reference/sdk/reference",
+                "reference/sdk/workflow",
+                "reference/sdk/types/struct",
+                "reference/sdk/types/file",
+                "reference/sdk/types/array",
+                "reference/sdk/types/video",
+                "reference/sdk/types/image",
+                "reference/sdk/types/audio",
+                "reference/sdk/push",
+                "reference/sdk/deploy"
+            ]
+        },
+        {
+            "group": "Errors",
+            "pages": [
+                "error-codes"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "website": "https://www.sievedata.com",
+        "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
     }
-  ],
-  "anchors": [
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-    },
-    {
-      "name": "Book a Demo",
-      "icon": "phone",
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform"
-    }
-  ],
-  "navigation": [
-    {
-      "group": "Guide",
-      "pages": [
-        "guide/intro",
-        "guide/quickstart/intro",
-        "guide/quickstart/template-workflows",
-        "guide/quickstart/custom-workflows",
-        "guide/quickstart/building-blocks"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "reference/api/intro",
-        "reference/api/push",
-        "reference/api/jobs/get",
-        "reference/api/jobs/list",
-        "reference/api/workflows/get",
-        "reference/api/workflows/delete",
-        "reference/api/workflows/list",
-        "reference/api/models/get",
-        "reference/api/models/list",
-        "reference/api/models/metrics",
-        "reference/api/models/requests"
-      ]
-    },
-    {
-      "group": "CLI Reference",
-      "pages": [
-        "reference/cli/intro",
-        "reference/cli/workflow",
-        "reference/cli/model",
-        "reference/cli/job",
-        "reference/cli/push",
-        "reference/cli/deploy"
-      ]
-    },
-    {
-      "group": "SDK Reference",
-      "pages": [
-        "reference/sdk/intro",
-        "reference/sdk/function",
-        "reference/sdk/model",
-        "reference/sdk/reference",
-        "reference/sdk/workflow",
-        "reference/sdk/types/struct",
-        "reference/sdk/types/file",
-        "reference/sdk/types/array",
-        "reference/sdk/types/video",
-        "reference/sdk/types/image",
-        "reference/sdk/types/audio",
-        "reference/sdk/push",
-        "reference/sdk/deploy"
-      ]
-    },
-    {
-      "group": "Errors",
-      "pages": ["error-codes"]
-    }
-  ],
-  "footerSocials": {
-    "website": "https://www.sievedata.com",
-    "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-  }
 }
