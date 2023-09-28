@@ -45,8 +45,21 @@
             "group": "Guide",
             "pages": [
                 "guide/intro",
-                "guide/running-apps/intro",
-                "guide/custom-apps/intro",
+                {
+                    "group": "Running Apps",
+                    "pages": [
+                        "guide/installation/intro",
+                        "guide/running-apps/guide-python",
+                        "guide/running-apps/guide-curl"
+                    ]
+                },
+                {
+                    "group": "Custom Apps",
+                    "pages": [
+                        "guide/installation/intro",
+                        "guide/custom-apps/guide"
+                    ]
+                },
                 {
                     "group": "Examples",
                     "pages": [

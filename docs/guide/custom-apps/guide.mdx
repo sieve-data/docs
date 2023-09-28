@@ -1,4 +1,46 @@
 ---
-title: "Running Apps"
-description: "Running a Sieve App"
+title: "Custom Apps"
+description: "Building and running a custom sieve app"
 ---
+
+### Verify sieve installation 
+
+```bash
+sieve
+```
+
+### Create a python file
+
+
+
+```bash
+touch echo.py
+```
+
+### Copy the following content into the python file
+
+```python
+@sieve.function(
+    name="echo_with_exclamation",
+)
+def echo_excla(echo: str) -> str:
+    return echo + "!"
+```
+
+
+### Create another python file to run the function 
+
+```python
+org_name = "<Your org name>"
+echo_with_exclamation = sieve.function.get(f"{org_name}/echo_with_exclamation")
+result = retalker.run("hello world")
+
+print(result) 
+```
+
+### Run the file
+
+```bash
+$ python echo.py
+hello world!
+```
