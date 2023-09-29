@@ -1,18 +1,27 @@
 ---
 title: "Custom Apps"
-description: "Building and running a custom sieve app"
+description: "Building and running custom sieve apps"
 ---
+
+### Creating an echo function
+
+Let's start by creating an echo function that adds an exclamation mark to the string that you pass in! (TODO: More intro)
 
 ### Verify sieve installation 
 
-Verify authentication status and that the sieve CLI is installed by running the following command (TODO: Wording)
+Verify authentication status and that the sieve CLI is installed by running the following command (TODO: Wording) 
+
+If you are not authenticated, go to the previous section to authenticate your CLI.
 
 ```sh
 $ sieve whoami
-sieve-developer
+{
+    'name': 'sieve-developer',
+    'email': 'developer@sievedata.com',
+    'role': 'individual',
+    'organization_id': 'c0ec7825-0fcb-444e-b0b9-9660c40fa0f4'
+}
 ```
-
-Let's start by creating an echo function that adds an exclamation mark to the string that you pass in! 
 
 ### Create a python file
 
@@ -22,9 +31,9 @@ Create a python file for your echo function.
 touch echo.py
 ```
 
-### Create the sieve function
+### Create the Sieve function
 
-Copy the following content into the python file.
+Let's create a Sieve function with the name `echo_with_exclamation`. That takes in a string, and return the string with an exclamation mark appened at the end.
 
 ```python
 import sieve
@@ -36,11 +45,10 @@ def echo_with_exclamation(s: str) -> str:
     return s + "!"
 ```
 
-Deploy the function with sieve deploy
+After creating the Sieve function, we can deploy the function with the following command.
 
 ```bash
-$ sieve deploy --yes
-
+$ sieve deploy
 ✔ Deployed echo_with_exclamation
 
 
@@ -52,7 +60,7 @@ $ sieve deploy --yes
 └───────────────────────┴───────────────────────────────────────────────────────────────────────┘
 ```
 
-### Run the function
+### Running the function
 
 Create another python file to run the function 
 
@@ -60,7 +68,7 @@ Create another python file to run the function
 touch main.py
 ```
 
-Copy paste the following code that runs the sieve function
+Copy paste the following code that runs the sieve function. You can find your org name by running `sieve whoami`.
 
 
 ```python
@@ -71,11 +79,13 @@ result = echo_with_exclamation.run("hello world")
 print(result)
 ```
 
-Run the file and see the results!
+Run the file and see the result of the function!
 
 ```bash
 $ python main.py
 hello world!
 ```
 
-Lets create another application 
+## Creating a [PLACEHOLDER] function
+
+Lets create another sieve function that can (TODO: ) 
