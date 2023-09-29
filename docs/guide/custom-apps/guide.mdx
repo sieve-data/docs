@@ -5,42 +5,77 @@ description: "Building and running a custom sieve app"
 
 ### Verify sieve installation 
 
-```bash
-sieve
+Verify authentication status and that the sieve CLI is installed by running the following command (TODO: Wording)
+
+```sh
+$ sieve whoami
+sieve-developer
 ```
+
+Let's start by creating an echo function that adds an exclamation mark to the string that you pass in! 
 
 ### Create a python file
 
-
+Create a python file for your echo function.
 
 ```bash
 touch echo.py
 ```
 
-### Copy the following content into the python file
+### Create the sieve function
+
+Copy the following content into the python file.
 
 ```python
+import sieve
+
 @sieve.function(
     name="echo_with_exclamation",
 )
-def echo_excla(echo: str) -> str:
-    return echo + "!"
+def echo_with_exclamation(s: str) -> str:
+    return s + "!"
 ```
 
-
-### Create another python file to run the function 
-
-```python
-org_name = "<Your org name>"
-echo_with_exclamation = sieve.function.get(f"{org_name}/echo_with_exclamation")
-result = retalker.run("hello world")
-
-print(result) 
-```
-
-### Run the file
+Deploy the function with sieve deploy
 
 ```bash
-$ python echo.py
+$ sieve deploy --yes
+
+✔ Deployed echo_with_exclamation
+
+
+🤝 Functions deployed!
+┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Name                  ┃ Deployment                                                            ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ echo_with_exclamation │ https://sievedata.com/functions/sieve-developer/echo_with_exclamation │
+└───────────────────────┴───────────────────────────────────────────────────────────────────────┘
+```
+
+### Run the function
+
+Create another python file to run the function 
+
+```bash
+touch main.py
+```
+
+Copy paste the following code that runs the sieve function
+
+
+```python
+import sieve
+
+echo_with_exclamation = sieve.function.get(f"<your-org-here>/echo_with_exclamation")
+result = echo_with_exclamation.run("hello world")
+print(result)
+```
+
+Run the file and see the results!
+
+```bash
+$ python main.py
 hello world!
 ```
+
+Lets create another application 
