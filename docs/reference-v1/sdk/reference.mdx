@@ -1,0 +1,48 @@
+---
+title: "sieve.reference"
+---
+
+```python
+def reference(
+  name: str = None,
+  id: str = None
+)
+```
+
+A `sieve.reference` is a reference to a `sieve.function` or `sieve.Model` that has already been deployed by you or another user. The power of `sieve.reference` is that it allows you to use a `sieve.function` or `sieve.Model` that has already been deployed without having to re-deploy it. For example, you might choose to use a "video splitter" utility already deployed at `sieve-developer/video-splitter`.
+
+### Video Lipsyncing Example
+
+The example below shows how to use `sieve.reference` in a video lipsyncing workflow.
+
+```python
+import sieve
+from wav2lip import Wav2Lip
+
+# Wav2Lip takes in a video, audio, and a a set of faces that are tracked over time.
+@sieve.workflow(name="video_lipsyncing")
+def wav2lip(video: sieve.Video, audio: sieve.Audio):
+    images = sieve.reference("sieve-developer/video-splitter")(video)
+    faces = sieve.reference("sieve-developer/mediapipe-face-detector")(images)
+    tracked_faces = sieve.reference("sieve-developer/sort")(faces)
+    return Wav2Lip()(video, audio, tracked_faces)
+```
+
+## Arguments
+
+- `name` Name of the reference.
+- `id` ID of the reference.
+
+### name
+```python
+def name(self) -> str
+```
+
+Name of the reference.
+
+### id
+```python
+def id(self) -> str
+```
+
+ID of the reference.

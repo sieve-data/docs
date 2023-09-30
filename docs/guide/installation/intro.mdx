@@ -1,0 +1,44 @@
+---
+title: "Introduction"
+description: "Running Existing Sieve Apps"
+---
+
+Sieve offers a wide range of high quality pre-built applications that you can use with a few lines of code. 
+
+### CLI and Python Package Installation
+
+Install the Sieve CLI and the python package by running the following command.
+
+```bash 
+pip install https://mango.sievedata.com/v1/client_package/sievedata-0.0.1.1.2-py3-none-any.whl --force-reinstall
+```
+
+### Authentication
+
+Get your API key from the [settings page](https://www.sievedata.com/dashboard/settings).
+
+### Authenticating the CLI
+
+You may choose to log in using the cli or by using environment variables
+
+
+To authenticate via the CLI, run the following command and enter your api key when prompted.
+
+```
+$ sieve login
+Please enter your api key:
+
+✔ Login successful
+```
+
+To authenticate via environment variables:
+
+```bash 
+export SIEVE_API_KEY=<your api key>
+```
+
+
+Go to the next section to run a sieve app.
+
+(TODO: Refine navigation)
+

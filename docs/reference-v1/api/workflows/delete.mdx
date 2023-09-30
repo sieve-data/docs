@@ -1,0 +1,19 @@
+---
+title: "Delete Workflow"
+api: "DELETE /workflows/{workflow_name}"
+---
+
+<ParamField path="workflow_name" type="string" required>
+  name of Sieve workflow
+</ParamField>
+
+This endpoint deletes a workflow and all associated data given its name.
+
+<ResponseExample>
+```json
+{
+  "name": "my_workflow",
+  "description": "Workflow deleted"
+}
+```
+</ResponseExample>

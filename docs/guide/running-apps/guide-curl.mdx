@@ -1,0 +1,84 @@
+---
+title: "Command Line"
+description: "Running a sieve app with curl"
+---
+
+we will provide a few examples to run the sieve retalker app. the retalker app takes in a video and an audio, then converts (todo: reword).
+
+## Using the curl command
+
+Export your API Key
+```sh
+export SIEVE_API_KEY=<your api key>
+```
+
+Pushing the job
+
+```sh 
+$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/push' \
+  -H 'x-api-key: <your api key>' \
+  --data-raw '{
+    "function": "sieve-internal/video_retalker",
+    "inputs": {
+      "source_video": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-source_video"
+      },
+      "target_audio": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-target_audio"
+      }
+    }
+  }' \
+
+
+{"id":"<your-job-id>","run_id":"<your-run-id>","stream_output":false,"status":"queued","organization_id":"0a27f1ed-b241-4a1e-8b3c-e8aff3b8379c","model_id":"<your-org-id>","workflow_id":null}% 
+```
+
+
+### Getting the results of the job
+
+```sh 
+$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
+  -H 'x-api-key: <your api key>' \
+
+{
+  "id": "<your-job-id>",
+  "function_id": "0d5fbb11-5bea-48f8-baf8-28e82c06d31f",
+  "status": "finished",
+  "created_at": "2023-09-29T22:13:51.190000",
+  "started_at": "2023-09-29T22:13:51.199000",
+  "completed_at": "2023-09-29T22:14:08.809000",
+  "inputs": {
+    "source_video": {
+      "type": "sieve.Video",
+      "name": "source_video",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-source_video"
+      },
+      "description": null
+    },
+    "target_audio": {
+      "type": "sieve.Audio",
+      "name": "target_audio",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-target_audio"
+      },
+      "description": null
+    }
+  },
+  "outputs": [
+    {
+      "type": "sieve.Video",
+      "name": null,
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-output-89b2931b-a190-4e8c-a25f-6220ca586cce.mp4",
+        "_path": null
+      },
+      "description": null
+    }
+  ],
+  "error": "",
+  "visibility": "public",
+  "run_id": "7ec9d405-85ee-49d4-aef2-08d39e2b1e26-669107e8-519f-4fa9-a393-f7540c713291"
+}
+```
+

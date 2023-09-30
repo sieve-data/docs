@@ -57,7 +57,8 @@
                     "group": "Custom Apps",
                     "pages": [
                         "guide/installation/intro",
-                        "guide/custom-apps/guide"
+                        "guide/custom-apps/guide",
+                        "guide/custom-apps/advanced"
                     ]
                 },
                 {
@@ -76,19 +77,19 @@
                 {
                     "group": "API Reference V2",
                     "pages": [
-                        ""
+                        "reference-v1/api/intro"
                     ]
                 },
                 {
                     "group": "CLI Reference V2",
                     "pages": [
-                        ""
+                        "reference-v1/api/intro"
                     ]
                 },
                 {
                     "group": "SDK Reference V2",
                     "pages": [
-                        ""
+                        "reference-v1/api/intro"
                     ]
                 }
             ]
