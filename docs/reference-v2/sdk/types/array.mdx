@@ -1,0 +1,41 @@
+---
+title: "sieve.Array"
+---
+
+```python
+class Array(sieve.File)
+```
+
+A type that represents an array in Sieve. The benefit of using a `sieve.Array` is that Sieve is able to optimize the storage and transfer of the type while processing, which results in faster processing times.
+
+### path
+```python
+@property
+path(self) -> str
+```
+
+The path to the array on disk.
+
+### array
+```python
+@property
+array(self) -> numpy.ndarray
+```
+
+The array as a `numpy.ndarray`.
+
+### height
+```python
+@property
+height(self) -> int
+```
+
+The height of the array.
+
+### width
+```python
+@property
+width(self) -> int
+```
+
+The width of the array.

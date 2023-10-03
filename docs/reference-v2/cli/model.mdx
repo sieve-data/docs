@@ -1,0 +1,57 @@
+---
+title: "sieve model"
+---
+
+Manage models in Sieve.
+
+## Usage
+```bash
+sieve model [OPTIONS] COMMAND [ARGS]...
+```
+
+## Options
+- `--help` Show this message and exit.
+
+## Commands
+- `list` List all models.
+- `status` Get status of a model.
+- `info` Get information about a model.
+
+## `sieve model list`
+List all models.
+
+### Usage
+```bash
+sieve model list [OPTIONS]
+```
+
+### Options
+- `--help` Show this message and exit.
+
+## `sieve model status`
+Get status of a model. The possible values are "ready", "queued", "building", and "failed".
+
+### Usage
+```bash
+sieve model status [OPTIONS] MODEL_ID
+```
+
+### Options
+- `--help` Show this message and exit.
+
+### Arguments
+- `MODEL_ID` ID of model to get status of.
+
+## `sieve model info`
+Get information about a model.
+
+### Usage
+```bash
+sieve model info [OPTIONS] MODEL_ID
+```
+
+### Options
+- `--help` Show this message and exit.
+
+### Arguments
+- `MODEL_ID` ID of model to get information about.

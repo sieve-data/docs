@@ -19,7 +19,7 @@
             "name": "X-API-Key"
         },
         "baseUrl": [
-            "https://mango.sievedata.com/v1"
+            "https://mango.sievedata.com"
         ]
     },
     "topbarLinks": [
@@ -94,11 +94,13 @@
                     "group": "CLI Reference V2",
                     "pages": [
                         "reference-v2/cli/intro",
+                        "reference-v2/cli/login",
                         "reference-v2/cli/workflow",
                         "reference-v2/cli/model",
                         "reference-v2/cli/job",
                         "reference-v2/cli/push",
-                        "reference-v2/cli/deploy"
+                        "reference-v2/cli/deploy",
+                        "reference-v2/cli/whoami"
                     ]
                 },
                 {
