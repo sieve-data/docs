@@ -77,19 +77,44 @@
                 {
                     "group": "API Reference V2",
                     "pages": [
-                        "reference-v1/api/intro"
+                        "reference-v2/api/intro",
+                        "reference-v2/api/push",
+                        "reference-v2/api/jobs/get",
+                        "reference-v2/api/jobs/list",
+                        "reference-v2/api/workflows/get",
+                        "reference-v2/api/workflows/delete",
+                        "reference-v2/api/workflows/list",
+                        "reference-v2/api/models/get",
+                        "reference-v2/api/models/list",
+                        "reference-v2/api/models/metrics",
+                        "reference-v2/api/models/requests"
                     ]
                 },
                 {
                     "group": "CLI Reference V2",
                     "pages": [
-                        "reference-v1/api/intro"
+                        "reference-v2/cli/intro",
+                        "reference-v2/cli/workflow",
+                        "reference-v2/cli/model",
+                        "reference-v2/cli/job",
+                        "reference-v2/cli/push",
+                        "reference-v2/cli/deploy"
                     ]
                 },
                 {
                     "group": "SDK Reference V2",
                     "pages": [
-                        "reference-v1/api/intro"
+                        "reference-v2/sdk/intro",
+                        "reference-v2/sdk/function",
+                        "reference-v2/sdk/model",
+                        "reference-v2/sdk/reference",
+                        "reference-v2/sdk/workflow",
+                        "reference-v2/sdk/types/struct",
+                        "reference-v2/sdk/types/file",
+                        "reference-v2/sdk/types/array",
+                        "reference-v2/sdk/types/video",
+                        "reference-v2/sdk/types/image",
+                        "reference-v2/sdk/types/audio"
                     ]
                 }
             ]
@@ -137,9 +162,7 @@
                         "reference-v1/sdk/types/array",
                         "reference-v1/sdk/types/video",
                         "reference-v1/sdk/types/image",
-                        "reference-v1/sdk/types/audio",
-                        "reference-v1/sdk/push",
-                        "reference-v1/sdk/deploy"
+                        "reference-v1/sdk/types/audio"
                     ]
                 }
             ]
