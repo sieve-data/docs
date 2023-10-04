@@ -45,29 +45,33 @@
         {
             "group": "Guide",
             "pages": [
-                "guide/intro",
                 {
-                    "group": "Running Apps",
+                    "group": "Getting Started",
                     "pages": [
+                        "guide/intro",
                         "guide/installation/intro",
-                        "guide/running-apps/guide-python",
-                        "guide/running-apps/guide-curl"
+                        "guide/examples/audio-transcription",
+                        "guide/examples/video-dubbing"
                     ]
                 },
                 {
-                    "group": "Custom Apps",
+                    "group": "Custom Functions and Models",
                     "pages": [
-                        "guide/installation/intro",
-                        "guide/custom-apps/guide",
-                        "guide/custom-apps/advanced"
+                        "guide/custom-apps/deploying-functions",
+                        "guide/custom-apps/gpu-acceleration",
+                        "guide/examples/yolo-object-detection",
+                        "guide/custom-apps/typing-and-metadata",
+                        "guide/sieve/inputs-and-outputs",
+                        "guide/custom-apps/autoscaling",
+                        "guide/custom-apps/visibility"
                     ]
                 },
                 {
-                    "group": "Examples",
+                    "group": "Building Complex Application",
                     "pages": [
-                        "guide/examples/noise-removal",
-                        "guide/examples/object-tracking",
-                        "guide/examples/video-localization"
+                        "guide/custom-apps/function-calling-and-references",
+                        "guide/examples/parallelized-face-detection",
+                        "guide/examples/video-dubbing"
                     ]
                 }
             ]

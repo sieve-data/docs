@@ -1,0 +1,25 @@
+---
+title: "GPU Acceleration"
+description: "Accelerate your Sieve functions with GPU"
+---
+
+Sieve let’s you run code on GPUs. To do so, all you need to do is add a `gpu` tag to your function with the GPU you want. Today, Sieve offers a couple machine configurations listed below.
+
+| Name | GPU | Memory (GB) | vCPUs | Tag |
+| --- | --- | --- | --- | --- |
+| T4 (default) | T4 | 16 | 4 | T4 |
+| A100-40GB | A100-40GB | 85 | 12 | a100 |
+| A100-20GB | A100-20GB | 42.5 | 6 | a100-20gb |
+| V100 | V100 | 16 | 4 | v100 |
+| L4 | L4 | 16 | 4 | l4 |
+
+You can specify one of these in code as follows.
+
+```python
+@sieve.function(
+	name="gpu_function",
+	gpu="t4"
+)
+def runs_on_gpu(video: sieve.Video) -> sieve.Video:
+	...
+```

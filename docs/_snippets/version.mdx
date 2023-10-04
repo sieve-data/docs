@@ -1,0 +1,64 @@
+<ResponseField name="id" type="string">
+  Id of the model.
+</ResponseField>
+<ResponseField name="build_status" type="string">
+  Build status of the function version. Statuses are 'queued', 'building', 'pushing', 'deploying', 'ready', 'error'
+</ResponseField>
+<ResponseField name="queued_at" type="string">
+  The time that the function build is queued.
+</ResponseField>
+<ResponseField name="built_at" type="string">
+  The time that the function build finished building.
+</ResponseField>
+<ResponseField name="ready_at" type="string">
+  The time that the model is ready to process jobs.
+</ResponseField>
+<ResponseField name="compute_type" type="string">
+  Machine type to use, see possible values for GPU machine types [here](/guide/custom-apps/gpu-acceleration)
+</ResponseField>
+<ResponseField name="python_packages" type="string array">
+  An array of the model's python pip packages.
+</ResponseField>
+<ResponseField name="system_packages" type="string array">
+  An array of the model's system packages.
+</ResponseField>
+<ResponseField name="cuda_version" type="string">
+  Cuda Version.
+</ResponseField>
+<ResponseField name="gpu" type="boolean">
+  Whether this model uses gpu.
+</ResponseField>
+<ResponseField name="minimum_replicas" type="integer">
+    The minimum number of replicas of the model. Scale your model's minimum replicas to avoid cold starts.
+</ResponseField>
+<ResponseField name="maximum_replicas" type="integer">
+    The maximum number of replicas of the model. Prevents model replicas from scaling beyond a certain point.
+</ResponseField>
+<ResponseField name="inputs" type="array Input">
+The inputs to a function, learn more about inputs [here](/guide/sieve/inputs-and-outputs)
+    <Expandable title="properties">
+<Snippet file="input.mdx" />
+    </Expandable>
+</ResponseField>
+<ResponseField name="outputs" type="array Output">
+The outputs to a function, learn more about outputs [here](/guide/sieve/inputs-and-outputs)
+    <Expandable title="properties">
+<Snippet file="output.mdx" />
+    </Expandable>
+</ResponseField>
+<ResponseField name="environment_variables" type="array EnvironmentVariable">
+The outputs to a function
+    <Expandable title="properties">
+        <ResponseField name="name" type="string">
+        The name of the environment variables
+        </ResponseField>
+        <ResponseField name="description" type="string">
+        The description of the environment variables
+        </ResponseField>
+        <ResponseField name="default" type="string">
+        Default value of the environment variable
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+

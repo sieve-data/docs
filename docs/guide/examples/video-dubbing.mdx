@@ -1,0 +1,94 @@
+---
+title: "Example: Video Dubbing"
+description: "Build a video dubbing Sieve app"
+---
+
+In this example, we will explore a more complex use case of Sieve. We’ll create an application that automatically dubs a video of a person speaking into another language! We’ll take an input video, transcribe it, translate that text to another language, generate text-to-speech of that translated text, and have the original video lipsync to the new audio.
+
+By following this, you will learn how to:
+
+- Use the Sieve client package to call multiple existing functions in pure Python
+- Combine these functions to create a customized app that meets your requirements
+
+## **Introduction**
+
+As mentioned above, to create an app that can dub videos, we need several models to work together:
+
+1. ****************WhisperX****************: an audio transcription model
+2. ************************SeamlessT2T:************************ a text-to-text translation model
+3. ******************XTTS-V1:****************** a text-to-speech model
+4. ******************************************Sieve Video Retalker:****************************************** an optimized version of video retalker for lipsyncing
+
+## **Using the python client**
+
+Ensure that the Sieve python package is installed on your system by executing the following command.
+
+```python
+pip show sievedata
+```
+
+If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc. If it isn’t, please follow installation instructions linked here.
+
+## Building **the app from scratch**
+
+Create a new Python file named **`video_dubbing.py`** with the following command:
+
+```bash
+touch video_dubbing.py
+```
+
+Open**`video_dubbing.py`** and paste the following code:
+
+```python
+def translate_video():
+    source_video=sieve.Video(
+            path="path-to-your-video.mp4")
+    source_audio = ...
+		TODO: Maybe ffmpeg stuff
+
+    video_transcriber = sieve.function.get("sieve-internal/video_transcriber")
+    text_translation = sieve.function.get("sieve-internal/text_translation")
+    tts = sieve.function.get("sieve-internal/tts")
+
+    transcribed_text = video_transcriber.run(source_video)
+    translated_text = text_translation.run(transcribed_text)
+    final_audio = tts.run(translated_text)
+
+    return transcription_result.url
+
+if __name__ == "__main__":
+	translated_audio = translate_video()
+	print(transcription_text)
+```
+
+Now run the code
+
+```jsx
+python video_dubbing.py
+```
+
+Run the **`video_dubbing.py`** script and the resulting video URL will be printed to the console.
+
+If it ran correctly, great! However, you may encounter the error `command not found: ffmpeg`, which means that ffmpeg is not installed on your machine.
+
+In that case, you can choose to run your code on Sieve’s cloud. Sieve let’s you define and run arbitrary code in the cloud, including this code which calls other Sieve functions. We’ll walk through this functionality more in detail and separate part of our documentation, that can be found here.
+
+To accomplish that, add the following decorator to the function and modify the running code accordingly:
+
+```python
+@sieve.function(
+    name="video_translator",
+    python_packages=["ffmpeg-python==0.2.0"],
+    system_packages=["libgl1"],
+)
+def translate_video():
+    ...
+
+if __name__ == "__main__":
+	translated_audio = translate_video.run()
+	print(translated_audio.url)
+```
+
+Running your code on Sieve is as simple as that. Now, if you run the **`video_dubbing.py`** script again, your code will be built and uploaded to Sieve and your function will be executed in the cloud. You will then see the result of your function in the output. 
+
+By following these steps, you created a complex app using many models. Nice!

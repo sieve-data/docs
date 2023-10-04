@@ -1,0 +1,74 @@
+---
+title: "Example: Parallelized Face Detection"
+description: "Building a parallelized face detection app with Sieve"
+---
+
+Because Sieve makes it easy to push to function queues, it’s relatively easy to parallelize data processing operations in just a few lines of code. To learn this, we’ll build an app that performs face detection on a video using Sieve.
+
+Let’s start with a simple function that has ffmpeg installed. This will allow us to split a video into many frames that get processed later on.
+
+```python
+import sieve
+
+@sieve.function(
+    name="video_face_detector",
+    python_packages=["ffmpeg-python==0.2.0"],
+    system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+)
+def vfd(video: sieve.Video):
+    """
+    :param video: a video to process
+    :return: a bunch of face coordinates
+    """
+```
+
+ ow let’s write code that splits the video into frames and starts passing it into a face detector. In this case, we’ll use a face detection model that has already been deployed to Sieve though you could also deploy your own using a setup similar to this.
+
+```python
+import sieve
+
+@sieve.function(
+    name="video_face_detector",
+    python_packages=["ffmpeg-python==0.2.0"],
+    system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+)
+def vfd(video: sieve.Video):
+    """
+    :param video: a Sieve video to split up
+    :return: a generator of Sieve images at the provided video FPS
+    """
+
+    # use ffmpeg to extract all frames in video as bmp files and return the path to the folder
+    import tempfile
+
+    temp_dir = tempfile.mkdtemp()
+
+    fps = video.fps
+
+    import subprocess
+
+    subprocess.call(
+        ["ffmpeg", "-i", video.path, "-r", str(fps), f"{temp_dir}/%09d.jpg"]
+    )
+    import os
+
+    filenames = os.listdir(temp_dir)
+    filenames.sort()
+		
+		jobs = []
+		face_detector = sieve.function.get("sieve/mediapipe-face-detector")
+    for i, filename in enumerate(filenames):
+        img = sieve.Image(path=os.path.join(temp_dir, filename))
+				jobs.append(face_detector.push(img))
+		
+		for job in jobs:
+			yield job.result()
+```
+
+Once defined, deploy the function using the Sieve CLI:
+
+```bash
+$ sieve deploy file.py
+```
+
+Upon successful deployment, you'll receive a confirmation with a link of your function in the dashboard. Try submitting an example video to it via the dashboard and you’ll see outputs populate as the video is being processed.

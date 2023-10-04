@@ -1,0 +1,45 @@
+---
+title: "Referencing Functions"
+description: "Referencing functions in Sieve"
+---
+
+## Referencing Functions
+
+Sieve has [many functions available](https://sievedata.com/explore) to reference in your code out of the box. This is powerful because you can used functions that are shared by many users of Sieve without having to rewrite or redeploy custom machine learning code yourself.
+
+The function name that is specified is typically your organization name followed by a slash followed by the function name. To call a specific version, you must add a “:” and then add the first 5 characters of that version ID.
+
+You can then call it via HTTP as follows:
+
+```bash
+curl --request POST \
+  --url https://mango.sievedata.com/v2/push \
+  --header 'X-API-Key: <x-api-key>' \
+  --data '{
+  "inputs": "<inputs>",
+  "function": "<org-name>/<function-name>:<version-id>"
+  }'
+```
+
+Or you can use them in Python, where Sieve let’s you call functions synchronously or asynchronously. Let’s take the WhisperX audio transcription model for example. I can call it synchronously in code as follows:
+
+```python
+import sieve
+
+audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+transcriber = sieve.function.get("sieve/whisperx")
+print(transcriber.run(audio))
+```
+
+You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if I’d like to send many requests at once. I can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received.
+
+```python
+import sieve
+
+audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+transcriber = sieve.function.get("sieve/whisperx")
+
+job = transcriber.push(audio)
+
+print(job.result())
+```

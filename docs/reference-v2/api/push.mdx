@@ -3,8 +3,6 @@ title: "Push Data"
 api: "POST /v2/push"
 ---
 
-TODO: This needs to be fixed.
-
 <ParamField body="function" type="string">
   name of Sieve function
 </ParamField>
@@ -14,7 +12,7 @@ TODO: This needs to be fixed.
 </ParamField>
 
 <ParamField body="inputs" type="dict" required>
-  an array representing the inputs to the sieve function. Read more about inputs [here](/guide/sieve/inputs)
+  an array representing the inputs to the sieve function. Read more about inputs [here](/guide/sieve/inputs-and-outputs)
 </ParamField>
 
 This endpoint triggers either a function or a model with a given set of inputs. The structure of the inputs should match the inputs types specified in the function or model definition.

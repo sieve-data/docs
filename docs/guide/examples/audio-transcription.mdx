@@ -1,0 +1,148 @@
+---
+title: "Example: Audio Transcription"
+description: "Transcribe an audio clip with Sieve"
+---
+
+In this example, you will walk through a simple use case of Sieve and learn how to:
+
+- Call an existing sieve function in pure Python using the Sieve client package
+- Make a call via the Sieve API and poll for results.
+
+## **Introduction**
+
+Audio transcription is the powerful task of transforming audio content to the text of the spoken words said in it, which can be useful for applications like captioning, accessibility, content analysis, and more. Let’s explore using an app that already exists on Sieve for this use case.
+
+## **Using the python client**
+
+Ensure that the Sieve python package is installed on your system by executing the following command
+
+```python
+pip show sievedata
+```
+
+If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc.
+
+Create a new Python file named **`transcriber.py`** with the following command:
+
+```bash
+touch transcriber.py
+```
+
+Open **`transcriber.py`** and paste the following code that:
+
+- Initializes a Sieve typed audio object and passes a local path to it
+- Gets a remote function by reference for audio transcription
+- Synchronously executes that remote function using `.run()`
+- Prints out the transcription
+
+```python
+def transcribe_audio():
+    target_audio=sieve.Audio(
+            path="path-to-your-audio.mp3")
+
+    transcriber = sieve.function.get("sieve-internal/audio_transcriber")
+    transcription_result = transcriber.run(target_audio)
+    return transcription_result.text
+
+transcription_text = transcribe_audio()
+
+print(transcription_text)
+```
+
+Execute the code
+
+```jsx
+python transcriber.py
+```
+
+Congrats, you just ran your first Sieve app! You should’ve just seen something similar to this output.
+
+```jsx
+https://storage.googleapis.com/sieve-public-data/assets/nature.mp4
+```
+
+By following these steps, we converted audio content to text in just a few lines of code. Just like this app, there are plenty of apps your can reference in code just like this which you can [find here](https://www.sievedata.com/explore).
+
+## **Using the HTTP API**
+
+Your SIEVE API key is used to authenticate your requests. Make sure to replace **`<your api key>`** with your actual API key.
+
+```python
+export SIEVE_API_KEY=<your api key>
+```
+
+Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
+
+```python
+$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/push' \
+  -H 'x-api-key: <your api key>' \
+  --data-raw '{
+    "function": "sieve-internal/video_retalker",
+    "inputs": {
+      "source_video": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-source_video"
+      },
+      "target_audio": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-target_audio"
+      }
+    }
+  }' \
+```
+
+Upon successful submission, you'll receive a response containing the `job_id` and other details:
+
+```python
+{"id":"<your-job-id>","run_id":"<your-run-id>","stream_output":false,"status":"queued","organization_id":"0a27f1ed-b241-4a1e-8b3c-e8aff3b8379c","model_id":"<your-org-id>","workflow_id":null}%
+```
+
+### ****Checking Job Status and Retrieving Job Results****
+
+To check the status of a job and retrieve its results, send a GET request to the **`/v2/jobs/<your-job-id>`** endpoint:
+
+```python
+$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
+  -H 'x-api-key: <your api key>' \
+
+{
+  "id": "<your-job-id>",
+  "function_id": "0d5fbb11-5bea-48f8-baf8-28e82c06d31f",
+  "status": "finished",
+  "created_at": "2023-09-29T22:13:51.190000",
+  "started_at": "2023-09-29T22:13:51.199000",
+  "completed_at": "2023-09-29T22:14:08.809000",
+  "inputs": {
+    "source_video": {
+      "type": "sieve.Video",
+      "name": "source_video",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-source_video"
+      },
+      "description": null
+    },
+    "target_audio": {
+      "type": "sieve.Audio",
+      "name": "target_audio",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-target_audio"
+      },
+      "description": null
+    }
+  },
+  "outputs": [
+    {
+      "type": "sieve.Video",
+      "name": null,
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-output-89b2931b-a190-4e8c-a25f-6220ca586cce.mp4",
+        "_path": null
+      },
+      "description": null
+    }
+  ],
+  "error": "",
+  "visibility": "public",
+  "run_id": "7ec9d405-85ee-49d4-aef2-08d39e2b1e26-669107e8-519f-4fa9-a393-f7540c713291"
+}
+```
+
+The **`outputs`** field contains a list of output files generated by the job. Each output is described by a type, a name, and a URL where the file can be downloaded. Congrats, you just used the HTTP API!

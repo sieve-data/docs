@@ -1,0 +1,36 @@
+<ResponseField name="name" type="string">
+  The name of the model.
+</ResponseField>
+<ResponseField name="owner_name" type="string">
+  The owner name of the model.
+</ResponseField>
+<ResponseField name="visibility" type="string">
+  The visibility of the model.
+</ResponseField>
+<ResponseField name="title" type="string">
+  The title of the model.
+</ResponseField>
+<ResponseField name="code_url" type="string">
+  The link to the code of the model.
+</ResponseField>
+<ResponseField name="description" type="string">
+  The description of the model.
+</ResponseField>
+<ResponseField name="tags" type="string array">
+  The tags of the model.
+</ResponseField>
+<ResponseField name="cover_image_url" type="string array">
+  The url of the model's cover image.
+</ResponseField>
+<ResponseField name="examples" type="string array">
+  An array of job ids that the function playground will use as an example. 
+</ResponseField>
+<ResponseField name="readme" type="object">
+  The readme of the function.
+</ResponseField>
+<ResponseField name="latest_version" type="object">
+  <Expandable title="properties">
+<Snippet file="version.mdx" />
+  </Expandable>
+</ResponseField>
+

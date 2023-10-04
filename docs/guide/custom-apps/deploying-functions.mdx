@@ -1,0 +1,62 @@
+---
+title: "Deploying Functions"
+description: "Customize and deploy your own Sieve function"
+---
+
+Sieve functions run on a Debian-based OS with Python 3.8 by default. Typically, you’ll want to customize this to your own liking, which Sieve let’s you do in a few ways.
+
+One think you’ll typically want to do is add custom python packages, like [opencv](https://pypi.org/project/opencv-python/). To do this, you can add it to a list of packages as follows under the `python_packages` tag.
+
+```python
+@sieve.function(
+	name="hello",
+	python_packages=[
+		"opencv-python"
+	]
+)
+def hello(img: sieve.Image) -> sieve.Image:
+	import cv2
+	...
+```
+
+In the same way, you can also specify custom system packages that will get `apt-install`-ed.
+
+```python
+@sieve.function(
+	name="hello",
+	python_packages=[
+		"opencv-python"
+	],
+	system_packages=[
+		"ffmpeg"
+	]
+)
+def hello(img: sieve.Image) -> sieve.Image:
+	import subprocess
+	subprocess.run(["ffmpeg", "-h"])
+	...
+```
+
+Sieve also let’s you specify custom shell commands for example if you want to download model weights or anything else to the container before it runs.
+
+```python
+@sieve.function(
+	name="hello",
+	python_packages=[
+		"opencv-python"
+	],
+	system_packages=[
+		"ffmpeg"
+	],
+	run_commands=[
+		"mkdir -p /root/.cache/models/",
+    "wget -c 'https://whisperx.s3.eu-west-2.amazonaws.com/model_weights/segmentation/0b5b3216d60a2d32fc086b47ea8c67589aaeb26b7e07fcbe620d6d0b83e209ea/pytorch_model.bin' -P /root/.cache/models/"
+	]
+)
+def hello(img: sieve.Image) -> sieve.Image:
+	import subprocess
+	subprocess.run(["ffmpeg", "-h"])
+	...
+```
+
+There are loads of other things you can customize including CUDA versions, python versions, and more which you can read more about [here](/reference-v2/sdk/function)
