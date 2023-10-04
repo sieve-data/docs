@@ -1,9 +1,17 @@
 ---
-title: "List Jobs"
-api: "GET /v2/jobs"
+title: "List Function Jobs"
+api: "GET /v2/functions/{organization_name}/{function_name}/jobs"
 ---
 
-This endpoint returns a list of jobs that have been created by the user.
+This endpoint returns a list of jobs for a given function. 
+
+### Request
+<ParamField path="organization_name" type="string" required>
+  name of Sieve organization
+</ParamField>
+<ParamField path="function_name" type="string" required>
+  name of Sieve model
+</ParamField>
 
 ### Response
 <ResponseField name="id" type="string">

@@ -19,7 +19,8 @@
             "name": "X-API-Key"
         },
         "baseUrl": [
-            "https://mango.sievedata.com"
+            "https://mango.sievedata.com",
+            "https://au-fn-iter-out.dev.sievedata.com"
         ]
     },
     "topbarLinks": [
@@ -79,15 +80,12 @@
                     "pages": [
                         "reference-v2/api/intro",
                         "reference-v2/api/push",
+                        "reference-v2/api/functions/get",
+                        "reference-v2/api/functions/versions",
+                        "reference-v2/api/functions/id",
+                        "reference-v2/api/functions/jobs",
                         "reference-v2/api/jobs/get",
-                        "reference-v2/api/jobs/list",
-                        "reference-v2/api/workflows/get",
-                        "reference-v2/api/workflows/delete",
-                        "reference-v2/api/workflows/list",
-                        "reference-v2/api/models/get",
-                        "reference-v2/api/models/list",
-                        "reference-v2/api/models/metrics",
-                        "reference-v2/api/models/requests"
+                        "reference-v2/api/jobs/list"
                     ]
                 },
                 {
@@ -95,8 +93,6 @@
                     "pages": [
                         "reference-v2/cli/intro",
                         "reference-v2/cli/login",
-                        "reference-v2/cli/workflow",
-                        "reference-v2/cli/model",
                         "reference-v2/cli/job",
                         "reference-v2/cli/push",
                         "reference-v2/cli/deploy",

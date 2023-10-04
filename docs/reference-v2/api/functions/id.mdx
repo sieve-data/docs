@@ -1,0 +1,145 @@
+---
+title: "Get Function Version"
+api: "GET /v2/functions/{organization_name}/{function_name}/versions/{id}"
+---
+
+This endpoint returns a JSON object that describes a given function version given its ID.
+
+### Request
+<ParamField path="organization_name" type="string" required>
+  name of Sieve organization
+</ParamField>
+<ParamField path="function_name" type="string" required>
+  name of Sieve model
+</ParamField>
+<ParamField path="id" type="string" required>
+  version id of Sieve function 
+</ParamField>
+
+### Response
+<ResponseField name="id" type="string">
+  Id of the model.
+</ResponseField>
+<ResponseField name="build_status" type="string">
+  Build status of the function version. Statuses are 'queued', 'building', 'pushing', 'deploying', 'ready', 'error'
+</ResponseField>
+<ResponseField name="queued_at" type="string">
+  The time that the model build is queued.
+</ResponseField>
+<ResponseField name="built_at" type="string">
+  The time that the model build finished building.
+</ResponseField>
+<ResponseField name="ready_at" type="string">
+  The time that the model is ready to process jobs.
+</ResponseField>
+<ResponseField name="compute_type" type="string">
+  Compute Type (TODO: Finalize the types)
+</ResponseField>
+<ResponseField name="python_packages" type="string array">
+  An array of the model's python pip packages.
+</ResponseField>
+<ResponseField name="system_packages" type="string array">
+  An array of the model's system packages.
+</ResponseField>
+<ResponseField name="cuda_version" type="string">
+  Cuda Version.
+</ResponseField>
+<ResponseField name="gpu" type="boolean">
+  Whether this model uses gpu.
+</ResponseField>
+<ResponseField name="minimum_replicas" type="integer">
+    The minimum number of replicas of the model. Scale your model's minimum replicas to avoid cold starts.
+</ResponseField>
+<ResponseField name="maximum_replicas" type="integer">
+    The maximum number of replicas of the model. Prevents model replicas from scaling beyond a certain point.
+</ResponseField>
+<ResponseField name="inputs" type="array Input">
+The inputs to a function, learn more about inputs [here](/guide/sieve/inputs)
+    <Expandable title="properties">
+        <ResponseField name="type" type="string">
+        The type of the input, see possible values in the (TODO: ) section.
+        </ResponseField>
+        <ResponseField name="name" type="string">
+        The name of this input.
+        </ResponseField>
+        <ResponseField name="data" type="string">
+        The data of the input. Empty if the response if not from a job. 
+        </ResponseField>
+        <ResponseField name="description" type="string">
+        The description of the input.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+<ResponseField name="outputs" type="array Output">
+The outputs to a function, learn more about outputs [here](/guide/sieve/inputs)
+    <Expandable title="properties">
+        <ResponseField name="type" type="string">
+        The type of the input, see possible values in the (TODO: ) section.
+        </ResponseField>
+        <ResponseField name="name" type="string">
+        The name of this input.
+        </ResponseField>
+        <ResponseField name="data" type="string">
+        The data of the input. Empty if the response if not from a job. 
+        </ResponseField>
+        <ResponseField name="description" type="string">
+        The description of the input.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+<ResponseField name="environment_variables" type="array EnvironmentVariable">
+The outputs to a function
+    <Expandable title="properties">
+        <ResponseField name="name" type="string">
+        The name of the environment variables
+        </ResponseField>
+        <ResponseField name="description" type="string">
+        The description of the environment variables
+        </ResponseField>
+        <ResponseField name="default" type="string">
+        Default value of the environment variable
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "id": "9c701df7-13e3-4d97-a344-693d615bede9",
+  "name": "whisper",
+  "version": "54cd08e8-8f77-49f1-9824-b969aab8bf7d",
+  "organization_id": "c0ec7825-0fcb-444e-b0b9-9660c40fa0f4",
+  "status": "ready",
+  "permissions": {
+    "private": false,
+    "ids": null
+  },
+  "gpu": "true",
+  "full_config": null,
+  "time": {
+    "queued": "2023-02-09T19:26:04.455000",
+    "started": "2023-02-09T19:26:04.467000",
+    "completed": "2023-02-09T19:27:23.462000"
+  },
+  "machine_type": "",
+  "type": "model",
+  "is_iterator_input": false,
+  "is_iterator_output": true,
+  "outputs": [
+    {
+      "type": "typing.Dict"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "sieve.types.file.Audio",
+      "name": "audio"
+    }
+  ],
+  "minimum_running_replicas": 2,
+  "description": "",
+  "code_url": "",
+  "author": "sieve-developer"
+}
+```
+</ResponseExample>

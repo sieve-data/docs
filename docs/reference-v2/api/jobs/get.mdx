@@ -14,45 +14,80 @@ This endpoint returns a JSON object with information about the job along with it
 <ResponseField name="id" type="string">
   The id of the job.
 </ResponseField>
-<ResponseField name="workflow_id" type="string">
-  The id of the workflow that the job belongs to.
+<ResponseField name="function_id" type="string">
+  The id of the function that the job belongs to.
 </ResponseField>
-<ResponseField name="time" type="dict">
-  The times when the job was queued, started, and completed.
+<ResponseField name="function" type="string">
+  The name of the function that the job belongs to.
 </ResponseField>
 <ResponseField name="status" type="string">
-  The status of the job. Can be "queued", "started", "finished", or "error".
+The status of the job. Possible values: 'queued', 'processing', 'error', 'finished', 'cancelled';
 </ResponseField>
-<ResponseField name="user_inputs" type="dict">
-  The inputs that the user provided to trigger the job.
+<ResponseField name="created_at" type="string">
+  The time the job was created.
 </ResponseField>
-<ResponseField name="data" type="list">
-  The outputs of the job. Populated as the job progresses, and can be polled for updates.
+<ResponseField name="started_at" type="string">
+  The time the job started processing by the function.
 </ResponseField>
-<ResponseField name="types" type="list">
-  The types of the outputs of the job. Populated as the job progresses, and can be polled for updates.
+<ResponseField name="completed_at" type="string">
+  The time the job was completed.
+</ResponseField>
+<ResponseField name="inputs" type="list">
+  TODO: Copy paste in input type after its finalized
+</ResponseField>
+<ResponseField name="outputs" type="list">
+  TODO: Copy paste in output type after its finalized
+</ResponseField>
+<ResponseField name="error" type="string">
+  The error that the job ran into. Empty string if there's no error. 
+</ResponseField>
+<ResponseField name="visibility" type="string">
+  "public" or "private". The error that the job ran into. Empty string if there's no error. 
+</ResponseField>
+<ResponseField name="run_id" type="string">
+  The run_id of the job (TODO: Write more about what the run_id is)
 </ResponseField>
 
 <ResponseExample>
 ```json
 {
-  "id": "506f3a2d-cae1-4a84-b816-f9e189a15cf0",
-  "workflow_id": "85c9563b-cc53-45e6-b993-508efaee9802",
-  "time": {
-    "queued":"2023-02-13T02:02:57.015000",
-    "started":"2023-02-13T04:34:48.949000",
-    "completed":"2023-02-13T04:38:17.853000"
-  },
+  "id": "34196fe0-6fc9-4cc7-a716-48861ef15c86",
+  "function_id": "f7de8467-17f3-4599-8f9d-ef601b172f71",
+  "function": null,
   "status": "finished",
-  "error": "",
-  "user_inputs": {
-    "image": {
-      "url": "https://www.incimages.com/uploaded_files/image/1920x1080/getty_481292845_77896.jpg"
+  "created_at": "2023-10-03T19:06:59.863000",
+  "started_at": "2023-10-03T19:06:59.912000",
+  "completed_at": "2023-10-03T19:13:26.469000",
+  "inputs": {
+    "video": {
+      "type": "sieve.Video",
+      "name": "video",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/c4d968f5-f25a-412b-9102-5b6ab6dafcb4/2d0dbbae-3d41-428e-a258-66ad133b7011-lebron-miami1.mp4"
+      },
+      "description": null
+    },
+    "slow_factor": {
+      "type": "int",
+      "name": "slow_factor",
+      "data": 2,
+      "description": null
     }
   },
-  "data": ["a man sitting at a table with a laptop "],
-  "types":["builtins.str"],
-  "next_offset":-1
+  "outputs": [
+    {
+      "type": "sieve.Video",
+      "name": null,
+      "data": {
+        "url": "https://sieve-au-fn-iter-out-us-central1-persistent-bucket.storage.googleapis.com/0a27f1ed-b241-4a1e-8b3c-e8aff3b8379c/34196fe0-6fc9-4cc7-a716-48861ef15c86/5761230a-1706-44fa-a805-1239f61b69d9/tmpkio9on5a.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=alex-pulumi%40sieve-v1-development.iam.gserviceaccount.com%2F20231003%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20231003T191326Z&X-Goog-Expires=172800&X-Goog-SignedHeaders=host&x-goog-signature=b347494c63e41c8aff1eea6268ae446da4ce8f1eae587853932bf95c12191f9188ab743b27b86bc544a2182f0e650058addbdcd018fad2b94182c96639bc0a3b043917b9c16d88d20acf8e6d50e879799cac680b5c4a7c38549b0055bccaad69b074bd6995bc9f664844d9e3d2530be1551c9038d40a69b22431d45646383dafc7a35d8fcd6e3643eb829a0401157dc47ea119d0d1de4f515f65a9438d189b96f2cb443db7d0e99fedeb386bbd8f28a67597a58a632de9c1234e64d629f067333994a71056a2e657fadcedfe2affe21c14e9fa2b73de78992a003fa38132b12b60dd6cc906aad2ee916ca8ec272b51a06b98eb61887e402c6a8fe0a73680bf28",
+        "_path": null
+      },
+      "description": null
+    }
+  ],
+  "error": "",
+  "visibility": "private",
+  "run_id": "34196fe0-6fc9-4cc7-a716-48861ef15c86-ebe6922a-a645-4dfd-9a22-468f65326d7d"
 }
 ```
 </ResponseExample>
