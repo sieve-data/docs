@@ -3,42 +3,53 @@ title: "Introduction"
 description: "Running Existing Sieve Apps"
 ---
 
-Sieve offers a wide range of high quality pre-built applications that you can use with a few lines of code. 
+### **Installing Sieve CLI and Python Package**
 
-### CLI and Python Package Installation
+To install the Sieve Command Line Interface (CLI) and the corresponding Python package, you'll need to execute the following command in your system's terminal or command prompt. This command utilizes pip, which is the package installer for Python, to install the Sieve data package from a provided URL.
 
-Install the Sieve CLI and the python package by running the following command.
+The **`--force-reinstall`** flag is used to ensure that the package is reinstalled even if it is already present on your system, ensuring you have the latest version.
 
-```bash 
+```bash
 pip install https://mango.sievedata.com/v1/client_package/sievedata-0.0.1.1.2-py3-none-any.whl --force-reinstall
 ```
 
-### Authentication
+### **Authentication Process**
 
-Get your API key from the [settings page](https://www.sievedata.com/dashboard/settings).
+Before you can start using the Sieve CLI, you'll need to authenticate it. This is done by obtaining an API key which is a unique identifier that links your CLI commands to your Sieve account.
 
-### Authenticating the CLI
+1. Navigate to the **[settings page](https://www.sievedata.com/dashboard/settings)** on the Sieve website to obtain your API key.
 
-You may choose to log in using the cli or by using environment variables
+### **Authenticating through the CLI**
 
+There are two methods available for authenticating your CLI: directly through the CLI itself or by using environment variables on your system.
 
-To authenticate via the CLI, run the following command and enter your api key when prompted.
+### **Method 1: Authenticating via the CLI**
+
+In this method, you'll be providing your API key directly to the CLI. Follow these steps:
+
+1. Open your terminal or command prompt and type in the following command 
+
+```bash
+$ sieve login
+```
+
+1. When prompted, enter your API key and hit enter:
 
 ```
-$ sieve login
 Please enter your api key:
 
 ✔ Login successful
 ```
 
-To authenticate via environment variables:
+### **Method 2: Authenticating via Environment Variables**
 
-```bash 
+Alternatively, you can use environment variables to authenticate the CLI. This method can be more convenient and secure if you are working in a shared or automated environment.
+
+1. Open your terminal or command prompt.
+2. Execute the following command, replacing **`<your api key>`** with your actual API key:
+
+```bash
 export SIEVE_API_KEY=<your api key>
 ```
 
-
-Go to the next section to run a sieve app.
-
-(TODO: Refine navigation)
-
+Congratulations, you are now authenticated and ready to proceed to the next section to run a Sieve app!

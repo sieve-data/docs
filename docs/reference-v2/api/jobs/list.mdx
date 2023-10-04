@@ -5,7 +5,17 @@ api: "GET /v2/jobs"
 
 This endpoint returns a list of jobs that have been created by the user.
 
+### Request
+<ParamField query="limit" type="string" default="none">
+  Limit the number of response, used for pagination
+</ParamField>
+<ParamField query="offset" type="string" default="none">
+  The offset of the response, used for pagination
+</ParamField>
+
 ### Response
+<ResponseField name="array" type="array Jobs">
+<Expandable title="properties">
 <ResponseField name="id" type="string">
   The id of the job.
 </ResponseField>
@@ -42,6 +52,8 @@ The status of the job. Possible values: 'queued', 'processing', 'error', 'finish
 <ResponseField name="run_id" type="string">
   The run_id of the job (TODO: Write more about what the run_id is)
 </ResponseField>
+        </Expandable>
+    </ResponseField>
 
 <ResponseExample>
 ```json
@@ -54,28 +66,22 @@ The status of the job. Possible values: 'queued', 'processing', 'error', 'finish
     "created_at": "2023-10-03T19:06:59.863000",
     "started_at": "2023-10-03T19:06:59.912000",
     "completed_at": "2023-10-03T19:13:26.469000",
-    "inputs": {
-      "video": {
+    "inputs": [
+      {
         "type": "sieve.Video",
         "name": "video",
         "data": {
-          "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/c4d968f5-f25a-412b-9102-5b6ab6dafcb4/2d0dbbae-3d41-428e-a258-66ad133b7011-lebron-miami1.mp4"
+          "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
         },
         "description": null
       },
-      "slow_factor": {
-        "type": "int",
-        "name": "slow_factor",
-        "data": 2,
-        "description": null
-      }
-    },
+    ],
     "outputs": [
       {
         "type": "sieve.Video",
         "name": null,
         "data": {
-          "url": "https://sieve-au-fn-iter-out-us-central1-persistent-bucket.storage.googleapis.com/0a27f1ed-b241-4a1e-8b3c-e8aff3b8379c/34196fe0-6fc9-4cc7-a716-48861ef15c86/5761230a-1706-44fa-a805-1239f61b69d9/tmpkio9on5a.mp4?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=alex-pulumi%40sieve-v1-development.iam.gserviceaccount.com%2F20231003%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20231003T191326Z&X-Goog-Expires=172800&X-Goog-SignedHeaders=host&x-goog-signature=b347494c63e41c8aff1eea6268ae446da4ce8f1eae587853932bf95c12191f9188ab743b27b86bc544a2182f0e650058addbdcd018fad2b94182c96639bc0a3b043917b9c16d88d20acf8e6d50e879799cac680b5c4a7c38549b0055bccaad69b074bd6995bc9f664844d9e3d2530be1551c9038d40a69b22431d45646383dafc7a35d8fcd6e3643eb829a0401157dc47ea119d0d1de4f515f65a9438d189b96f2cb443db7d0e99fedeb386bbd8f28a67597a58a632de9c1234e64d629f067333994a71056a2e657fadcedfe2affe21c14e9fa2b73de78992a003fa38132b12b60dd6cc906aad2ee916ca8ec272b51a06b98eb61887e402c6a8fe0a73680bf28",
+          "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4",
           "_path": null
         },
         "description": null

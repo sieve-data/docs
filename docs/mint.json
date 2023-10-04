@@ -73,10 +73,10 @@
             ]
         },
         {
-            "group": "V2 Reference",
+            "group": "Reference",
             "pages": [
                 {
-                    "group": "API Reference V2",
+                    "group": "API Reference",
                     "pages": [
                         "reference-v2/api/intro",
                         "reference-v2/api/push",
@@ -89,7 +89,7 @@
                     ]
                 },
                 {
-                    "group": "CLI Reference V2",
+                    "group": "CLI Reference",
                     "pages": [
                         "reference-v2/cli/intro",
                         "reference-v2/cli/login",
@@ -100,7 +100,7 @@
                     ]
                 },
                 {
-                    "group": "SDK Reference V2",
+                    "group": "SDK Reference",
                     "pages": [
                         "reference-v2/sdk/intro",
                         "reference-v2/sdk/function",
@@ -118,10 +118,10 @@
             ]
         },
         {
-            "group": "V1 Reference",
+            "group": "Reference (V1 Legacy)",
             "pages": [
                 {
-                    "group": "API Reference V1",
+                    "group": "API Reference",
                     "pages": [
                         "reference-v1/api/intro",
                         "reference-v1/api/push",
@@ -137,7 +137,7 @@
                     ]
                 },
                 {
-                    "group": "CLI Reference V1",
+                    "group": "CLI Reference",
                     "pages": [
                         "reference-v1/cli/intro",
                         "reference-v1/cli/workflow",
@@ -148,7 +148,7 @@
                     ]
                 },
                 {
-                    "group": "SDK Reference V1",
+                    "group": "SDK Reference",
                     "pages": [
                         "reference-v1/sdk/intro",
                         "reference-v1/sdk/function",

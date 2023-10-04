@@ -12,43 +12,53 @@ This endpoint returns a list of jobs for a given function.
 <ParamField path="function_name" type="string" required>
   name of Sieve model
 </ParamField>
+<ParamField query="limit" type="string" default="none">
+  Limit the number of response, used for pagination
+</ParamField>
+<ParamField query="offset" type="string" default="none">
+  The offset of the response, used for pagination
+</ParamField>
 
 ### Response
-<ResponseField name="id" type="string">
-  The id of the job.
-</ResponseField>
-<ResponseField name="function_id" type="string">
-  The id of the function that the job belongs to.
-</ResponseField>
-<ResponseField name="function" type="string">
-  The name of the function that the job belongs to.
-</ResponseField>
-<ResponseField name="status" type="string">
-The status of the job. Possible values: 'queued', 'processing', 'error', 'finished', 'cancelled';
-</ResponseField>
-<ResponseField name="created_at" type="string">
-  The time the job was created.
-</ResponseField>
-<ResponseField name="started_at" type="string">
-  The time the job started processing by the function.
-</ResponseField>
-<ResponseField name="completed_at" type="string">
-  The time the job was completed.
-</ResponseField>
-<ResponseField name="inputs" type="list">
-  TODO: Copy paste in input type after its finalized
-</ResponseField>
-<ResponseField name="outputs" type="list">
-  TODO: Copy paste in output type after its finalized
-</ResponseField>
-<ResponseField name="error" type="string">
-  The error that the job ran into. Empty string if there's no error. 
-</ResponseField>
-<ResponseField name="visibility" type="string">
-  "public" or "private". The error that the job ran into. Empty string if there's no error. 
-</ResponseField>
-<ResponseField name="run_id" type="string">
-  The run_id of the job (TODO: Write more about what the run_id is)
+<ResponseField name="array" type="array Job">
+<Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The id of the job.
+    </ResponseField>
+    <ResponseField name="function_id" type="string">
+      The id of the function that the job belongs to.
+    </ResponseField>
+    <ResponseField name="function" type="string">
+      The name of the function that the job belongs to.
+    </ResponseField>
+    <ResponseField name="status" type="string">
+    The status of the job. Possible values: 'queued', 'processing', 'error', 'finished', 'cancelled';
+    </ResponseField>
+    <ResponseField name="created_at" type="string">
+      The time the job was created.
+    </ResponseField>
+    <ResponseField name="started_at" type="string">
+      The time the job started processing by the function.
+    </ResponseField>
+    <ResponseField name="completed_at" type="string">
+      The time the job was completed.
+    </ResponseField>
+    <ResponseField name="inputs" type="list">
+      TODO: Copy paste in input type after its finalized
+    </ResponseField>
+    <ResponseField name="outputs" type="list">
+      TODO: Copy paste in output type after its finalized
+    </ResponseField>
+    <ResponseField name="error" type="string">
+      The error that the job ran into. Empty string if there's no error. 
+    </ResponseField>
+    <ResponseField name="visibility" type="string">
+      "public" or "private". The error that the job ran into. Empty string if there's no error. 
+    </ResponseField>
+    <ResponseField name="run_id" type="string">
+      The run_id of the job (TODO: Write more about what the run_id is)
+    </ResponseField>
+</Expandable>
 </ResponseField>
 
 <ResponseExample>
