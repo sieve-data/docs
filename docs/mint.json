@@ -45,35 +45,30 @@
         {
             "group": "Guide",
             "pages": [
-                {
-                    "group": "Getting Started",
-                    "pages": [
                         "guide/intro",
                         "guide/installation/intro",
                         "guide/examples/audio-transcription",
                         "guide/examples/video-dubbing"
                     ]
-                },
-                {
-                    "group": "Custom Functions and Models",
-                    "pages": [
-                        "guide/custom-apps/deploying-functions",
-                        "guide/custom-apps/gpu-acceleration",
-                        "guide/examples/yolo-object-detection",
-                        "guide/custom-apps/typing-and-metadata",
-                        "guide/sieve/inputs-and-outputs",
-                        "guide/custom-apps/autoscaling",
-                        "guide/custom-apps/visibility"
-                    ]
-                },
-                {
-                    "group": "Building Complex Application",
-                    "pages": [
-                        "guide/custom-apps/function-calling-and-references",
-                        "guide/examples/parallelized-face-detection",
-                        "guide/examples/video-dubbing"
-                    ]
-                }
+        },
+        {
+            "group": "Custom Functions and Models",
+            "pages": [
+                "guide/custom-apps/deploying-functions",
+                "guide/custom-apps/gpu-acceleration",
+                "guide/examples/yolo-object-detection",
+                "guide/custom-apps/typing-and-metadata",
+                "guide/sieve/inputs-and-outputs",
+                "guide/custom-apps/autoscaling",
+                "guide/custom-apps/visibility"
+            ]
+        },
+        {
+            "group": "Building Complex Applications",
+            "pages": [
+                "guide/custom-apps/function-calling-and-references",
+                "guide/examples/parallelized-face-detection",
+                "guide/examples/video-dubbing"
             ]
         },
         {
