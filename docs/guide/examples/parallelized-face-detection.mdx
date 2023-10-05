@@ -27,6 +27,7 @@ def vfd(video: sieve.Video):
 ```python
 import sieve
 
+
 @sieve.function(
     name="video_face_detector",
     python_packages=["ffmpeg-python==0.2.0"],
@@ -54,15 +55,15 @@ def vfd(video: sieve.Video):
 
     filenames = os.listdir(temp_dir)
     filenames.sort()
-		
-		jobs = []
-		face_detector = sieve.function.get("sieve/mediapipe_face_detector")
+
+    jobs = []
+    face_detector = sieve.function.get("sieve/mediapipe_face_detector")
     for i, filename in enumerate(filenames):
         img = sieve.Image(path=os.path.join(temp_dir, filename))
-				jobs.append(face_detector.push(img))
-		
-		for job in jobs:
-			yield job.result()
+        jobs.append(face_detector.push(img))
+
+    for job in jobs:
+        yield job.result()
 ```
 
 Once defined, deploy the function using the Sieve CLI:
