@@ -6,8 +6,25 @@ title: "sieve.Video"
 class Video(sieve.File)
 ```
 
-A type that represents a video in Sieve. The benefit of using a `sieve.Video` is that Sieve is able to optimize the storage and transfer of the type while processing, which results in faster processing times.
 
+## Overview
+
+`sieve.Video` is a utility class that helps with dealing with video files. `sieve.Video` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits, with some added properties to help work with video.
+
+## Constructor Arguments
+- `array` (`numpy.ndarray`): The `ndarray` containing the image data
+- `path` (`str`): The local path of a `npy` file to load
+For examples, see [sieve.File](/reference-v2/sdk/types/file).
+
+## Properties
+
+### path
+```python
+@property
+path(self) -> str
+```
+
+The path to the image file.
 ### cap
 ```python
 @property
@@ -56,17 +73,20 @@ channels(self) -> int:
 
 The number of channels in the video.
 
-### __getstate__
+## Example
 ```python
-def __getstate__(self) -> dict:
-```
+import sieve
+import cv2 as cv
 
-### dict
-```python
-def dict(self) -> dict:
-```
+video = sieve.Video(url="example.com/video.mp4")
+print(video.fps)          # 24
+print(video.frame_count)  # 240
+print(video.width)        # 1366
+print(video.height)       # 768
+print(video.channels)     # 3
 
-### json
-```python
-def json(self) -> str:
+cap = video.cap
+_, frame = cap.read()
+gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+cv.imshow('frame', gray)  # displays the first frame
 ```

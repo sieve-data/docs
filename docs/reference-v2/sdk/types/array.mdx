@@ -6,15 +6,34 @@ title: "sieve.Array"
 class Array(sieve.File)
 ```
 
-A type that represents an array in Sieve. The benefit of using a `sieve.Array` is that Sieve is able to optimize the storage and transfer of the type while processing, which results in faster processing times.
+## Overview
 
+`sieve.Array` is a utility class that helps with dealing with `numpy.ndarray`. `sieve.Array` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits, with some added properties and constructor to help work with arrays.
+
+## Constructor Arguments
+- `array` (`numpy.ndarray`): The array to be initialized
+
+```python
+import sieve
+import numpy as np
+
+# initialize a new sieve array
+array = sieve.Array(array=np.arange(5))
+```
+
+- `path` (`str`): The local path of a `npy` file to load
+- `url` (`str`): The external url of a `npy` file to load
+
+For examples of `path` and `url` constructor arguments, see [sieve.File](/reference-v2/sdk/types/file)
+
+## Properties
 ### path
 ```python
 @property
 path(self) -> str
 ```
 
-The path to the array on disk.
+The path to the array on disk, as a .npy file (see [sieve.File](/reference-v2/sdk/types/file)).
 
 ### array
 ```python
@@ -39,3 +58,16 @@ width(self) -> int
 ```
 
 The width of the array.
+
+```python
+import sieve
+import numpy as np
+
+# initialize a new sieve array
+array = sieve.Array(array=np.arange(6).reshape(3,2))
+
+print(array.path)   # /example/path.npy
+print(array.array)  # array([[0, 1], [2, 3], [4, 5]])
+print(array.height) # 3
+print(array.width)  # 2
+```

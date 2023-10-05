@@ -97,6 +97,7 @@
                     "pages": [
                         "reference-v2/sdk/intro",
                         "reference-v2/sdk/function",
+                        "reference-v2/sdk/functions_models",
                         "reference-v2/sdk/model",
                         "reference-v2/sdk/reference",
                         "reference-v2/sdk/workflow",

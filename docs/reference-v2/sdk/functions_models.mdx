@@ -47,7 +47,9 @@ referenced_function = sieve.function.get("{username}/{function name}")
 
 There are two options for running `referenced_function` on the Sieve cloud. 
 
-- `.run()` method blocks and waits for the function to complete, and directly returns the value returned by the function.
+### run
+
+The `.run()` method blocks and waits for the function to complete, and directly returns the value returned by the function.
     
     ```python
     import sieve
@@ -57,7 +59,10 @@ There are two options for running `referenced_function` on the Sieve cloud.
     product2 = mult.run(product1, 4)
     ```
     
-- `.push()` method returns a `concurrent.futures.future` object, which resolves to the value returned by the function. You can later access the value of the future using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
+
+### push
+
+The `.push()` method returns a `concurrent.futures.future` object, which resolves to the value returned by the function. You can later access the value of the future using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
     
     ```python
     import sieve
@@ -78,10 +83,6 @@ There are two options for running `referenced_function` on the Sieve cloud.
 
 You can call both `.run()` and `.push()` locally, or within another Sieve function or Model. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
 
-## Lifecycle of Functions and Models
-
-[lots of specifics here that i kinda forget, need to go back to the code, I want to make a cool lil flowchart]
-
 ## Specifying Additional Data for Functions and Models
 
 By default, Sieve functions and models live inside Linux containers without a GPU and a limited number of python packages installed. You can use a number of key word arguments in the Model/function decorator in order to customize the environment.
@@ -98,7 +99,7 @@ By default, Sieve functions and models live inside Linux containers without a GP
 | run_commands | List[str] | List of shell commands to be run during build. Note: these commands currently do not have access to the uploaded code | [] |
 | metadata | sieve.Metadata | Extra information about the model to be shown on the dashboard. See below for example. | None |
 
-## Using Metadata
+### Using Metadata
 
 Metadata can be used to provide additional information on the dashboard, including a full title, a description, a code reference, tags, and a readme. You can create a metadata object as follows:
 

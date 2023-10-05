@@ -2,20 +2,49 @@
 title: "sieve.File"
 ---
 
+## Overview
+
+`sieve.File` is a utility class that helps with handling files that are inputs to a `function`, produced locally in the file system, or downloaded from an external url. The underlying contents in a `sieve.File` are backed by Sieve's file servers and are downloaded lazily, meaning that they will not download the content until requested with the `path` property. This means that a `sieve.File` can be passed around to different functions efficiently without having to deal with network overhead, allowing for more efficnient applications.
+
 ```python
 class File(sieve.Struct):
 ```
 
 A type that represents a file.
 
-## Arguments
+## Constructor Arguments
 - `url` (str): The URL of the file to download.
 - `path` (str): The local path to the file.
 
+
+A `File` can be instantiated in two ways, either by providing a local file path, or an external url.
+
+```python
+import sieve
+
+# Instantiate a sieve File with a local file path
+local_file = sieve.File(path="path/to/file.txt")
+
+# Instantiate a sieve File with a url
+external_file = sieve.File(url="example.com/file.txt")
+
+## Properties
+```
 ### path
 ```python
 @property
 def path(self) -> str:
 ```
 
-The local path to the file.
+The local path to the file. This will download the file if it is not downloaded already, and return the path of the downloaded file.
+
+```python
+import sieve
+
+# Instantiate a File with a url
+my_file = sieve.File(url="example.com/file.txt")
+
+# Download the file, open it, and read the contents
+opened_file = open(my_file.path, "r")
+print(opened_file.read())
+```
