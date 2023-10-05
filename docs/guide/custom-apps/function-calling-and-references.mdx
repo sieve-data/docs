@@ -21,7 +21,7 @@ curl --request POST \
   }'
 ```
 
-Or you can use them in Python, where Sieve let’s you call functions synchronously or asynchronously. Let’s take the WhisperX audio transcription model for example. I can call it synchronously in code as follows:
+Or you can use them in Python, where Sieve let’s you call functions synchronously or asynchronously. Let’s take the WhisperX audio transcription model for example. You can call it synchronously in code as follows:
 
 ```python
 import sieve
@@ -31,7 +31,7 @@ transcriber = sieve.function.get("sieve/whisperx")
 print(transcriber.run(audio))
 ```
 
-You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if I’d like to send many requests at once. I can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received.
+You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you’d like to send many requests at once. You can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received.
 
 ```python
 import sieve

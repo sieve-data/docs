@@ -16,7 +16,7 @@ Pushing the job
 
 ```sh 
 $ curl 'https://mango.sievedata.com/v2/push' \
-  -H 'x-api-key: <your api key>' \
+  -H 'X-API-Key: <your api key>' \
   --data-raw '{
     "function": "sieve-internal/video_retalker",
     "inputs": {
@@ -38,7 +38,7 @@ $ curl 'https://mango.sievedata.com/v2/push' \
 
 ```sh 
 $ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
-  -H 'x-api-key: <your api key>' \
+  -H 'X-API-Key: <your api key>' \
 
 {
   "id": "<your-job-id>",

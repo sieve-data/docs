@@ -93,7 +93,7 @@ Congrats, you just ran your first Sieve app! You should’ve just seen something
 ]
 ```
 
-By following these steps, we converted audio content to text in just a few lines of code. Just like this app, there are plenty of apps your can reference in code just like this which you can [find here](https://www.sievedata.com/explore).
+By following these steps, we converted audio content to text in just a few lines of code. Just like this app, there are plenty of production-ready apps you can reference in code just like this which you can [find here](https://www.sievedata.com/explore).
 
 ## **Using the HTTP API**
 
@@ -107,7 +107,7 @@ Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
 
 ```python
 $ curl 'https://mango.sievedata.com/v2/push' \
-  -H 'x-api-key: <your-api-key>' \
+  -H 'X-API-Key: <your api key>' \
   --data-raw '{
     "function": "sieve/speech_transcriber",
     "inputs": {
@@ -130,7 +130,7 @@ To check the status of a job and retrieve its results, send a GET request to the
 
 ```python
 $ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
-  -H 'x-api-key: <your api key>' \
+  -H 'X-API-Key: <your api key>' \
 
 {
   "id": "898ccb04-fce3-4dec-83bd-c7569bfdc30b",
