@@ -36,17 +36,20 @@ Open **`transcriber.py`** and paste the following code that:
 - Prints out the transcription
 
 ```python
+import sieve
+
+
 def transcribe_audio():
-    target_audio=sieve.Audio(
-            url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+    target_audio = sieve.Audio(
+        url="https://storage.googleapis.com/sieve-public-data/assets/dub.m4a")
 
-    transcriber = sieve.function.get("sieve-internal/speech_transcriber")
+    transcriber = sieve.function.get("sieve/speech_transcriber")
     transcription_result = transcriber.run(target_audio)
-    return transcription_result.text
+    for i in transcription_result:
+        print(i)
 
-transcription_text = transcribe_audio()
 
-print(transcription_text)
+transcribe_audio()
 ```
 
 Execute the code
@@ -57,8 +60,37 @@ python transcriber.py
 
 Congrats, you just ran your first Sieve app! You should’ve just seen something similar to this output.
 
-```jsx
-https://storage.googleapis.com/sieve-public-data/assets/nature.mp4
+```json
+[
+    {
+        "start": 0.009,
+        "end": 7.733,
+        "text": "There were a lot of other businesses that just kind of fell by the wayside because they just couldn't make the adaptation from desktop to mobile computing.",
+        "words": [
+            {
+                "start": 0.009,
+                "end": 0.109,
+                "score": 0.069,
+                "word": "There"
+            },
+            ...
+        ]
+    },
+    {
+        "start": 7.733,
+        "end": 9.774,
+        "text": "I think AI is going to be like that for SaaS.",
+        "words": [
+            {
+                "start": 7.733,
+                "end": 7.813,
+                "score": 0.787,
+                "word": "I"
+            },
+            ...
+        ]
+    }
+]
 ```
 
 By following these steps, we converted audio content to text in just a few lines of code. Just like this app, there are plenty of apps your can reference in code just like this which you can [find here](https://www.sievedata.com/explore).
@@ -75,15 +107,12 @@ Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
 
 ```python
 $ curl 'https://mango.sievedata.com/v2/push' \
-  -H 'x-api-key: <your api key>' \
+  -H 'x-api-key: <your-api-key>' \
   --data-raw '{
     "function": "sieve/speech_transcriber",
     "inputs": {
-      "source_video": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
-      },
-      "target_audio": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/audio.mp3"
+      "file": {
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
       }
     }
   }' \
@@ -91,8 +120,8 @@ $ curl 'https://mango.sievedata.com/v2/push' \
 
 Upon successful submission, you'll receive a response containing the `job_id` and other details:
 
-```python
-{"id":"<your-job-id>","run_id":"<your-run-id>","stream_output":false,"status":"queued","organization_id":"0a27f1ed-b241-4a1e-8b3c-e8aff3b8379c","model_id":"<your-org-id>","workflow_id":null}%
+```sh
+{"id":"898ccb04-fce3-4dec-83bd-c7569bfdc30b","run_id":"898ccb04-fce3-4dec-83bd-c7569bfdc30b-653a14e7-7a48-4c8c-872b-6715a28aca1f","stream_output":true,"status":"queued","organization_id":"c0ec7825-0fcb-444e-b0b9-9660c40fa0f4","model_id":"c110b79c-5dce-46f5-9431-0a95dbcce8c9","workflow_id":null}
 ```
 
 ### ****Checking Job Status and Retrieving Job Results****
@@ -104,44 +133,63 @@ $ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
   -H 'x-api-key: <your api key>' \
 
 {
-  "id": "<your-job-id>",
-  "function_id": "0d5fbb11-5bea-48f8-baf8-28e82c06d31f",
+  "id": "898ccb04-fce3-4dec-83bd-c7569bfdc30b",
+  "function_id": "c110b79c-5dce-46f5-9431-0a95dbcce8c9",
+  "function": null,
   "status": "finished",
-  "created_at": "2023-09-29T22:13:51.190000",
-  "started_at": "2023-09-29T22:13:51.199000",
-  "completed_at": "2023-09-29T22:14:08.809000",
+  "created_at": "2023-10-05T22:45:34.238000",
+  "started_at": "2023-10-05T22:45:34.245000",
+  "completed_at": "2023-10-05T22:45:36.970000",
   "inputs": {
-    "source_video": {
-      "type": "sieve.Video",
-      "name": "source_video",
-      "data": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
-      },
-      "description": null
-    },
-    "target_audio": {
+    "file": {
       "type": "sieve.Audio",
-      "name": "target_audio",
+      "name": "file",
       "data": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/audio.mp3"
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
       },
       "description": null
     }
   },
   "outputs": [
     {
-      "type": "sieve.Video",
+      "type": "list",
       "name": null,
-      "data": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4",
-        "_path": null
-      },
+      "data": [
+        {
+          "start": 0.009,
+          "end": 7.733,
+          "text": " There were a lot of other businesses that just kind of fell by the wayside because they just couldn't make the adaptation from desktop to mobile computing.",
+          "words": [
+            {
+              "start": 0.009,
+              "end": 0.109,
+              "score": 0.069,
+              "word": "There"
+            },
+            ...
+          ]
+        },
+        {
+          "start": 7.733,
+          "end": 9.774,
+          "text": "I think AI is going to be like that for SaaS.",
+          "words": [
+            {
+              "start": 7.733,
+              "end": 7.813,
+              "score": 0.787,
+              "word": "I"
+            },
+            ...
+          ]
+        }
+      ],
       "description": null
     }
   ],
   "error": "",
-  "visibility": "public",
-  "run_id": "7ec9d405-85ee-49d4-aef2-08d39e2b1e26-669107e8-519f-4fa9-a393-f7540c713291"
+  "visibility": "private",
+  "run_id": "898ccb04-fce3-4dec-83bd-c7569bfdc30b-653a14e7-7a48-4c8c-872b-6715a28aca1f"
 }
 ```
 
