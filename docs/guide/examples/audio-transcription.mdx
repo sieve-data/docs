@@ -38,9 +38,9 @@ Open **`transcriber.py`** and paste the following code that:
 ```python
 def transcribe_audio():
     target_audio=sieve.Audio(
-            path="path-to-your-audio.mp3")
+            url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
 
-    transcriber = sieve.function.get("sieve-internal/audio_transcriber")
+    transcriber = sieve.function.get("sieve-internal/speech_transcriber")
     transcription_result = transcriber.run(target_audio)
     return transcription_result.text
 
@@ -74,16 +74,16 @@ export SIEVE_API_KEY=<your api key>
 Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
 
 ```python
-$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/push' \
+$ curl 'https://mango.sievedata.com/v2/push' \
   -H 'x-api-key: <your api key>' \
   --data-raw '{
-    "function": "sieve-internal/video_retalker",
+    "function": "sieve/speech_transcriber",
     "inputs": {
       "source_video": {
-        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-source_video"
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
       },
       "target_audio": {
-        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/d9d382d6-171d-4b79-9ce6-7bfea0691049-input-target_audio"
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/audio.mp3"
       }
     }
   }' \
@@ -100,7 +100,7 @@ Upon successful submission, you'll receive a response containing the `job_id` an
 To check the status of a job and retrieve its results, send a GET request to the **`/v2/jobs/<your-job-id>`** endpoint:
 
 ```python
-$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
+$ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
   -H 'x-api-key: <your api key>' \
 
 {
@@ -115,7 +115,7 @@ $ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
       "type": "sieve.Video",
       "name": "source_video",
       "data": {
-        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-source_video"
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
       },
       "description": null
     },
@@ -123,7 +123,7 @@ $ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
       "type": "sieve.Audio",
       "name": "target_audio",
       "data": {
-        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-input-target_audio"
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/audio.mp3"
       },
       "description": null
     }
@@ -133,7 +133,7 @@ $ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
       "type": "sieve.Video",
       "name": null,
       "data": {
-        "url": "https://storage.googleapis.com/sieve-au-fn-iter-out-us-central1-public-file-upload-bucket/0d5fbb11-5bea-48f8-baf8-28e82c06d31f/7ec9d405-85ee-49d4-aef2-08d39e2b1e26-output-89b2931b-a190-4e8c-a25f-6220ca586cce.mp4",
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4",
         "_path": null
       },
       "description": null

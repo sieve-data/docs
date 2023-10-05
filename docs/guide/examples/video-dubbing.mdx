@@ -40,25 +40,60 @@ touch video_dubbing.py
 Open**`video_dubbing.py`** and paste the following code:
 
 ```python
-def translate_video():
-    source_video=sieve.Video(
-            path="path-to-your-video.mp4")
-    source_audio = ...
-		TODO: Maybe ffmpeg stuff
+import sieve
 
-    video_transcriber = sieve.function.get("sieve-internal/video_transcriber")
-    text_translation = sieve.function.get("sieve-internal/text_translation")
-    tts = sieve.function.get("sieve-internal/tts")
+def video_dubbing(source_video: str, language: str):
+    """
+    :param source_video: The video to dub
+    :param language: The language to dub the video in
+    :return: The dubbed video
+    """
+    source_video = sieve.Video(path=source_video)
 
-    transcribed_text = video_transcriber.run(source_video)
-    translated_text = text_translation.run(transcribed_text)
-    final_audio = tts.run(translated_text)
+    # check if language is supported
+    if language not in ["en", "es", "fr", "de", "it", "pt", "pl", "tr", "ru", "nl", "cs", "ar", "zh-cn"]:
+        raise Exception("Language not supported")
 
-    return transcription_result.url
+    import subprocess
+    audio_path = 'temp.wav'
+    subprocess.run(["ffmpeg", "-i", source_video.path, audio_path, "-y"])
+    source_audio = sieve.Audio(path=audio_path)
+
+    transcriber = sieve.function.get("sieve/speech_transcriber")
+    transcript = list(transcriber.run(source_audio))
+    transcript = [segment for sublist in transcript for segment in sublist]
+    text = " ".join([segment["text"] for segment in transcript])
+
+    seamless_language_map = {
+        "en": "eng",
+        "es": "spa",
+        "fr": "fra",
+        "de": "deu",
+        "it": "ita",
+        "pt": "por",
+        "pl": "pol",
+        "tr": "tur",
+        "ru": "rus",
+        "nl": "nld",
+        "cs": "ces",
+        "ar": "ara",
+        "zh-cn": "cmn"
+    }
+
+    translator = sieve.function.get("sieve/seamless_text2text")
+    translated_text = translator.run(text, "eng", seamless_language_map[language])
+
+    # Generate new audio
+    language = "es"
+    target_audio = sieve.function.get("sieve/xtts-v1").run(source_audio, language, translated_text)
+
+    # Combine audio and video with Retalker
+    retalker = sieve.function.get("sieve/video_retalking")
+    return retalker.run(source_video, target_audio)
 
 if __name__ == "__main__":
-	translated_audio = translate_video()
-	print(transcription_text)
+	dubbed_video = video_dubbing("./path-to-video.mp4", "es")
+	print(dubbed_video)
 ```
 
 Now run the code
@@ -69,24 +104,70 @@ python video_dubbing.py
 
 Run the **`video_dubbing.py`** script and the resulting video URL will be printed to the console.
 
-If it ran correctly, great! However, you may encounter the error `command not found: ffmpeg`, which means that ffmpeg is not installed on your machine.
+If it ran correctly, great! However, you may encounter an error similar to `command not found: ffmpeg`, which means that ffmpeg is not installed on your machine.
 
 In that case, you can choose to run your code on Sieve’s cloud. Sieve let’s you define and run arbitrary code in the cloud, including this code which calls other Sieve functions. We’ll walk through this functionality more in detail and separate part of our documentation, that can be found here.
 
 To accomplish that, add the following decorator to the function and modify the running code accordingly:
 
 ```python
+import sieve
+
 @sieve.function(
-    name="video_translator",
-    python_packages=["ffmpeg-python==0.2.0"],
-    system_packages=["libgl1"],
+    name="video-dubber",
+    system_packages=["ffmpeg"],
 )
-def translate_video():
-    ...
+def video_dubbing(source_video: sieve.Video, language: str):
+    """
+    :param source_video: The video to dub
+    :param language: The language to dub the video in
+    :return: The dubbed video
+    """
+
+    # check if language is supported
+    if language not in ["en", "es", "fr", "de", "it", "pt", "pl", "tr", "ru", "nl", "cs", "ar", "zh-cn"]:
+        raise Exception("Language not supported")
+
+    import subprocess
+    audio_path = 'temp.wav'
+    subprocess.run(["ffmpeg", "-i", source_video.path, audio_path, "-y"])
+    source_audio = sieve.Audio(path=audio_path)
+
+    transcriber = sieve.function.get("sieve/speech_transcriber")
+    transcript = list(transcriber.run(source_audio))
+    transcript = [segment for sublist in transcript for segment in sublist]
+    text = " ".join([segment["text"] for segment in transcript])
+
+    seamless_language_map = {
+        "en": "eng",
+        "es": "spa",
+        "fr": "fra",
+        "de": "deu",
+        "it": "ita",
+        "pt": "por",
+        "pl": "pol",
+        "tr": "tur",
+        "ru": "rus",
+        "nl": "nld",
+        "cs": "ces",
+        "ar": "ara",
+        "zh-cn": "cmn"
+    }
+    translator = sieve.function.get("sieve/seamless_text2text")
+    translated_text = translator.run(text, "eng", seamless_language_map[language])
+
+    # Generate new audio
+    language = "es"
+    target_audio = sieve.function.get("sieve/xtts-v1").run(source_audio, language, translated_text)
+
+    # Combine audio and video with Retalker
+    retalker = sieve.function.get("sieve/video_retalking")
+    return retalker.run(source_video, target_audio)
 
 if __name__ == "__main__":
-	translated_audio = translate_video.run()
-	print(translated_audio.url)
+    video = sieve.Video(path="./path-tovideo.mp4")
+	dubbed_video = video_dubbing.run(video, "es")
+	print(dubbed_video)
 ```
 
 Running your code on Sieve is as simple as that. Now, if you run the **`video_dubbing.py`** script again, your code will be built and uploaded to Sieve and your function will be executed in the cloud. You will then see the result of your function in the output. 

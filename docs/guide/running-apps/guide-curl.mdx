@@ -15,7 +15,7 @@ export SIEVE_API_KEY=<your api key>
 Pushing the job
 
 ```sh 
-$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/push' \
+$ curl 'https://mango.sievedata.com/v2/push' \
   -H 'x-api-key: <your api key>' \
   --data-raw '{
     "function": "sieve-internal/video_retalker",
@@ -37,7 +37,7 @@ $ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/push' \
 ### Getting the results of the job
 
 ```sh 
-$ curl 'https://au-fn-iter-out.dev.sievedata.com/v2/jobs/<your-job-id>' \
+$ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
   -H 'x-api-key: <your api key>' \
 
 {

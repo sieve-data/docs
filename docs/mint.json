@@ -19,8 +19,7 @@
             "name": "X-API-Key"
         },
         "baseUrl": [
-            "https://mango.sievedata.com",
-            "https://au-fn-iter-out.dev.sievedata.com"
+            "https://mango.sievedata.com"
         ]
     },
     "topbarLinks": [

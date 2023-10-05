@@ -56,7 +56,7 @@ def vfd(video: sieve.Video):
     filenames.sort()
 		
 		jobs = []
-		face_detector = sieve.function.get("sieve/mediapipe-face-detector")
+		face_detector = sieve.function.get("sieve/mediapipe_face_detector")
     for i, filename in enumerate(filenames):
         img = sieve.Image(path=os.path.join(temp_dir, filename))
 				jobs.append(face_detector.push(img))
