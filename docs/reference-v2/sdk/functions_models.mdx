@@ -1,0 +1,125 @@
+---
+title: Functions and Models
+---
+
+## Overview
+
+Functions and models are the building blocks of creating applications deployed on Sieve.
+
+Models are defined as Python classes with `__setup__()` and `__predict()__` methods. The `__setup()__` method is run once during initialization, and the `__predict()__` method is run on every call to the model. The `__setup__()` method is typically used for heavy one time operations, such as loading machine learning model weights into memory. 
+
+Functions are just models under the hood, but are defined by just a single function. Use a function when a `__setup__()` call is not required
+
+## Creating Functions and Models
+
+Functions are defined with the `@sieve.function` decorator. Here is a minimal example of a function:
+
+```python
+import sieve
+
+@sieve.function(name="multiplier")
+def multiply(x1: int, x2: int) -> int:
+    return x1 * x2
+```
+
+Note the type hints in the function’s arguments. These are not strictly required, but are recommended. Type hints are picked up by the Sieve dashboard, and are used to generate the job submission form.
+
+Similarly, models are marked with the `@sieve.Model` decorator. Here is a minimal example of a Model:
+
+```python
+import sieve
+
+@sieve.Model(name="adder")
+class Adder:
+    def __setup__(self):
+        print("setting up!")
+    def __predict__(self, x1: int, x2: int) -> int:
+        return x1 + x2
+```
+
+## Calling Functions and Models
+
+Functions and models already deployed on sieve can be referenced by using 
+
+```python
+referenced_function = sieve.function.get("{username}/{function name}")
+```
+
+There are two options for running `referenced_function` on the Sieve cloud. 
+
+- `.run()` method blocks and waits for the function to complete, and directly returns the value returned by the function.
+    
+    ```python
+    import sieve
+    
+    mult = sieve.function.get("username/multiplier")
+    product1 = mult.run(2, 3)
+    product2 = mult.run(product1, 4)
+    ```
+    
+- `.push()` method returns a `concurrent.futures.future` object, which resolves to the value returned by the function. You can later access the value of the future using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
+    
+    ```python
+    import sieve
+    
+    mult = sieve.function.get("username/multiplier")
+    multiplication_inputs = [4, 8, 15, 16, 23, 42]
+    multiplication_jobs = []
+    
+    # send all of the jobs first
+    for multiplication_input in multiplication_inputs:
+        multiplication_jobs.append(mult.push(2, multiplication_input))
+    
+    # then, once everything is submitted, grab the results
+    for multiplication_job in multiplication_jobs:
+        print(multiplication_job.result())
+    ```
+    
+
+You can call both `.run()` and `.push()` locally, or within another Sieve function or Model. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
+
+## Lifecycle of Functions and Models
+
+[lots of specifics here that i kinda forget, need to go back to the code, I want to make a cool lil flowchart]
+
+## Specifying Additional Data for Functions and Models
+
+By default, Sieve functions and models live inside Linux containers without a GPU and a limited number of python packages installed. You can use a number of key word arguments in the Model/function decorator in order to customize the environment.
+
+| Parameter | Type | Description | Default |
+| --- | --- | --- | --- |
+| name | str | Defines the name of the function | This field is required |
+| gpu | bool | Determines whether the function is deployed on a server with a GPU | false |
+| python_version | str | Determines the python version installed | Default is determined by python packages |
+| python_packages | List[str] | List of python packages to be installed during build | sieve and its dependencies will be installed by default |
+| system_packages | List[str] | List of Linux packages to be installed during build | [] |
+| cuda_version | str | Version of cuda to be installed (for models with gpu enabled) | Default is determined by python packages |
+| machine_type | str | Determines what type of gpu will be used (includes t4, a100, etc) | "t4" |
+| run_commands | List[str] | List of shell commands to be run during build. Note: these commands currently do not have access to the uploaded code | [] |
+| metadata | sieve.Metadata | Extra information about the model to be shown on the dashboard. See below for example. | None |
+
+## Using Metadata
+
+Metadata can be used to provide additional information on the dashboard, including a full title, a description, a code reference, tags, and a readme. You can create a metadata object as follows:
+
+```python
+metadata = sieve.Metadata(
+    title="Adder",
+    description="adds two numbers together",
+    code_url="https://github.com/username/repo/blob/main/adder/main.py",
+    image=sieve.Image(
+        url="https://example.com/cover.gif"
+    ),
+    tags=["Math", "Example"],
+    readme="This is an example readme",
+)
+```
+
+Then, pass it into the decorator:
+
+```python
+@sieve.Model(
+		name="adder",
+		metadata=metadata
+)
+```
