@@ -35,8 +35,9 @@ Create a new Python file named **`video_dubbing.py`** with the following command
 
 ```bash
 touch video_dubbing.py
+```
 
-Then, paste the following code into `video_dubbing.py`
+Then, paste the following code into `video_dubbing.py`. The function calls that use `.run()`, such as `transcriber.run(source_audio)` are executed on the Sieve cloud. 
 
 ```python
 import sieve
@@ -121,5 +122,6 @@ if __name__ == "__main__":
 ```
 
 Running your code on Sieve is as simple as that. Now, if you run the **`video_dubbing.py`** script, your code will be built and uploaded to Sieve and your function will be executed in the cloud. You will then see the result of your function in the output. 
+
 
 By following these steps, you created a complex app using many models. Nice!

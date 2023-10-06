@@ -26,50 +26,81 @@ Now let’s write code that splits the video into frames and starts passing it i
 
 ```python
 import sieve
-
+import concurrent.futures
 
 @sieve.function(
     name="video_face_detector",
-    python_packages=["ffmpeg-python==0.2.0"],
-    system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+    system_packages=["ffmpeg"],
 )
-def vfd(video: sieve.Video):
-    """
-    :param video: a Sieve video to split up
-    :return: a generator of Sieve images at the provided video FPS
-    """
+def detector(video: sieve.Video):
+    print("Starting video face detection...")
+    video_path = video.path
 
-    # use ffmpeg to extract all frames in video as bmp files and return the path to the folder
-    import tempfile
+    face_detector = sieve.function.get("sieve/mediapipe_face_detector")
 
-    temp_dir = tempfile.mkdtemp()
-
-    fps = video.fps
-
+    # use ffmpeg to extract frames from video
     import subprocess
-
-    subprocess.call(
-        ["ffmpeg", "-i", video.path, "-r", str(fps), f"{temp_dir}/%09d.jpg"]
-    )
     import os
 
-    filenames = os.listdir(temp_dir)
-    filenames.sort()
+    temp_dir ='temp'
+    # delete temp dir if it exists
+    if os.path.exists(temp_dir):
+        import shutil
+        shutil.rmtree(temp_dir)
+    os.makedirs(temp_dir, exist_ok=True)
 
-    jobs = []
-    face_detector = sieve.function.get("sieve/mediapipe_face_detector")
-    for i, filename in enumerate(filenames):
-        img = sieve.Image(path=os.path.join(temp_dir, filename))
-        jobs.append(face_detector.push(img))
+    # extract frames from video
+    subprocess.run(["ffmpeg", "-i", video_path, "-qscale:v", "2", f"{temp_dir}/%06d.jpg"])
 
-    for job in jobs:
-        yield job.result()
+    # get list of frames
+    import glob
+    frames = glob.glob(f"{temp_dir}/*.jpg")
+    frames.sort()
+
+    # remove background from each frame
+    # remove background from each frame
+    imgs = []
+    for frame_num, frame in enumerate(frames):
+        img = sieve.Image(path=frame)
+        imgs.append(img)
+        # print(f"Frame {frame_num} created for background remover")
+
+    # make directory for output
+    output_dir = 'output'
+    # delete output dir if it exists
+    if os.path.exists(output_dir):
+        import shutil
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
+
+    # start joining frames back together as they finish
+    import time
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        count = 0
+        for job in executor.map(face_detector.push, imgs):
+            t = time.time()
+            res = list(job.result())
+            yield {
+                "frame_number": count,
+                "boxes": res[1]
+            }
+            print(f"Detected faces in frame {count} in {time.time() - t} seconds")
+            count += 1
+
+    # delete temp dir
+    import shutil
+    shutil.rmtree(temp_dir)
+
+if __name__=="__main__":
+    video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
+    for detection in detector.run(video):
+        print(detection)
 ```
 
 Once defined, deploy the function using the Sieve CLI:
 
 ```bash
-$ sieve deploy file.py
+$ python file.py
 ```
 
 Upon successful deployment, you'll receive a confirmation with a link of your function in the dashboard. Try submitting an example video to it via the dashboard and you’ll see outputs populate as the video is being processed.
