@@ -21,7 +21,7 @@ This endpoint triggers either a function or a model with a given set of inputs. 
 A function that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following request:
 ```json
 {
-  "function": "sample_function",
+  "function": "sieve/sample_function",
   "inputs": {
     "video": {
       "url": "{SOME_VIDEO_URL}"
@@ -33,21 +33,12 @@ A function that takes in a `sieve.Video` named `video` and a `sieve.Image` named
 }
 ```
 
-A model that takes in a `str` named `prompt` would be triggered with the following request:
+A function that takes in a `string` named `prompt` would be triggered with the following request:
 ```json
 {
-  "model_id": "570e75d6-008f-4a5a-93ec-fede6a8675eb",
+  "function": "sieve/some_function",
   "inputs": {
     "prompt": "some string"
   }
 }
 ```
-
-<ResponseExample>
-```json
-{
-  "id": "c49b2fa2-f236-43d8-b2f3-03eceff16d71",
-  "description": "Pushed c49b2fa2-f236-43d8-b2f3-03eceff16d71 to queue"
-}
-```
-</ResponseExample>
