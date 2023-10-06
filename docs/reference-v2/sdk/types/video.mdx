@@ -11,9 +11,30 @@ class Video(sieve.File)
 
 `sieve.Video` is a utility class that helps with dealing with video files. `sieve.Video` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits, with some added properties to help work with video.
 
+## Example
+
+```python
+import sieve
+import cv2 as cv
+
+video = sieve.Video(url="example.com/video.mp4")
+print(video.fps)          # 24
+print(video.frame_count)  # 240
+print(video.width)        # 1366
+print(video.height)       # 768
+print(video.channels)     # 3
+
+cap = video.cap
+_, frame = cap.read()
+gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+cv.imshow('frame', gray)  # displays the first frame
+```
+
 ## Constructor Arguments
-- `array` (`numpy.ndarray`): The `ndarray` containing the image data
-- `path` (`str`): The local path of a `npy` file to load
+- `path` (`str`): The local path of a video file to load
+- `url` (`str`): The external url of a video file to load
+
+
 For examples, see [sieve.File](/reference-v2/sdk/types/file).
 
 ## Properties
@@ -73,20 +94,3 @@ channels(self) -> int:
 
 The number of channels in the video.
 
-## Example
-```python
-import sieve
-import cv2 as cv
-
-video = sieve.Video(url="example.com/video.mp4")
-print(video.fps)          # 24
-print(video.frame_count)  # 240
-print(video.width)        # 1366
-print(video.height)       # 768
-print(video.channels)     # 3
-
-cap = video.cap
-_, frame = cap.read()
-gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-cv.imshow('frame', gray)  # displays the first frame
-```

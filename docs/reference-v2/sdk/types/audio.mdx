@@ -6,5 +6,20 @@ title: "sieve.Audio"
 class Audio(sieve.File)
 ```
 
-A type that represents an audio file in Sieve. The benefit of using a `sieve.Audio` is that Sieve is able to optimize the storage and transfer of the type while processing, which results in faster processing times.
+## Overview
 
+`sieve.Audio` is a utility class that helps with dealing with Audio files. `sieve.Audio` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits. Currently, `sieve.Audio` does not provide any utilities over `sieve.File`, but we are working on adding some useful helper functions. See the [sieve.File](/reference-v2/sdk/types/file) documentation for more info.
+
+## Example
+
+```python
+import sieve
+
+from playsound import playsound
+ 
+# initialize audio object with url
+audio = sieve.Audio(url="example/sound.mp4")
+
+# downloads and plays audio
+playsound(audio.path) 
+```

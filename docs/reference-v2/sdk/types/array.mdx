@@ -10,6 +10,21 @@ class Array(sieve.File)
 
 `sieve.Array` is a utility class that helps with dealing with `numpy.ndarray`. `sieve.Array` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits, with some added properties and constructor to help work with arrays.
 
+
+## Example
+```python
+import sieve
+import numpy as np
+
+# initialize a new sieve array
+array = sieve.Array(array=np.arange(6).reshape(3,2))
+
+print(array.path)   # /example/path.npy
+print(array.array)  # array([[0, 1], [2, 3], [4, 5]])
+print(array.height) # 3
+print(array.width)  # 2
+```
+
 ## Constructor Arguments
 - `array` (`numpy.ndarray`): The array to be initialized
 
@@ -59,15 +74,3 @@ width(self) -> int
 
 The width of the array.
 
-```python
-import sieve
-import numpy as np
-
-# initialize a new sieve array
-array = sieve.Array(array=np.arange(6).reshape(3,2))
-
-print(array.path)   # /example/path.npy
-print(array.array)  # array([[0, 1], [2, 3], [4, 5]])
-print(array.height) # 3
-print(array.width)  # 2
-```
