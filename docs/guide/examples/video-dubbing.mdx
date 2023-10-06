@@ -197,7 +197,7 @@ def video_dubbing(source_video: sieve.Video, language: str):
     return lipsyncer.run(source_video, target_audio)
 
 if __name__ == "__main__":
-    video = sieve.Video(url="https://storage.googleapis.com/sieve-public-data/assets/dub.m4a")
+    video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
     dubbed_video = video_dubbing.run(video, "es")
     print(dubbed_video)
 ```

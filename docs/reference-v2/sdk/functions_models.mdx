@@ -1,5 +1,5 @@
 ---
-title: Functions and Models
+title: sieve.function and sieve.Model
 ---
 
 ## Overview
@@ -90,12 +90,11 @@ By default, Sieve functions and models live inside Linux containers without a GP
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
 | name | str | Defines the name of the function | This field is required |
-| gpu | bool | Determines whether the function is deployed on a server with a GPU | false |
+| gpu | bool \| string | Determines whether the function is deployed on a server with a GPU. See the `Tag` column in the table in [GPU Acceleration](guide/custom-apps/gpu-acceleration) for a list of options. The default value of `false` runs on a machine with no GPU, while true defaults to a `t4` gpu. Any other value is specified with a `str` | false |
 | python_version | str | Determines the python version installed | Default is determined by python packages |
 | python_packages | List[str] | List of python packages to be installed during build | sieve and its dependencies will be installed by default |
 | system_packages | List[str] | List of Linux packages to be installed during build | [] |
 | cuda_version | str | Version of cuda to be installed (for models with gpu enabled) | Default is determined by python packages |
-| machine_type | str | Determines what type of gpu will be used (includes t4, a100, etc) | "t4" |
 | run_commands | List[str] | List of shell commands to be run during build. Note: these commands currently do not have access to the uploaded code | [] |
 | metadata | sieve.Metadata | Extra information about the model to be shown on the dashboard. See below for example. | None |
 
