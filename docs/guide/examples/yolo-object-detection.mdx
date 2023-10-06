@@ -1,0 +1,103 @@
+---
+title: "Example: YOLO Object Detection"
+description: "Create a YOLO Object Detection app with Sieve"
+---
+
+In this guide, we'll deploy YOLOv5 to Sieve. By the end, you’ll have:
+
+- deployed a custom model to Sieve
+- sent a request to a custom model
+
+Let’s first create a new directory and add a Python file to that directory.
+
+```python
+import sieve
+
+@sieve.Model(
+    name="yolo-v5",
+)
+class Yolo:
+    def __setup__(self):
+        ...
+
+    def __predict__(self, img: sieve.Image) -> list:
+        """
+        :param img: Image to detect objects in
+        :return: List of objects with their bounding boxes, classes, and scores
+        """
+        ...
+```
+
+Let’s now look at the dependencies we need.
+
+**1. Python Packages**:
+
+- **`torch`** and **`torchvision`**: These are essential libraries for PyTorch-based deep learning projects. YOLOv5 is implemented in PyTorch, making these libraries fundamental.
+- **`ultralytics`**: The Ultralytics package is a suite of tools designed specifically for YOLOv5, assisting with various tasks like model loading, inference, and more.
+- **`opencv-python-headless`**: OpenCV is a comprehensive library for computer vision tasks. The **`headless`** version omits GUI-related dependencies, which aren’t necessary in a server environment.
+
+**2. System Packages**:
+
+- **`libgl1-mesa-glx`** and **`libglib2.0-0`**: These libraries provide graphics and system-level functionalities that are often prerequisites for OpenCV and PyTorch operations.
+- **`ffmpeg`**: A solution for handling multimedia data, which can be essential if dealing with video input or other media-related tasks.
+
+To install pip packages and system packages for your model, you can use the `python_packages` and `system_packages` argument respectively. To also enable a T4 GPU for our model, we set the `gpu` argument to `True`. Let’s also fill out the rest of the code.
+
+```python
+import sieve
+
+@sieve.Model(
+    name="yolo-v5",
+    gpu=True,
+    python_packages=[
+        "torch==1.8.1",
+        "opencv-python-headless",
+        "torchvision==0.9.1",
+        "ultralytics==8.0.149",
+    ],
+    system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+    python_version="3.8",
+    run_commands=[
+        "python -c \"import torch; print(torch.hub.load('ultralytics/yolov5', 'yolov5s'))\""
+    ],
+)
+class Yolo:
+    def __setup__(self):
+        import torch
+
+        self.yolo_model = torch.hub.load("ultralytics/yolov5", "yolov5s")
+
+    def __predict__(self, img: sieve.Image) -> list:
+        """
+        :param img: Image to detect objects in
+        :return: List of objects with their bounding boxes, classes, and scores
+        """
+        results = self.yolo_model(img.array)
+        outputs = []
+        for pred in reversed(results.pred):
+            for *box, conf, cls in reversed(pred):
+                cls_name = results.names[int(cls)]
+                box = [float(i) for i in box]
+                score = float(conf)
+                if score < 0.7:
+                    continue
+                outputs.append(
+                    {
+                        "box": box,
+                        "class_name": cls_name,
+                        "score": score,
+                        "frame_number": None
+                        if not hasattr(img, "frame_number")
+                        else img.frame_number,
+                    }
+                )
+        return outputs
+```
+
+Now deploy this by running the following command
+
+```python
+sieve deploy
+```
+
+Great! You should now be able to see this model in your dashboard, which comes with a form to try it out as well as an API guide if you want to call it from code.

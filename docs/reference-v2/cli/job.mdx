@@ -1,0 +1,73 @@
+---
+title: "sieve job"
+---
+
+Manage jobs in Sieve.
+
+## Usage
+```bash
+sieve job [OPTIONS] COMMAND [ARGS]...
+```
+
+## Options
+- `--help` Show this message and exit.
+
+## Commands
+- `list` List all jobs.
+- `get` Get the information and output of a job.
+- `logs` Get the logs of a job.
+- `status` Get the status of a job.
+
+## `sieve job list`
+List all jobs.
+
+### Usage
+```bash
+sieve job list [OPTIONS]
+```
+
+### Options
+- `--help` Show this message and exit.
+
+## `sieve job get`
+Get the information and output of a job.
+
+### Usage
+```bash
+sieve job get [OPTIONS] JOB_ID
+```
+
+### Options
+- `--help` Show this message and exit.
+
+### Arguments
+- `JOB_ID` ID of job to get information about.
+
+## `sieve job logs`
+Get the logs of a job.
+
+### Usage
+```bash
+sieve job logs [OPTIONS] JOB_ID
+```
+
+### Options
+- `--help` Show this message and exit.
+
+### Arguments
+- `JOB_ID` ID of job to get logs of.
+
+## `sieve job status`
+Get the status of a job. The possible values can be "queued", "started", "finished", or "error".
+
+### Usage
+```bash
+sieve job status [OPTIONS] JOB_ID
+```
+
+### Options
+- `--help` Show this message and exit.
+
+### Arguments
+- `JOB_ID` ID of job to get status of.
+

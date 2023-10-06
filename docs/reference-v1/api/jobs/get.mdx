@@ -1,0 +1,58 @@
+---
+title: "Get Job"
+api: "GET /v1/jobs/{id}"
+---
+
+This endpoint returns a JSON object with information about the job along with its outputs.
+
+### Request
+<ParamField path="id" type="string" required>
+  id of the job
+</ParamField>
+
+### Response
+<ResponseField name="id" type="string">
+  The id of the job.
+</ResponseField>
+<ResponseField name="workflow_id" type="string">
+  The id of the workflow that the job belongs to.
+</ResponseField>
+<ResponseField name="time" type="dict">
+  The times when the job was queued, started, and completed.
+</ResponseField>
+<ResponseField name="status" type="string">
+  The status of the job. Can be "queued", "started", "finished", or "error".
+</ResponseField>
+<ResponseField name="user_inputs" type="dict">
+  The inputs that the user provided to trigger the job.
+</ResponseField>
+<ResponseField name="data" type="list">
+  The outputs of the job. Populated as the job progresses, and can be polled for updates.
+</ResponseField>
+<ResponseField name="types" type="list">
+  The types of the outputs of the job. Populated as the job progresses, and can be polled for updates.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "id": "506f3a2d-cae1-4a84-b816-f9e189a15cf0",
+  "workflow_id": "85c9563b-cc53-45e6-b993-508efaee9802",
+  "time": {
+    "queued":"2023-02-13T02:02:57.015000",
+    "started":"2023-02-13T04:34:48.949000",
+    "completed":"2023-02-13T04:38:17.853000"
+  },
+  "status": "finished",
+  "error": "",
+  "user_inputs": {
+    "image": {
+      "url": "https://www.incimages.com/uploaded_files/image/1920x1080/getty_481292845_77896.jpg"
+    }
+  },
+  "data": ["a man sitting at a table with a laptop "],
+  "types":["builtins.str"],
+  "next_offset":-1
+}
+```
+</ResponseExample>

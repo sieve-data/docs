@@ -1,108 +1,168 @@
 {
-  "name": "Sieve",
-  "logo": "/logo.svg",
-  "favicon": "/favicon.png",
-  "colors": {
-    "primary": "#8d62ee",
-    "light": "#c4b5fd",
-    "dark": "#7240ff",
-    "ultraLight": "#ddd6fe",
-    "ultraDark": "#5b21b6"
-  },
-  "topbarCtaButton": {
-    "name": "Create a new account",
-    "url": "https://www.sievedata.com/dashboard"
-  },
-  "api": {
-    "auth": {
-      "method": "key",
-      "name": "X-API-Key"
+    "name": "Sieve",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#8d62ee",
+        "light": "#c4b5fd",
+        "dark": "#7240ff",
+        "ultraLight": "#ddd6fe",
+        "ultraDark": "#5b21b6"
     },
-    "baseUrl": [
-      "https://mango.sievedata.com/v1"
-    ]
-  },
-  "topbarLinks": [
-    {
-      "name": "Dashboard",
-      "url": "https://www.sievedata.com/dashboard"
+    "topbarCtaButton": {
+        "name": "Create a new account",
+        "url": "https://www.sievedata.com/dashboard"
+    },
+    "api": {
+        "auth": {
+            "method": "key",
+            "name": "X-API-Key"
+        },
+        "baseUrl": [
+            "https://mango.sievedata.com"
+        ]
+    },
+    "topbarLinks": [
+        {
+            "name": "Dashboard",
+            "url": "https://www.sievedata.com/dashboard"
+        }
+    ],
+    "anchors": [
+        {
+            "name": "Book a Demo",
+            "icon": "phone",
+            "url": "https://cal.com/team/sieve/demo"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Guide",
+            "pages": [
+                "guide/intro",
+                "guide/installation/intro",
+                "guide/examples/audio-transcription",
+                "guide/examples/video-dubbing"
+            ]
+        },
+        {
+            "group": "Custom Functions and Models",
+            "pages": [
+                "guide/custom-apps/deploying-functions",
+                "guide/custom-apps/gpu-acceleration",
+                "guide/examples/yolo-object-detection",
+                "guide/custom-apps/typing-and-metadata",
+                "guide/sieve/inputs-and-outputs",
+                "guide/custom-apps/autoscaling",
+                "guide/custom-apps/visibility"
+            ]
+        },
+        {
+            "group": "Building Complex Applications",
+            "pages": [
+                "guide/custom-apps/function-calling-and-references",
+                "guide/examples/parallelized-face-detection",
+                "guide/examples/video-dubbing"
+            ]
+        },
+        {
+            "group": "Reference",
+            "pages": [
+                {
+                    "group": "API Reference",
+                    "pages": [
+                        "reference-v2/api/intro",
+                        "reference-v2/api/push",
+                        "reference-v2/api/functions/get",
+                        "reference-v2/api/functions/versions",
+                        "reference-v2/api/functions/id",
+                        "reference-v2/api/functions/jobs",
+                        "reference-v2/api/jobs/get",
+                        "reference-v2/api/jobs/list"
+                    ]
+                },
+                {
+                    "group": "CLI Reference",
+                    "pages": [
+                        "reference-v2/cli/intro",
+                        "reference-v2/cli/login",
+                        "reference-v2/cli/job",
+                        "reference-v2/cli/push",
+                        "reference-v2/cli/deploy",
+                        "reference-v2/cli/whoami"
+                    ]
+                },
+                {
+                    "group": "SDK Reference",
+                    "pages": [
+                        "reference-v2/sdk/intro",
+                        "reference-v2/sdk/functions_models",
+                        "reference-v2/sdk/types/file",
+                        "reference-v2/sdk/types/array",
+                        "reference-v2/sdk/types/image",
+                        "reference-v2/sdk/types/video",
+                        "reference-v2/sdk/types/audio"
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Reference (V1 Legacy)",
+            "pages": [
+                {
+                    "group": "API Reference",
+                    "pages": [
+                        "reference-v1/api/intro",
+                        "reference-v1/api/push",
+                        "reference-v1/api/jobs/get",
+                        "reference-v1/api/jobs/list",
+                        "reference-v1/api/workflows/get",
+                        "reference-v1/api/workflows/delete",
+                        "reference-v1/api/workflows/list",
+                        "reference-v1/api/models/get",
+                        "reference-v1/api/models/list",
+                        "reference-v1/api/models/metrics",
+                        "reference-v1/api/models/requests"
+                    ]
+                },
+                {
+                    "group": "CLI Reference",
+                    "pages": [
+                        "reference-v1/cli/intro",
+                        "reference-v1/cli/workflow",
+                        "reference-v1/cli/model",
+                        "reference-v1/cli/job",
+                        "reference-v1/cli/push",
+                        "reference-v1/cli/deploy"
+                    ]
+                },
+                {
+                    "group": "SDK Reference",
+                    "pages": [
+                        "reference-v1/sdk/intro",
+                        "reference-v1/sdk/function",
+                        "reference-v1/sdk/model",
+                        "reference-v1/sdk/reference",
+                        "reference-v1/sdk/workflow",
+                        "reference-v1/sdk/types/struct",
+                        "reference-v1/sdk/types/file",
+                        "reference-v1/sdk/types/array",
+                        "reference-v1/sdk/types/video",
+                        "reference-v1/sdk/types/image",
+                        "reference-v1/sdk/types/audio"
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Errors",
+            "pages": [
+                "error-codes"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "website": "https://www.sievedata.com",
+        "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
     }
-  ],
-  "anchors": [
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-    },
-    {
-      "name": "Book a Demo",
-      "icon": "phone",
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdoXPC_FXbp_J-S7mp1-0MPIjXN1x84eY1Rqa6cUjvn-D_HRQ/viewform"
-    }
-  ],
-  "navigation": [
-    {
-      "group": "Guide",
-      "pages": [
-        "guide/intro",
-        "guide/quickstart/intro",
-        "guide/quickstart/template-workflows",
-        "guide/quickstart/custom-workflows",
-        "guide/quickstart/building-blocks"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "reference/api/intro",
-        "reference/api/push",
-        "reference/api/jobs/get",
-        "reference/api/jobs/list",
-        "reference/api/workflows/get",
-        "reference/api/workflows/delete",
-        "reference/api/workflows/list",
-        "reference/api/models/get",
-        "reference/api/models/list",
-        "reference/api/models/metrics",
-        "reference/api/models/requests"
-      ]
-    },
-    {
-      "group": "CLI Reference",
-      "pages": [
-        "reference/cli/intro",
-        "reference/cli/workflow",
-        "reference/cli/model",
-        "reference/cli/job",
-        "reference/cli/push",
-        "reference/cli/deploy"
-      ]
-    },
-    {
-      "group": "SDK Reference",
-      "pages": [
-        "reference/sdk/intro",
-        "reference/sdk/function",
-        "reference/sdk/model",
-        "reference/sdk/reference",
-        "reference/sdk/workflow",
-        "reference/sdk/types/struct",
-        "reference/sdk/types/file",
-        "reference/sdk/types/array",
-        "reference/sdk/types/video",
-        "reference/sdk/types/image",
-        "reference/sdk/types/audio",
-        "reference/sdk/push",
-        "reference/sdk/deploy"
-      ]
-    },
-    {
-      "group": "Errors",
-      "pages": ["error-codes"]
-    }
-  ],
-  "footerSocials": {
-    "website": "https://www.sievedata.com",
-    "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
-  }
 }

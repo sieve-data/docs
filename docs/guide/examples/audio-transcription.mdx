@@ -1,0 +1,196 @@
+---
+title: "Example: Audio Transcription"
+description: "Transcribe an audio clip with Sieve"
+---
+
+In this example, you will walk through a simple use case of Sieve and learn how to:
+
+- Call an existing sieve function in pure Python using the Sieve client package
+- Make a call via the Sieve API and poll for results.
+
+## **Introduction**
+
+Audio transcription is the powerful task of transforming audio content to the text of the spoken words said in it, which can be useful for applications like captioning, accessibility, content analysis, and more. Let’s explore using an app that already exists on Sieve for this use case.
+
+## **Using the python client**
+
+Ensure that the Sieve python package is installed on your system by executing the following command
+
+```python
+pip show sievedata
+```
+
+If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc.
+
+Create a new Python file named **`transcriber.py`** with the following command:
+
+```bash
+touch transcriber.py
+```
+
+Open **`transcriber.py`** and paste the following code that:
+
+- Initializes a Sieve typed audio object and passes a local path to it
+- Gets a remote function by reference for audio transcription
+- Synchronously executes that remote function using `.run()`
+- Prints out the transcription
+
+```python
+import sieve
+
+
+def transcribe_audio():
+    target_audio = sieve.Audio(
+        url="https://storage.googleapis.com/sieve-public-data/assets/dub.m4a")
+
+    transcriber = sieve.function.get("sieve/speech_transcriber")
+    transcription_result = transcriber.run(target_audio)
+    for i in transcription_result:
+        print(i)
+
+
+transcribe_audio()
+```
+
+Execute the code
+
+```jsx
+python transcriber.py
+```
+
+Congrats, you just ran your first Sieve app! You should’ve just seen something similar to this output.
+
+```json
+[
+    {
+        "start": 0.009,
+        "end": 7.733,
+        "text": "There were a lot of other businesses that just kind of fell by the wayside because they just couldn't make the adaptation from desktop to mobile computing.",
+        "words": [
+            {
+                "start": 0.009,
+                "end": 0.109,
+                "score": 0.069,
+                "word": "There"
+            },
+            ...
+        ]
+    },
+    {
+        "start": 7.733,
+        "end": 9.774,
+        "text": "I think AI is going to be like that for SaaS.",
+        "words": [
+            {
+                "start": 7.733,
+                "end": 7.813,
+                "score": 0.787,
+                "word": "I"
+            },
+            ...
+        ]
+    }
+]
+```
+
+By following these steps, we converted audio content to text in just a few lines of code. Just like this app, there are plenty of production-ready apps you can reference in code just like this which you can [find here](https://www.sievedata.com/explore).
+
+## **Using the HTTP API**
+
+Your SIEVE API key is used to authenticate your requests. Make sure to replace **`<your api key>`** with your actual API key.
+
+```python
+export SIEVE_API_KEY=<your api key>
+```
+
+Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
+
+```python
+$ curl 'https://mango.sievedata.com/v2/push' \
+  -H 'X-API-Key: <your api key>' \
+  --data-raw '{
+    "function": "sieve/speech_transcriber",
+    "inputs": {
+      "file": {
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
+      }
+    }
+  }' \
+```
+
+Upon successful submission, you'll receive a response containing the `job_id` and other details:
+
+```sh
+{"id":"898ccb04-fce3-4dec-83bd-c7569bfdc30b","run_id":"898ccb04-fce3-4dec-83bd-c7569bfdc30b-653a14e7-7a48-4c8c-872b-6715a28aca1f","stream_output":true,"status":"queued","organization_id":"c0ec7825-0fcb-444e-b0b9-9660c40fa0f4","model_id":"c110b79c-5dce-46f5-9431-0a95dbcce8c9","workflow_id":null}
+```
+
+### ****Checking Job Status and Retrieving Job Results****
+
+To check the status of a job and retrieve its results, send a GET request to the **`/v2/jobs/<your-job-id>`** endpoint:
+
+```python
+$ curl 'https://mango.sievedata.com/v2/jobs/<your-job-id>' \
+  -H 'X-API-Key: <your api key>' \
+
+{
+  "id": "898ccb04-fce3-4dec-83bd-c7569bfdc30b",
+  "function_id": "c110b79c-5dce-46f5-9431-0a95dbcce8c9",
+  "function": null,
+  "status": "finished",
+  "created_at": "2023-10-05T22:45:34.238000",
+  "started_at": "2023-10-05T22:45:34.245000",
+  "completed_at": "2023-10-05T22:45:36.970000",
+  "inputs": {
+    "file": {
+      "type": "sieve.Audio",
+      "name": "file",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
+      },
+      "description": null
+    }
+  },
+  "outputs": [
+    {
+      "type": "list",
+      "name": null,
+      "data": [
+        {
+          "start": 0.009,
+          "end": 7.733,
+          "text": " There were a lot of other businesses that just kind of fell by the wayside because they just couldn't make the adaptation from desktop to mobile computing.",
+          "words": [
+            {
+              "start": 0.009,
+              "end": 0.109,
+              "score": 0.069,
+              "word": "There"
+            },
+            ...
+          ]
+        },
+        {
+          "start": 7.733,
+          "end": 9.774,
+          "text": "I think AI is going to be like that for SaaS.",
+          "words": [
+            {
+              "start": 7.733,
+              "end": 7.813,
+              "score": 0.787,
+              "word": "I"
+            },
+            ...
+          ]
+        }
+      ],
+      "description": null
+    }
+  ],
+  "error": "",
+  "visibility": "private",
+  "run_id": "898ccb04-fce3-4dec-83bd-c7569bfdc30b-653a14e7-7a48-4c8c-872b-6715a28aca1f"
+}
+```
+
+The **`outputs`** field contains a list of output files generated by the job. Each output is described by a type, a name, and a URL where the file can be downloaded. Congrats, you just used the HTTP API!

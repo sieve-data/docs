@@ -1,0 +1,52 @@
+---
+title: "Get Job"
+api: "GET /v2/jobs/{id}"
+---
+
+This endpoint returns a JSON object with information about the job along with its outputs.
+
+### Request
+<ParamField path="id" type="string" required>
+  id of the job
+</ParamField>
+
+### Response
+<Snippet file="job.mdx" />
+
+<ResponseExample>
+```json
+{
+  "id": "34196fe0-6fc9-4cc7-a716-48861ef15c86",
+  "function_id": "f7de8467-17f3-4599-8f9d-ef601b172f71",
+  "function": null,
+  "status": "finished",
+  "created_at": "2023-10-03T19:06:59.863000",
+  "started_at": "2023-10-03T19:06:59.912000",
+  "completed_at": "2023-10-03T19:13:26.469000",
+  "inputs": {
+    "video": {
+      "type": "sieve.Video",
+      "name": "video",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4"
+      },
+      "description": null
+    },
+  },
+  "outputs": [
+    {
+      "type": "sieve.Video",
+      "name": null,
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-public-data/assets/nature.mp4",
+        "_path": null
+      },
+      "description": null
+    }
+  ],
+  "error": "",
+  "visibility": "private",
+  "run_id": "34196fe0-6fc9-4cc7-a716-48861ef15c86-ebe6922a-a645-4dfd-9a22-468f65326d7d"
+}
+```
+</ResponseExample>

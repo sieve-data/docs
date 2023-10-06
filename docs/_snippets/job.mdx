@@ -1,0 +1,41 @@
+
+    <ResponseField name="id" type="string">
+      The id of the job.
+    </ResponseField>
+    <ResponseField name="function_id" type="string">
+      The id of the function that the job belongs to. This can be the first 7 characters of the full id.
+    </ResponseField>
+    <ResponseField name="function" type="string">
+      The name of the function that the job belongs to.
+    </ResponseField>
+    <ResponseField name="status" type="string">
+    The status of the job. Possible values: 'queued', 'processing', 'error', 'finished', 'cancelled';
+    </ResponseField>
+    <ResponseField name="created_at" type="string">
+      The time the job was created.
+    </ResponseField>
+    <ResponseField name="started_at" type="string">
+      The time the job started processing by the function.
+    </ResponseField>
+    <ResponseField name="completed_at" type="string">
+      The time the job was completed.
+    </ResponseField>
+    <ResponseField name="inputs" type="list">
+    <Expandable title="properties">
+<Snippet file="input.mdx" />
+    </Expandable>
+    </ResponseField>
+    <ResponseField name="outputs" type="list">
+    <Expandable title="properties">
+<Snippet file="output.mdx" />
+    </Expandable>
+    </ResponseField>
+    <ResponseField name="error" type="string">
+      The error that the job ran into. Empty string if there's no error. 
+    </ResponseField>
+    <ResponseField name="visibility" type="string">
+      "public" or "private".
+    </ResponseField>
+    <ResponseField name="run_id" type="string">
+      The run_id of the job
+    </ResponseField>

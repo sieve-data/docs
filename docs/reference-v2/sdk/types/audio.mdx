@@ -1,0 +1,25 @@
+---
+title: "sieve.Audio"
+---
+
+```python
+class Audio(sieve.File)
+```
+
+## Overview
+
+`sieve.Audio` is a utility class that helps with dealing with Audio files. `sieve.Audio` is backed by [sieve.File](/reference-v2/sdk/types/file), so it has the same network overhead benefits. Currently, `sieve.Audio` does not provide any utilities over `sieve.File`, but we are working on adding some useful helper functions. See the [sieve.File](/reference-v2/sdk/types/file) documentation for more info.
+
+## Example
+
+```python
+import sieve
+
+from playsound import playsound
+ 
+# initialize audio object with url
+audio = sieve.Audio(url="https://storage.googleapis.com/mango-public-models/david.mp4")
+
+# downloads and plays audio
+playsound(audio.path) 
+```

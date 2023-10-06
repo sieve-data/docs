@@ -1,0 +1,75 @@
+---
+title: "sieve.Image"
+---
+
+```python
+class Image(sieve.Array)
+```
+
+## Overview
+
+`sieve.Image` is a utility class that helps work with image. Images are backed by [sieve.Array](/reference-v2/sdk/types/array) (which are in turn backed by [sieve.File](/reference-v2/sdk/types/file))
+
+
+## Example
+
+```python
+import sieve
+import matplotlib.pyplot as plt
+
+
+image = sieve.Image(url="example.com/example.png")
+print(image.channels) # 3
+plt.imshow(image.array) # displays the image
+```
+
+## Constructor Arguments
+- `array` (`numpy.ndarray`): The `ndarray` containing the image data
+- `path` (`str`): The local path of an image file to load
+- `url` (`str`): The external url of an image file to load
+
+
+For examples, see [sieve.Array](/reference-v2/sdk/types/array) and [sieve.File](/reference-v2/sdk/types/file)
+
+## Properties
+### array
+```python
+@property
+array(self) -> np.ndarray
+```
+
+The underlying numpy array that represents the image.
+
+### path
+```python
+@property
+path(self) -> str
+```
+
+The path to the image file.
+
+### width
+```python
+@property
+width(self) -> int
+```
+
+The width of the image.
+
+### height
+```python
+@property
+height(self) -> int
+```
+
+The height of the image.
+
+### channels
+```python
+@property
+channels(self) -> int
+```
+
+The number of channels in the image.
+
+For examples of the other properties, see [sieve.Array](/reference-v2/sdk/types/array) and [sieve.File](/reference-v2/sdk/types/file). 

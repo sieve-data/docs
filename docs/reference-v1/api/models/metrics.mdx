@@ -1,0 +1,57 @@
+---
+title: "Get Model Metrics"
+api: "GET /v1/models/{model_id}/metrics"
+---
+
+This endpoint returns a JSON object that describes the metrics associated with a model given its ID.
+
+### Request
+<ParamField path="model_id" type="string" required>
+  Sieve model ID
+</ParamField>
+
+<ParamField query="limit_min" type="number" default="60">
+  The duration (in minutes) of historical metrics to retrieve, ending at the current time
+</ParamField>
+
+### Response
+
+Responses are organized by key as seen below. The `value` key provides a list of timestamps and values for each metric.
+
+<ResponseField name="model_requests" type="dict">
+  The number of requests sent to a model at any given time.
+</ResponseField>
+<ResponseField name="queue_length" type="dict">
+  The length of the queue for a model at any given time.
+</ResponseField>
+<ResponseField name="replica_count" type="dict">
+  The number of replicas of the model that are up at any given time.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "model_requests": {
+    "key": "model_requests",
+    "name": "Model Requests",
+    "description": "Number of requests sent to model",
+    "type": "matrix",
+    "value": [[1686336600, 0], [1686336720, 0]]
+  },
+  "queue_length": {
+    "key": "queue_length",
+    "name": "Queue Length",
+    "description": "Number of requests in queue",
+    "type": "matrix",
+    "value": [[1686336600, 0], [1686336720, 0]]
+  },
+  "replica_count": {
+    "key": "replica_count",
+    "name": "Replica Count",
+    "description": "Number of replicas",
+    "type": "matrix",
+    "value": [[1686336600, 0], [1686336720, 0]]
+  }
+}
+```
+</ResponseExample>

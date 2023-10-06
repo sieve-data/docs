@@ -1,0 +1,63 @@
+---
+title: "Python Client"
+description: "Running a sieve app with the python client"
+---
+
+## Introduction
+
+In this section, we will run the retalker app with the sieve python client. The retalker app takes in a video, an audio excerpt and makes the person in the video speak the audio. (TODO: Reword)
+
+## Using the python client  
+
+Verify that the python package is installed by running: 
+
+```bash
+$ pip show sievedata
+
+Name: sievedata
+Version: 0.0.1.1.2
+Summary: Sieve CLI and Python Client
+Home-page: https://github.com/sieve-data/sieve
+Author: Sieve Team
+Author-email: developer@sievedata.com
+License: unlicensed
+Location: /Users/alexxi/anaconda3/lib/python3.11/site-packages
+Requires: argparse, click, cloudpickle, docstring-parser, grpcio, jsonref, networkx, numpy, opencv-python-headless, pathlib, pillow, protobuf, pydantic, pyyaml, requests, rich, sseclient, tqdm, typeguard, typer, typing, uuid
+Required-by:
+```
+
+## Running a Sieve App (TODO: Reword)
+
+Create a python file
+
+```bash
+touch retalker.py
+```
+
+Copy paste the following code into the python file.
+
+```python
+# TODO: Use public links
+def retalker(): 
+    source_video=sieve.Video(
+            url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c4d968f5-f25a-412b-9102-5b6ab6dafcb4/video_retalker/df431771-8c96-41aa-8c86-5f0179ef3f19-input-source_video.mp4")
+    target_audio=sieve.Audio(
+            url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c4d968f5-f25a-412b-9102-5b6ab6dafcb4/video_retalker/df431771-8c96-41aa-8c86-5f0179ef3f19-input-target_audio.wav")
+    retalker = sieve.function.get("sieve-internal/video_retalker")
+    sieve_video = retalker.run(source_video, target_audio)
+    return sieve_video.url
+
+video_url = retalker()
+
+print(video_url)
+```
+
+Run the code and view the processed video in the outputted url
+
+```bash
+$ python retalker.py
+https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c4d968f5-f25a-412b-9102-5b6ab6dafcb4/video_retalker/df431771-8c96-41aa-8c86-5f0179ef3f19-input-source_video.mp4
+```
+(TODO: Replace result with actual video generated) 
+
+Open the link for your results! 

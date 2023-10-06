@@ -1,0 +1,71 @@
+---
+title: "Typing and Metadata"
+---
+
+Sieve allows you to type the inputs and outputs of functions deployed to the platform. Most of the pre-built functions have their input and output types listed on their API Guide page. The types supported out of the box include:
+
+- `str`: a string
+- `int`: an integer
+- `float`: a floating point number
+- `bool`: a boolean
+- `dict`: a dictionary
+- `list`: a list
+- `sieve.Video`: a video file
+- `sieve.Image`: an image file
+- `sieve.Audio`: an audio file
+- `sieve.File`: a generic file object
+
+These types allow Sieve to render forms that can be used to run these functions without code and auto-generate documentation that any other user of the function can see before using it.
+
+```python
+import sieve
+
+@sieve.function(
+    name="audio_extractor",
+		system_packages=["ffmpeg"]
+)
+class fn(video: sieve.Video) -> sieve.Audio:
+	...
+```
+
+You can also add an inline comment sphinx format to propagate descriptions for the inputs and outputs to the Sieve dashboard.
+
+```python
+import sieve
+
+@sieve.function(
+    name="audio_extractor",
+		system_packages=["ffmpeg"]
+)
+class fn(video: sieve.Video) -> sieve.Audio:
+	"""
+  :param video: a video to extract audio from
+  :return: the extracted audio
+  """
+```
+
+Sieve also lets you add other metadata including a cover image, description, and README which you can do as follows. 
+
+```python
+import sieve
+
+metadata = sieve.Metadata(
+	description="Convert video to audio",
+	code_url="https://github.com/",
+	tags=["Audio"],
+	readme=open("README.md", "r").read(),
+)
+
+@sieve.function(
+    name="audio_extractor",
+		system_packages=["ffmpeg"],
+		metadata=metadata
+)
+class fn(video: sieve.Video) -> sieve.Audio:
+	"""
+  :param video: a video to extract audio from
+  :return: the extracted audio
+  """
+```
+
+Read more about various out-of-the-box types in the [SDK reference](/reference-v2/sdk/types/file).
