@@ -37,7 +37,14 @@ Create a new Python file named **`video_dubbing.py`** with the following command
 touch video_dubbing.py
 ```
 
-Then, paste the following code into `video_dubbing.py`. The function calls that use `.run()`, such as `transcriber.run(source_audio)` are executed on the Sieve cloud. 
+Then, paste the following code into `video_dubbing.py`. This function uses other models that have already been deployed to Sieve that you can run almost like you're running them locally. The function calls that use `.run()`, such as `transcriber.run(source_audio)` are executed on the Sieve cloud.
+
+The higher level logic of this code is as follows:
+- Extract audio from the video
+- Transcribe the audio
+- Translate the transcript
+- Generate new audio from the translated text
+- Combine audio and video with our lipsyncer
 
 ```python
 import sieve
@@ -121,7 +128,24 @@ if __name__ == "__main__":
     print('dubbed video path: ', dubbed_video.path)
 ```
 
-Running your code on Sieve is as simple as that. Now, if you run the **`video_dubbing.py`** script, your code will be built and uploaded to Sieve and your function will be executed in the cloud. You will then see the result of your function in the output. 
+Now let's run the code. This will deploy your function to Sieve and call it with the video we provided.
 
+```bash
+python video_dubbing.py
+```
 
-By following these steps, you created a complex app using many models. Nice!
+You should start seeing some logs streaming in. You can also view the status of this job on the Sieve dashboard. After it has completed running, you'll see a video file path printed to the console, which has been saved to a temporary directory. You can open this video to see the results.
+
+On MacOS, you can open the video with the following command:
+
+```bash
+open <video_path>
+```
+
+On Windows, you can open the video with the following command:
+
+```bash
+start <video_path>
+```
+
+Or just view the video on the Sieve dashboard!

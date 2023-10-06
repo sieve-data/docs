@@ -22,7 +22,7 @@ def vfd(video: sieve.Video):
     """
 ```
 
-Now let’s write code that splits the video into frames and starts passing it into a face detector. In this case, we’ll use a face detection model that has already been deployed to Sieve though you could also deploy your own using a setup similar to this.
+Now let’s write code that splits the video into frames and starts passing it into a face detector. In this case, we’ll use a face detection model that is already available on Sieve though you could also deploy your own using a setup similar to this.
 
 ```python
 import sieve
@@ -97,10 +97,10 @@ if __name__=="__main__":
         print(detection)
 ```
 
-Once defined, deploy the function using the Sieve CLI:
+Once defined, you can run this as follows. You'll notice the code having a `main` function. This is because that's how we're triggering a call to the function. In this case, the function will first deploy and then the `main` function will be called.
 
 ```bash
 $ python file.py
 ```
 
-Upon successful deployment, you'll receive a confirmation with a link of your function in the dashboard. Try submitting an example video to it via the dashboard and you’ll see outputs populate as the video is being processed.
+You can view this job on your dashboard, or start seeing data stream to your terminal.
