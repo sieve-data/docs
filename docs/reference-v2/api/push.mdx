@@ -4,7 +4,9 @@ api: "POST /v2/push"
 ---
 
 <ParamField body="function" type="string">
-  name of Sieve function
+  name of Sieve function. Possible values are: `<organization-name>/<function-name>` or `<organization-name>/<function-name>:<version-id-prefix>` where the version-id prefix is 4 or more characters of your function version.
+
+  An example would be: `sieve/video_retalking` or `sieve/video_retalking:1a8b41cc`.
 </ParamField>
 
 <ParamField body="id" type="string">
