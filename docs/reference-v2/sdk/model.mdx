@@ -74,7 +74,7 @@ class Yolo:
 - `cuda_version` CUDA version to use. Defaults to `None`.
 - `machine_type` Machine type to use. Defaults to `None`.
 - `iterator_input` Whether the function takes in an iterator. Defaults to `False`.
-- `run_commands` List of commands to run when the function is built. Defaults to `[]`.
+- `run_commands` List of commands to run when the function is built. Defaults to `[]`. The run commands are run when the Docker container is built, and the resulting files are a part of the Docker container. 
 
 ### name
 ```python
