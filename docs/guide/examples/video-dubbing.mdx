@@ -88,7 +88,6 @@ def video_dubbing(source_video: sieve.Video, language: str):
     print("transcribing audio")
     # transcribe audio
     transcript = list(transcriber.run(source_audio))
-    print(transcript)
     text = transcript_to_text(transcript)
     text_language = "english"
     print("transcription:", text)
