@@ -8,7 +8,9 @@ Functions and models are the building blocks of creating applications deployed o
 
 Models are defined as Python classes with `__setup__()` and `__predict()__` methods. The `__setup()__` method is run once during initialization, and the `__predict()__` method is run on every call to the model. The `__setup__()` method is typically used for heavy one time operations, such as loading machine learning model weights into memory. 
 
-Functions are just models under the hood, but are defined by just a single function. Use a function when a `__setup__()` call is not required
+Functions are just models under the hood, but are defined by just a single function. Use a function when a `__setup__()` call is not required.
+
+All code is mounted by default into `/src` of the container.
 
 ## Creating Functions and Models
 
