@@ -61,6 +61,9 @@ def transcript_to_text(transcript):
 
 @sieve.function(
     name="video-dubber",
+    python_packages=[
+        "numpy>=1.19.0",
+    ],
     system_packages=["ffmpeg"],
 )
 def video_dubbing(source_video: sieve.Video, language: str):
@@ -99,7 +102,7 @@ def video_dubbing(source_video: sieve.Video, language: str):
 
     print("generating tts audio")
     # Generate new audio from translated text
-    target_audio = tts.run(source_audio, language, translated_text)
+    target_audio = tts.run(translated_text, source_audio, stability=0.5, similarity_boost=0.5)
     print("done generating audio")
 
     print("starting lipsync")
