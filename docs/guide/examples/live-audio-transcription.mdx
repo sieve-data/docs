@@ -55,10 +55,12 @@ url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 language = "en" # don't pass in a language code to automatically detect the language
 
 live_speech_transcriber = sieve.function.get("{your_org}/live_speech_transcriber")
-output = live_speech_transcriber.run(url, language)
+output = live_speech_transcriber.push(url, language)
+
+print(f"Started job with id {output.job['id']}")
 
 print("stream ingestor initializing (please set a replica if you'd like for this to be instant)...")
-for segment in output:
+for segment in output.result():
     print(segment)
 ```
 
