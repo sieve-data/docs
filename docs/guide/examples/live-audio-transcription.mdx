@@ -45,7 +45,8 @@ sieve deploy live_transcriber.py
 
 Congrats, you just deployed a custom function to Sieve! Replicas of the live transcriber automatically scale to zero when there is no traffic, so be sure to check out the [autoscaling](/guide/custom-apps/autoscaling) guide to learn more about how to configure autoscaling for your custom functions if you want to keep them running and ready to process requests. You may otherwise notice a slight delay when you first call the function as the replicas are scaled up.
 
-Let's now use it to transcribe a live audio stream in Python. Make sure to replace **`<your org>`** with your actual organization name.
+Let's now use it to transcribe a live audio stream in Python. Make sure to replace **`{your_org}`** with your actual organization name. You can find your organization name in the [dashboard settings](https://www.sievedata.com/dashboard/settings).
+
 
 ```python
 import sieve
