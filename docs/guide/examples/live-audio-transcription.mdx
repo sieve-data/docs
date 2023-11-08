@@ -57,6 +57,7 @@ language = "en" # don't pass in a language code to automatically detect the lang
 live_speech_transcriber = sieve.function.get("{your_org}/live_speech_transcriber")
 output = live_speech_transcriber.run(url, language)
 
+print("stream ingestor initializing (please set a replica if you'd like for this to be instant)...")
 for segment in output:
     print(segment)
 ```
