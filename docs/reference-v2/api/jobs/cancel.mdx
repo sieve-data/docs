@@ -1,0 +1,19 @@
+---
+title: "Cancel Job"
+api: "DELETE /v2/jobs/{id}"
+---
+
+This endpoint allows you to cancel a job that is currently running.
+
+### Request
+<ParamField path="id" type="string" required>
+  id of the job
+</ParamField>
+
+<ResponseExample>
+```json
+{
+  "status": "Job cancelled"
+}
+```
+</ResponseExample>
