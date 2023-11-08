@@ -11,11 +11,17 @@ Let's say you want to transcribe RTMP or HLS livestreams. Let's walk through dep
 
 Ensure that the Sieve python package is installed on your system by executing the following command
 
-```python
+```bash
 pip show sievedata
 ```
 
 If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc.
+
+Then make sure to log in with your API key that can be found in the [dashboard settings](https://www.sievedata.com/dashboard/settings).
+
+```bash
+sieve login
+```
 
 Clone the Sieve examples repository and navigate into the `audio_transcription` directory.
 
