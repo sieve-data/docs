@@ -62,7 +62,8 @@
             "pages": [
                 "guide/custom-apps/function-calling-and-references",
                 "guide/examples/parallelized-face-detection",
-                "guide/examples/video-dubbing"
+                "guide/examples/video-dubbing",
+                "guide/examples/live-audio-transcription"
             ]
         },
         {
@@ -78,7 +79,8 @@
                         "reference-v2/api/functions/id",
                         "reference-v2/api/functions/jobs",
                         "reference-v2/api/jobs/get",
-                        "reference-v2/api/jobs/list"
+                        "reference-v2/api/jobs/list",
+                        "reference-v2/api/jobs/cancel"
                     ]
                 },
                 {

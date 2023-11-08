@@ -1,0 +1,62 @@
+---
+title: "Example: Live Stream Transcription"
+description: "Transcribe live audio streams in real-time"
+---
+
+## **Introduction**
+
+Let's say you want to transcribe RTMP or HLS livestreams. Let's walk through deploying a custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities for the purposes of transcription.
+
+## **Using the python client**
+
+Ensure that the Sieve python package is installed on your system by executing the following command
+
+```python
+pip show sievedata
+```
+
+If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc.
+
+Clone the Sieve examples repository and navigate into the `audio_transcription` directory.
+
+```bash
+git clone https://github.com/sieve-community/examples
+cd examples/audio_transcription
+```
+
+Let's now deploy a custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities by running the following command:
+
+We won't dive too deep into what the code does but at a high level it:
+1. Imports necessary libraries and modules.
+3. Defines a class `SieveWhisper` that loads the `sieve/whisperx` model and provides methods for transcribing audio and processing the transcription results.
+4. Defines a class `LiveSpeechTranscriber` that is decorated with `sieve.Model`. This class sets up the `SieveWhisper` model in its `__setup__` method.
+5. The `__predict__` method of `LiveSpeechTranscriber` takes a URL to a live audio stream and a language code. It uses `ffmpeg` to segment the audio stream into chunks and processes each chunk with the `OnlineASRProcessor`.
+6. The processed transcription results are then yielded as a list of segments, each with a start time, end time, and text.
+
+```bash
+sieve deploy live_transcriber.py
+```
+
+Congrats, you just deployed a custom function to Sieve! Let's now use it to transcribe a live audio stream in Python. Make sure to replace **`<your org>`** with your actual organization name.
+
+```python
+import sieve
+
+url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+language = "en" # don't pass in a language code to automatically detect the language
+
+live_speech_transcriber = sieve.function.get("{your_org}/live_speech_transcriber")
+output = live_speech_transcriber.run(url, language)
+
+for segment in output:
+    print(segment)
+```
+
+The segment output will print as it's being transcribed. You may also push a job via the REST API [here](/reference-v2/api/push).
+
+To cancel the job once you're done, you may use the `cancel` API linked [here](/reference-v2/api/jobs/cancel).
+
+Replicas of the live transcriber automatically scale to zero when there is no traffic, so be sure to check out the [autoscaling](/guide/custom-apps/autoscaling) guide to learn more about how to configure autoscaling for your custom functions if you want to keep them running and ready to process requests.
+
+
+
