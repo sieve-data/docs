@@ -85,7 +85,7 @@ def video_dubbing(source_video: sieve.Video, language: str):
     # use remote sieve models
     transcriber = sieve.function.get("sieve/speech_transcriber")
     translator = sieve.function.get("sieve/seamless_text2text")
-    tts = sieve.function.get("sieve/xtts-v1")
+    tts = sieve.function.get("sieve/xtts")
     lipsyncer = sieve.function.get("sieve/video_retalking")
 
     print("transcribing audio")
