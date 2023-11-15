@@ -1,11 +1,11 @@
 ---
-title: "Example: Live Stream Transcription"
-description: "Transcribe live audio streams in real-time"
+title: "Example: Live Stream Transcription + Translation"
+description: "Transcribe & translate live audio streams in real-time"
 ---
 
 ## **Introduction**
 
-Let's say you want to transcribe RTMP or HLS livestreams. Let's walk through deploying a custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities for the purposes of transcription.
+Let's say you want to transcribe RTMP or HLS livestreams. Let's walk through deploying a custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities for the purposes of transcription & translation.
 
 ## **Using the python client**
 
@@ -51,7 +51,7 @@ Let's now use it to transcribe a live audio stream in Python. Make sure to repla
 import sieve
 
 url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
-language = "eng" # don't pass in a language code to automatically detect the language
+language = "eng" # If this language is different from the stream, translation will happen automatically
 
 live_speech_transcriber = sieve.function.get("{your_org}/live_transcriber")
 output = live_speech_transcriber.push(url, target_language=language)
