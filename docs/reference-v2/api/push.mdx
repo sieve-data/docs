@@ -17,6 +17,11 @@ api: "POST /v2/push"
   an array representing the inputs to the sieve function. Read more about inputs [here](/guide/sieve/inputs-and-outputs)
 </ParamField>
 
+
+<ParamField body="webhook_urls" type="array">
+  an array of URLs to be called when the job completes. Read more about webhooks [here](/guide/custom-apps/webhooks)
+</ParamField>
+
 This endpoint triggers either a function or a model with a given set of inputs. The structure of the inputs should match the inputs types specified in the function or model definition.
 
 ## Example
@@ -44,3 +49,63 @@ A function that takes in a `string` named `prompt` would be triggered with the f
   }
 }
 ```
+
+### Webhook Response
+
+The webhook responses vary depending on the event.
+
+### Event `job_complete`
+
+<ResponseField name="id" type="string">
+    The id of the job.
+</ResponseField>
+<ResponseField name="event" type="string">
+    The webhook event.
+</ResponseField>
+<ResponseField name="status" type="string">
+The status of the job. Possible values: 'error', 'finished';
+</ResponseField>
+<ResponseField name="output" type="object">
+Output field will be null if the job errored out.
+<Expandable title="properties">
+<Snippet file="output.mdx" />
+</Expandable>
+</ResponseField>
+
+<ResponseExample>
+```json Event: Job Completed
+{
+  "id": "f530182b-5d54-4680-a2fb-bc17ae9aa79f",
+  "event": "job_complete", 
+  "output": 
+    {
+      "data": {
+        "url": "<image url>",
+        "_path": null,
+        "_data": null,
+        "_array": null
+      },
+      "type": "sieve.Image"
+    }
+}
+```
+</ResponseExample>
+
+### Event `job_started`
+
+<ResponseField name="id" type="string">
+    The id of the job.
+</ResponseField>
+
+<ResponseField name="event" type="string">
+    The webhook event.
+</ResponseField>
+
+<ResponseExample> 
+```json Event: Job Started
+{
+  "id": "f530182b-5d54-4680-a2fb-bc17ae9aa79f",
+  "event": "job_started"
+}
+```
+</ResponseExample>
