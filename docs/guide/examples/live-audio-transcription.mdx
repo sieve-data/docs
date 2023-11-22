@@ -66,3 +66,8 @@ for segment in output.result():
 The segment output will print as it's being transcribed. You may also push a job via the REST API [here](/reference-v2/api/push) and later poll for outputs with [this endpoint](/reference-v2/api/jobs/get).
 
 This is an example of a job that will not cancel automatically as it's processing a stream! To cancel the job once you're done, you may use the `cancel` API linked [here](/reference-v2/api/jobs/cancel). You may also cancel the job via the dashboard.
+
+## Streaming VTT captions
+
+If you'd like to [stream VTT](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#tutorial_on_how_to_write_a_webvtt_file) captions directly to your video player, please follow our [demo here](https://github.com/sieve-community/examples/tree/main/audio_transcription/live_vtt_demo).
+
