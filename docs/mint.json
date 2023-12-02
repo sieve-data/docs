@@ -163,6 +163,11 @@
             ]
         }
     ],
+    "feedback": {
+        "thumbsRating": true,
+        "suggestEdit": true,
+        "raiseIssue": true
+    },
     "footerSocials": {
         "website": "https://www.sievedata.com",
         "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
