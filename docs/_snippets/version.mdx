@@ -46,6 +46,26 @@ The outputs to a function, learn more about outputs [here](/guide/sieve/inputs-a
 <Snippet file="output.mdx" />
     </Expandable>
 </ResponseField>
+<ResponseField name="current_workers" type="Status Object">
+    The current number and status of the model's workers.
+    <Expandable title="properties">
+        <ResponseField name="awaiting_resources" type="integer">
+            The number of workers that are still waiting for resources on the Sieve cloud.
+        </ResponseField>
+        <ResponseField name="starting" type="integer">
+            The number of workers that are in the process of being started. This means that the worker has been allocated resources on the Sieve cloud, but is still in the process of creating the environment in which the model runs.
+        </ResponseField>
+        <ResponseField name="setup" type="integer">
+            The number of workers that are in the process of running the setup function.
+        </ResponseField>
+        <ResponseField name="active" type="integer">
+            The number of workers that are actively running a prediction.
+        </ResponseField>
+        <ResponseField name="idle" type="integer">
+            The number of workers that have fully setup, but are not currently running a prediction.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
 <ResponseField name="environment_variables" type="array EnvironmentVariable">
 The outputs to a function
     <Expandable title="properties">
