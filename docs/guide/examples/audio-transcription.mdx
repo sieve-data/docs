@@ -40,7 +40,7 @@ import sieve
 
 
 def transcribe_audio():
-    target_audio = sieve.Audio(
+    target_audio = sieve.File(
         url="https://storage.googleapis.com/sieve-public-data/assets/dub.m4a")
 
     transcriber = sieve.function.get("sieve/speech_transcriber")
