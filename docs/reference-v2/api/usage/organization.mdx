@@ -1,0 +1,22 @@
+---
+title: "Get Organization Usage"
+api: "GET /v2/usage"
+---
+
+### Request
+
+This endpoint retrieves usage statistics for your organization, filtered by the provided start and end timestamps.
+
+<Snippet file="usage_parameters.mdx" />
+
+### Response
+
+<ResponseExample>
+```json
+{
+  "cpu": 3.298063308383466,
+  "n1-standard-4-T4": 0.18991428048098052,
+  "total_cost": 3.4879775888644464
+}
+```
+</ResponseExample>

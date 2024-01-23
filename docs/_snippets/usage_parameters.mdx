@@ -1,0 +1,10 @@
+<ParamField query="start_timestamp" type="int" required={false}>
+The start timestamp for filtering the usage data. If not provided, the current billing period will be used.
+</ParamField>
+<ParamField query="end_timestamp" type="int" required={false}>
+The end timestamp for filtering the usage data. If not provided, the current billing period will be used.
+</ParamField>
+<ParamField query="output" type="string" required={false}>
+- `cost` Return cost in dollars.
+- `compute` Return CPU/GPU time in seconds.
+</ParamField>
