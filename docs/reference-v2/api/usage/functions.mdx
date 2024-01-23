@@ -13,17 +13,21 @@ This endpoint retrieves usage statistics for your's organization usage, grouped 
 <ResponseExample>
 ```json
 {
-  "sieve-developer/top": {
-    "cpu": 0.1557263551548611,
-    "total_cost": 0.1557263551548611
+  "example/test": {
+    "cpu": {
+      "cost_dollars": 14.74,
+      "compute_seconds": 1192.671
+    },
+    "total_compute_seconds": 1192.671,
+    "total_cost_dollars": 14.74
   },
-  "sieve-developer/bottom_gpu": {
-    "n1-standard-4-T4": 0.18991428048098055,
-    "total_cost": 0.18991428048098055
-  },
-  "sieve-developer/bottom": {
-    "cpu": 6.15524752008725,
-    "total_cost": 6.15524752008725
+  "example/test_gpu": {
+    "n1-standard-4-T4": {
+      "cost_dollars": 8.83,
+      "compute_seconds": 31474.757
+    },
+    "total_compute_seconds": 31474.757,
+    "total_cost_dollars": 8.83
   }
 }
 ```

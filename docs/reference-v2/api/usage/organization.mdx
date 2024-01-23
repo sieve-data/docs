@@ -14,9 +14,16 @@ This endpoint retrieves usage statistics for your organization, filtered by the 
 <ResponseExample>
 ```json
 {
-  "cpu": 3.298063308383466,
-  "n1-standard-4-T4": 0.18991428048098052,
-  "total_cost": 3.4879775888644464
+  "cpu": {
+    "cost_dollars": 14.74,
+    "compute_seconds": 1192.671
+  },
+  "n1-standard-4-T4": {
+    "cost_dollars": 8.83,
+    "compute_seconds": 31474.757
+  },
+  "total_compute_seconds": 32667.428,
+  "total_cost_dollars": 23.57
 }
 ```
 </ResponseExample>

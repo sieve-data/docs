@@ -19,9 +19,12 @@ This endpoint retrieves usage statistics for your's organization usage of a spec
 <ResponseExample>
 ```json
 {
-  "cpu": 3.298063308383466,
-  "n1-standard-4-T4": 0.18991428048098052,
-  "total_cost": 3.4879775888644464
+  "cpu": {
+    "cost_dollars": 14.74,
+    "compute_seconds": 1192.671
+  },
+  "total_compute_seconds": 1192.671,
+  "total_cost_dollars": 14.74
 }
 ```
 </ResponseExample>
