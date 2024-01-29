@@ -96,7 +96,7 @@ By default, Sieve functions and models live inside Linux containers without a GP
 | python_version | str | Determines the python version installed | Default is determined by python packages |
 | python_packages | List[str] | List of python packages to be installed during build | sieve and its dependencies will be installed by default |
 | system_packages | List[str] | List of Linux packages to be installed during build | [] |
-| cuda_version | str | Version of cuda to be installed (for models with gpu enabled) | Default is determined by python packages |
+| cuda_version | str | Version of cuda to be installed (for models with gpu enabled). See below for possible versions. | Default is determined by python packages |
 | run_commands | List[str] | List of shell commands to be run during build. Note: these commands currently do not have access to the uploaded code | [] |
 | metadata | sieve.Metadata | Extra information about the model to be shown on the dashboard. See below for example. | None |
 
@@ -124,4 +124,37 @@ Then, pass it into the decorator:
 		name="adder",
 		metadata=metadata
 )
+```
+
+### Cuda Versions
+
+The CUDA version can be specified with the `cuda_version` parameter in the function decorator. Possible values for `cuda_version` are:
+```
+'8.0'
+'9.0'
+'9.1'
+'9.2'
+'10.0'
+'10.1'
+'10.2'
+'11.0.3'
+'11.1.1'
+'11.2.0'
+'11.2.1'
+'11.2.2'
+'11.3.0'
+'11.3.1'
+'11.4.0'
+'11.4.1'
+'11.4.2'
+'11.4.3'
+'11.5.0'
+'11.5.1'
+'11.5.2'
+'11.6.0'
+'11.6.1'
+'11.6.2'
+'11.7.0'
+'11.7.1'
+'11.8.0'
 ```
