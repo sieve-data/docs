@@ -1,0 +1,30 @@
+---
+title: "Get One Function Usage"
+api: "GET /v2/usage/function/{organization_name}/{function_name}"
+---
+
+### Request
+This endpoint retrieves usage statistics for your's organization usage of a specific function, filtered by the provided start and end timestamps.
+
+<ParamField path="organization_name" type="string" required>
+  name of Sieve organization.
+</ParamField>
+<ParamField path="function_name" type="string" required>
+  name of Sieve model.
+</ParamField>
+<Snippet file="usage_parameters.mdx" />
+
+### Response
+
+<ResponseExample>
+```json
+{
+  "cpu": {
+    "cost_dollars": 14.74,
+    "compute_seconds": 1192.671
+  },
+  "total_compute_seconds": 1192.671,
+  "total_cost_dollars": 14.74
+}
+```
+</ResponseExample>

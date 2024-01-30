@@ -80,7 +80,11 @@
                         "reference-v2/api/functions/jobs",
                         "reference-v2/api/jobs/get",
                         "reference-v2/api/jobs/list",
-                        "reference-v2/api/jobs/cancel"
+                        "reference-v2/api/jobs/cancel",
+                        "reference-v2/api/usage/organization",
+                        "reference-v2/api/usage/function",
+                        "reference-v2/api/usage/functions",
+                        "reference-v2/api/usage/job"
                     ]
                 },
                 {

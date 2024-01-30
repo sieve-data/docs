@@ -1,0 +1,28 @@
+---
+title: "Get Job Usage"
+api: "GET /v2/usage/job/{id}"
+---
+
+### Request
+<ParamField path="id" type="string" required>
+  ID of the job.
+</ParamField>
+
+This endpoint retrieves usage statistics for a single job in your organization, filtered by the provided start and end timestamps.
+
+<Snippet file="usage_parameters.mdx" />
+
+### Response
+
+<ResponseExample>
+```json
+{
+  "cpu": {
+    "cost_dollars": 14.74,
+    "compute_seconds": 1192.671
+  },
+  "total_compute_seconds": 1192.671,
+  "total_cost_dollars": 14.74
+}
+```
+</ResponseExample>

@@ -1,0 +1,34 @@
+---
+title: "Get All Functions Usage"
+api: "GET /v2/usage/function"
+---
+
+### Request
+This endpoint retrieves usage statistics for your's organization usage, grouped by function, and filtered by the provided start and end timestamps.
+
+<Snippet file="usage_parameters.mdx" />
+
+### Response
+
+<ResponseExample>
+```json
+{
+  "example/test": {
+    "cpu": {
+      "cost_dollars": 14.74,
+      "compute_seconds": 1192.671
+    },
+    "total_compute_seconds": 1192.671,
+    "total_cost_dollars": 14.74
+  },
+  "example/test_gpu": {
+    "t4": {
+      "cost_dollars": 8.83,
+      "compute_seconds": 31474.757
+    },
+    "total_compute_seconds": 31474.757,
+    "total_cost_dollars": 8.83
+  }
+}
+```
+</ResponseExample>
