@@ -61,7 +61,7 @@
             "group": "Building Complex Applications",
             "pages": [
                 "guide/custom-apps/function-calling-and-references",
-                "guide/custom-apps/webhooks",
+                "guide/custom-apps/using-webhooks",
                 "guide/examples/parallelized-face-detection",
                 "guide/examples/video-dubbing",
                 "guide/examples/live-audio-transcription"

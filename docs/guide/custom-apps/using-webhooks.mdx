@@ -1,5 +1,5 @@
 ---
-title: "Webhooks"
+title: "Using Webhooks"
 description: "Webhooks provide a way for notifications to be delivered to an external web server when a Sieve job completes."
 ---
 
@@ -32,14 +32,14 @@ Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
         "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
      },
     "webhooks": [{
-            "event_type": "<event type>",
+            "type": "<event type>",
             "url": "<your webhook url>"
         }]
     }
   }'
 ```
 
-Once the job completes, you'll receive a notification on [webhook.site](https://webhook.site/) with the output of the job.
+Once the job completes, you'll receive a notification on [webhook.site](https://webhook.site/) with the output of the job. The response output is in the following format:
 
 ## **Using webhooks via the Python client**
 
@@ -51,7 +51,7 @@ f.run(
     target_audio,
     webhooks=[
         {
-            "event_type": "<event type>",
+            "type": "<event type>",
             "url": "<your webhook url>"
         }
     ]
@@ -62,9 +62,7 @@ The code will run as usual, with the added benefit of a webhook being triggered 
 
 ### **Using webhooks via the Sieve dashboard**
 
-Webhook can also be set on a per-model basis via the dashboard. In other words, every time the model is run the webhook will be triggered, including via. the REST API. Add the webhook on the Settings page once you have an app selected.
-
-[image here]
+Webhook can also be set on a per-function basis via. the dashboard. In other words, every time the model is run the webhook will be triggered, including via. the REST API. Add the webhook on the Settings page once you have an app selected.
 
 Once you submit a run, you should again receive a notification.
 
