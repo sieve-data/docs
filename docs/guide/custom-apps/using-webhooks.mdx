@@ -14,7 +14,7 @@ Webhooks can be triggered by the following event types:
 - `job_complete` - triggered when a job completes successfully or with an error.
 - `job_started` - triggered when a job has exited the queue and is being processed.
 
-More event types will be added in the future. See the [API reference](/reference-v2/api/push#webhook-response) for more information.
+More event types will be added in the future. See the [API reference](/reference-v2/api/webhook) for more information.
 
 ## **Using webhooks via the HTTP API**
 
@@ -65,5 +65,7 @@ The code will run as usual, with the added benefit of a webhook being triggered 
 Webhooks can also be set on a per-function basis via the dashboard. In other words, every time the function is run (from the UI, REST API, or Python client), the webhook will be triggered. Add the webhook on the Settings page once you have a function selected.
 
 Once you submit a run, you should again receive a notification.
+
+![](https://storage.googleapis.com/sieve-public-data/assets/webhooks.png)
 
  <Warning>If a list of webhooks is specified via the REST API, this will override any webhooks set on the UI.</Warning>
