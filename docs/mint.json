@@ -54,7 +54,8 @@
                 "guide/custom-apps/typing-and-metadata",
                 "guide/sieve/inputs-and-outputs",
                 "guide/custom-apps/autoscaling",
-                "guide/custom-apps/visibility"
+                "guide/custom-apps/visibility",
+                "guide/custom-apps/using-webhooks"
             ]
         },
         {
@@ -80,7 +81,8 @@
                         "reference-v2/api/functions/jobs",
                         "reference-v2/api/jobs/get",
                         "reference-v2/api/jobs/list",
-                        "reference-v2/api/jobs/cancel"
+                        "reference-v2/api/jobs/cancel",
+                        "reference-v2/api/webhook"
                     ]
                 },
                 {
