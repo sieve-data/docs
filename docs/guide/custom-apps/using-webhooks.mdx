@@ -28,14 +28,14 @@ Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
   --data-raw '{
     "function": "sieve/speech_transcriber",
     "inputs": {
-      "file": {
-        "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
+        "file": {
+          "url": "https://storage.googleapis.com/sieve-public-data/assets/dub.m4a"
+      }
      },
     "webhooks": [{
             "type": "<event type>",
             "url": "<your webhook url>"
         }]
-    }
   }'
 ```
 
