@@ -22,7 +22,13 @@ The status of the job.
 The job ID.
 </ResponseField>
 <ResponseField name="output" type="object">
-Output field will be null if the job errored out.
+(Deprecated) The first output of the job. Output field will be null if the job errored out.
+<Expandable title="properties">
+<Snippet file="output.mdx" />
+</Expandable>
+</ResponseField>
+<ResponseField name="outputs" type="array[object]">
+A list of all outputs emitted by the job, if any.
 <Expandable title="properties">
 <Snippet file="output.mdx" />
 </Expandable>
