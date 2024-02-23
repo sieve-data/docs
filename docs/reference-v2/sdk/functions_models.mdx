@@ -92,7 +92,7 @@ By default, Sieve functions and models live inside Linux containers without a GP
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
 | name | str | Defines the name of the function | This field is required |
-| gpu | sieve.gpu | Determines whether the function is deployed on a server with a GPU, which GPU it should be deployed to, . See the `Parameter` column in the table in [GPU Acceleration](/guide/custom-apps/gpu-acceleration) for a list of options and for more information about GPU sharing. The default value of `sieve.gpu.CPU()` runs on a machine with no GPU. Any other value is specified with a call to one of the sieve.gpu constructors | sieve.gpu.CPU() |
+| gpu | sieve.gpu | Determines whether the function is deployed on a server with a GPU, which GPU it should be deployed to, . See the `Parameter` column in the table in [GPU Acceleration](/guide/custom-apps/gpu-acceleration) for a list of options and for more information about GPU sharing. The default value runs on a machine with no GPU. Any other value is specified with a call to one of the sieve.gpu constructors | `None` |
 | python_version | str | Determines the python version installed | Default is determined by python packages |
 | python_packages | List[str] | List of python packages to be installed during build | sieve and its dependencies will be installed by default |
 | system_packages | List[str] | List of Linux packages to be installed during build | [] |
