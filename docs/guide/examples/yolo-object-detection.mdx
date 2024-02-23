@@ -48,7 +48,7 @@ import sieve
 
 @sieve.Model(
     name="yolo-v5",
-    gpu=True,
+    gpu=sieve.gpu.T4(),
     python_packages=[
         "torch==1.8.1",
         "opencv-python-headless",
