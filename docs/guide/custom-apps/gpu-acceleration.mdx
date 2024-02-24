@@ -3,25 +3,42 @@ title: "GPU Acceleration"
 description: "Accelerate your Sieve functions with GPU"
 ---
 
-Sieve let’s you run code on GPUs. To do so, all you need to do is add a `gpu` tag to your function with the GPU you want. Today, Sieve offers a couple machine configurations listed below.
+Sieve lets you run code on GPUs. To do so, all you need to do is add a `gpu` parameter to your function decorator with the GPU you want. Today, Sieve offers a couple machine configurations listed below.
 
-| Name | GPU | Memory (GB) | vCPUs | Tag |
+| Name | GPU | Memory (GB) | vCPUs | Parameter |
 | --- | --- | --- | --- | --- |
-| T4 (default) | T4 | 16 | 4 | `t4` |
-| A100-40GB | A100-40GB | 85 | 12 | `a100` |
-| A100-20GB | A100-20GB | 42.5 | 6 | `a100-20gb` |
-| V100 | V100 | 16 | 4 | `v100` |
-| L4 | L4 | 32 | 8 | `l4` |
+| T4 (default) | T4 | 16 | 4 | `sieve.gpu.T4()` |
+| A100-40GB | A100-40GB | 85 | 12 | `sieve.gpu.A100()` |
+| A100-20GB | A100-20GB | 42.5 | 6 | `sieve.gpu.A10020GB()` |
+| V100 | V100 | 16 | 4 | `sieve.gpu.V100()` |
+| L4 | L4 | 32 | 8 | `sieve.gpu.L4()` |
 
 You can specify one of these in code as follows.
 
 ```python
 @sieve.function(
 	name="gpu_function",
-	gpu="t4" # Tag
+	gpu=sieve.gpu.T4()
 )
 def runs_on_gpu(video: sieve.Video) -> sieve.Video:
 	...
 ```
 
-Read more about the way this field works in [SDK reference](/reference-v2/sdk/functions_models#specifying-additional-data-for-functions-and-models).
+## GPU Sharing
+
+By default, Sieve will allocate an entire GPU for your function worker to use. Each worker runs one prediction at a time. This way, your worker is guaranteed to have the entire GPU to use for the duration of a function call. However, some workloads may not require the use of an entire GPU. You can use the optional `split` argument in the GPU constructor to tell Sieve to let multiple workers share the same GPU. For example, the following would tell sieve to allocate 3 workers per GPU:
+
+```python
+@sieve.function(
+	name="gpu_function_sharing",
+	gpu=sieve.gpu.T4(split=3)
+)
+def runs_on_gpu(video: sieve.Video) -> sieve.Video:
+	...
+```
+
+`split` can be any integer between 1 and 8. Sieve will only share a GPU with other workers of the same function. Since `split` number of workers share the same GPU, Sieve will spin up that many workers at a time.
+
+Each shared worker will be billed at `1/split` the rate of a regular worker. So, Sieve will charge you the same amount per GPU hour regardless of how many workers are running on it. 
+
+Read more about the way the `gpu` field works in [SDK reference](/reference-v2/sdk/functions_models#specifying-additional-data-for-functions-and-models).
