@@ -30,6 +30,11 @@
     ],
     "anchors": [
         {
+            "name": "Join Discord Community",
+            "icon": "discord",
+            "url": "https://discord.com/invite/Pnh97rvRtD"
+        },
+        {
             "name": "Book a Demo",
             "icon": "phone",
             "url": "https://cal.com/team/sieve/demo"
