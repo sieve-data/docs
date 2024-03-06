@@ -2,6 +2,7 @@
     "name": "Sieve",
     "logo": "/logo.svg",
     "favicon": "/favicon.png",
+    "openapi": ["/openapi.json"],
     "colors": {
         "primary": "#8d62ee",
         "light": "#c4b5fd",
@@ -18,9 +19,7 @@
             "method": "key",
             "name": "X-API-Key"
         },
-        "baseUrl": [
-            "https://mango.sievedata.com"
-        ]
+        "baseUrl": ["https://mango.sievedata.com"]
     },
     "topbarLinks": [
         {
@@ -79,14 +78,14 @@
                     "group": "API Reference",
                     "pages": [
                         "reference-v2/api/intro",
-                        "reference-v2/api/push",
-                        "reference-v2/api/functions/get",
-                        "reference-v2/api/functions/versions",
-                        "reference-v2/api/functions/id",
-                        "reference-v2/api/functions/jobs",
-                        "reference-v2/api/jobs/get",
-                        "reference-v2/api/jobs/list",
-                        "reference-v2/api/jobs/cancel",
+                        "reference-v2/api/create-new-job",
+                        "reference-v2/api/get-function",
+                        "reference-v2/api/get-function-versions",
+                        "reference-v2/api/get-function-version",
+                        "reference-v2/api/list-function-jobs",
+                        "reference-v2/api/get-job",
+                        "reference-v2/api/cancel-job",
+                        "reference-v2/api/list-jobs",
                         "reference-v2/api/webhook"
                     ]
                 },
@@ -165,9 +164,7 @@
         },
         {
             "group": "Errors",
-            "pages": [
-                "error-codes"
-            ]
+            "pages": ["error-codes"]
         }
     ],
     "feedback": {
