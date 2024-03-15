@@ -2,7 +2,6 @@
     "name": "Sieve",
     "logo": "/logo.svg",
     "favicon": "/favicon.png",
-    "openapi": ["/openapi.json"],
     "colors": {
         "primary": "#8d62ee",
         "light": "#c4b5fd",
@@ -10,6 +9,12 @@
         "ultraLight": "#ddd6fe",
         "ultraDark": "#5b21b6"
     },
+    "redirects": [
+        {
+            "source": "/reference-v2/api/push",
+            "destination": "/reference-v2/api/push-new-job"
+        }
+    ],
     "topbarCtaButton": {
         "name": "Create a new account",
         "url": "https://www.sievedata.com/dashboard"
