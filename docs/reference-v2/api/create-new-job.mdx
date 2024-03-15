@@ -1,0 +1,34 @@
+---
+openapi: post /v2/push
+---
+
+
+This endpoint triggers either a function or a model with a given set of inputs. The structure of the inputs should match the inputs types specified in the function or model definition.
+
+## Example
+A function that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following request:
+```json
+{
+  "function": "sieve/sample_function",
+  "inputs": {
+    "video": {
+      "url": "{SOME_VIDEO_URL}"
+    },
+    "image": {
+      "url": "{SOME_IMAGE_URL}"
+    }
+  }
+}
+```
+
+A function that takes in a `string` named `prompt` would be triggered with the following request:
+```json
+{
+  "function": "sieve/some_function",
+  "inputs": {
+    "prompt": "some string"
+  }
+}
+```
+
+See detailed information on webhook responses [here](webhook).
