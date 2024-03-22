@@ -1,6 +1,3 @@
-## Powered by Mintlify
-
-
 # Sieve Documentation
 [Docs](https://docs.sievedata.com)
 [Mintlify](https://mintlify.com)
