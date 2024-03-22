@@ -1,0 +1,90 @@
+---
+title: "Typing & Metadata"
+---
+
+Sieve allows you to type the inputs and outputs of functions deployed to the platform. Most of the pre-built functions have their input and output types listed on their API Guide page. 
+
+## Function Typing
+
+Sieve jobs can be run in 2 ways -- via the API or the Python client. Some Python types may not be JSON-encodable and thus will not be supported by the API. For that reason, we limit the types supported out of the box to:
+- All Python primitives (`str`, `int`, `float`, `bool`, `dict`, `list`)
+- Sieve types (see [SDK reference](/reference-v2/sdk/types/file))
+	- `sieve.File`: a generic file object, used to pass references through Sieve functions
+	- `sieve.Image`, `sieve.Video`, `sieve.Audio`: special file objects, optimized for images, videos, and audio
+
+**Inputs:** If your function is not typed, we allow you to pass in any Python object via the client (and any JSON-encodable input from the API). For example, you can run an untyped function with a `pandas.DataFrame` as input via the client, but this wouldn't be possible from the API without implementing a custom JSON encoder/decoder in your function code.
+
+**Outputs:** When fetching job outputs from the API, we automatically try to JSON encode your function's return value. If your function is typed, we will use the type to determine how to encode the output. If your function is not typed, we will use the default JSON encoder. From the Python client, we always return the direct Python object.
+
+Types also allow Sieve to render auto-generated UIs that can be used to run these functions via the dashboard. You may also include [Sphinx docs](https://www.sphinx-doc.org/) with each function to show descriptions with each of your inputs.
+
+Here's an example of a typed function with a description for the input:
+
+```python
+import sieve
+
+@sieve.function(
+    name="audio_extractor",
+		system_packages=["ffmpeg"]
+)
+class fn(video: sieve.Video) -> sieve.Audio:
+	"""
+	:param video: a video to extract audio from
+	"""
+	...
+```
+
+Calling this function can be done in a few ways:
+<CodeGroup>
+```bash API
+curl -X POST \
+	--url https://mango.sievedata.com/v2/push \
+	-H 'X-API-Key: <your-api-key>' \
+	-H 'Content-Type: application/json' \
+	--data '{
+		"function": "<org-name>/audio-extractor"
+		"inputs": {
+			"video": {"url": "https://storage.googleapis.com/mango-public-models/output1.mp4"}
+		}
+	}'
+
+```
+
+```python Python Client
+import sieve
+audio_extractor = sieve.function.get("<org>/audio_extractor")
+
+# Run the function with a video file
+audio = audio_extractor.run(sieve.Video("path/to/video.mp4"))
+print(audio.path)
+```
+</CodeGroup>
+
+You may also view this function in the dashboard and upload files for the `sieve.Video` input directly, making it easy to share with others on your team.
+
+
+## Metadata
+Sieve also lets you add other metadata including a description, README, and more. This is particularly useful for functions that you want to share with others or make public. Here's a quick example: 
+
+```python
+import sieve
+
+metadata = sieve.Metadata(
+	description="Convert video to audio",
+	code_url="https://github.com/rick/roll",
+	readme=open("README.md", "r").read()
+)
+
+@sieve.function(
+    name="audio_extractor",
+		system_packages=["ffmpeg"],
+		metadata=metadata
+)
+class fn(video: sieve.Video) -> sieve.Audio:
+	"""
+	:param video: a video to extract audio from
+	:return: the extracted audio
+	"""
+	...
+```
+

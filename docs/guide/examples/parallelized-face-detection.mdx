@@ -3,9 +3,9 @@ title: "Example: Parallelized Face Detection"
 description: "Building a parallelized face detection app with Sieve"
 ---
 
-Because Sieve makes it easy to push to function queues, it’s relatively easy to parallelize data processing operations in just a few lines of code. To learn this, we’ll build an app that performs face detection on a video using Sieve.
+Because Sieve makes it easy to push to function queues, it’s relatively easy to parallelize data processing operations in just a few lines of code. In this example, we’ll build an app that performs face detection on a video using Sieve.
 
-Let’s start with a simple function that has ffmpeg installed. This will allow us to split a video into many frames that get processed later on.
+Let’s start with a simple function that has `ffmpeg` installed. This will allow us to split a video into many frames.
 
 ```python
 import sieve
@@ -20,9 +20,10 @@ def vfd(video: sieve.Video):
     :param video: a video to process
     :return: a bunch of face coordinates
     """
+    return
 ```
 
-Now let’s write code that splits the video into frames and starts passing it into a face detector. In this case, we’ll use a face detection model that is already available on Sieve though you could also deploy your own using a setup similar to this.
+Now let’s write code that splits the video into frames and starts passing it into a face detector. In this case, we’ll use a face detection model that is already available on Sieve, though you could also deploy your own.
 
 ```python
 import sieve
@@ -33,19 +34,20 @@ import concurrent.futures
     system_packages=["ffmpeg"],
 )
 def detector(video: sieve.Video):
+    import os
+    import subprocess
+    import glob
+    import shutil
+    import time
+
     print("Starting video face detection...")
     video_path = video.path
 
     face_detector = sieve.function.get("sieve/mediapipe_face_detector")
 
-    # use ffmpeg to extract frames from video
-    import subprocess
-    import os
-
     temp_dir ='temp'
     # delete temp dir if it exists
     if os.path.exists(temp_dir):
-        import shutil
         shutil.rmtree(temp_dir)
     os.makedirs(temp_dir, exist_ok=True)
 
@@ -53,28 +55,18 @@ def detector(video: sieve.Video):
     subprocess.run(["ffmpeg", "-i", video_path, "-qscale:v", "2", f"{temp_dir}/%06d.jpg"])
 
     # get list of frames
-    import glob
     frames = glob.glob(f"{temp_dir}/*.jpg")
     frames.sort()
-
-    # remove background from each frame
-    # remove background from each frame
-    imgs = []
-    for frame_num, frame in enumerate(frames):
-        img = sieve.Image(path=frame)
-        imgs.append(img)
-        # print(f"Frame {frame_num} created for background remover")
 
     # make directory for output
     output_dir = 'output'
     # delete output dir if it exists
     if os.path.exists(output_dir):
-        import shutil
         shutil.rmtree(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
     # start joining frames back together as they finish
-    import time
+    imgs = [sieve.Image(path=frame) for frame in frames]
     with concurrent.futures.ThreadPoolExecutor() as executor:
         count = 0
         for job in executor.map(face_detector.push, imgs):
@@ -88,16 +80,17 @@ def detector(video: sieve.Video):
             count += 1
 
     # delete temp dir
-    import shutil
     shutil.rmtree(temp_dir)
 
 if __name__=="__main__":
     video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
+
+    # Calling detector.run both deploys and runs the current version of your code
     for detection in detector.run(video):
         print(detection)
 ```
 
-Once defined, you can run this as follows. You'll notice the code having a `main` function. This is because that's how we're triggering a call to the function. In this case, the function will first deploy and then the `main` function will be called.
+Once defined, you can run this as follows. You'll notice the code calling `detector.run` directly, where `detector` is the actual function annotated with `@sieve.function`. In this case, the function will first deploy and then will be remotely called.
 
 ```bash
 $ python file.py

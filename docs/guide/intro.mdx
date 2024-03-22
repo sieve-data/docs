@@ -1,5 +1,6 @@
 ---
-title: "Introduction"
+title: "Welcome to Sieve!"
+description: "The fastest way to build AI features."
 ---
 
 ## What is Sieve?
@@ -12,39 +13,161 @@ title: "Introduction"
     ></video>
 </Frame>
 
-Sieve is the platform to discover, design, and run AI features at scale. AI development is moving away from being predominantly about training & finetuning, and more towards how people combine models together to make specific use cases work. Our platform is the best development experience built around this growing trend.
+Sieve is a platform built to help discover, design, and run AI features at scale. AI development is moving away from being predominantly about training & finetuning, and more towards how people combine models together to make specific use cases work. Our platform is the best development experience built around this growing trend.
 
 Some features include:
 
-- Pre-built, production-ready apps and models your can use in a single click or API call
+- Pre-built, production-ready apps and models you can use in a single click or API call
 - Build complex apps that use many models in a few lines of code
 - Instant no-code interfaces for every app on Sieve, with zero extra configuration
-- Shareable links to every job request sent to Sieve
-- Attaching compute resources to functions in a single line of code (CPU, GPU, system packages, python packages, etc)
 - Reliable, horizontally scaling infrastructure based on traffic
-- Powerful distributed primitives like queues and function-in-function calling to parallelize data processing
-- Streaming output support
+- Powerful distributed primitives like queues and async jobs to parallelize data processing
 
-## **Quickstart**
+## **Getting Started**
 
-All you need to get started with Sieve is an account which you can sign up for [here](https://www.sievedata.com/). From there, you can decide what you’d like to do next.
+Every account comes with $20 of credit to get you started:
+- [Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
+- Install the Sieve Python client
+```bash
+pip install sievedata
+```
+- Login with your API key
+```bash
+sieve login
+```
 
-<CardGroup cols={2}>
+### **Building a simple AI translation app**
+
+Let's build a simple translation function on Sieve. We'll take in an input file (video or audio) + the target language and return the translated transcript.
+
+<Info>For simplicity, our app will only support English as the source language.</Info>
+
+<Steps>
+  <Step title="To start off, let's make a new directory and file">
+    ```bash
+    mkdir simple_translation && cd simple_translation
+    ```
+
+    And copy the following code into `simple_translation/main.py`:
+    ```python
+    import sieve
+
+    @sieve.function(name="simple_translation")
+    def simple_translation(file: sieve.File, target_language: str = "spa") -> str:
+        """
+        :param file: File to translate
+        :param target_language: Language code to translate to. Defaults to "spa" for Spanish.
+        """
+
+        transcribe = sieve.function.get("sieve/speech_transcriber")
+        translate = sieve.function.get("sieve/seamless_text2text")
+
+        transcript = transcribe.run(file)
+        translated_segments = []
+        for segment in transcript:
+            translate_job = translate.push(
+                segment["text"],
+                source_language="eng",
+                target_language=target_language
+            )
+            translated_segments.append(translate_job)
+
+        translated_transcript = ""
+        for translated_seg in translated_segments:
+            translated_transcript += translated_seg.result()
+
+        return translated_transcript
+    ```
+  </Step>
+  <Step title="Deploy to Sieve">
+    <Warning>Make sure you are in the correct directory! Sieve zips up your current directory to run in the cloud.</Warning>
+    ```bash
+    sieve deploy
+    ```
+
+    Your build should only take a few seconds, after which you'll see a link to your newly deployed function on the Sieve dashboard.
+  </Step>
+  <Step title="Run a job">
+    Navigate to your function on the [Sieve dashboard](https://www.sievedata.com/dashboard) and upload a sample file to test out your app.
+
+    You can also call your function via [API call](/reference-v2/api/push) or the [Python client](/guide/custom-apps/referencing-functions).
+
+    <Info>Make sure to replace `<your-org-name>` with your org name and `<your-api-key>` with your API key.</Info>
+
+    <CodeGroup>
+    ```bash API
+    curl -X POST \
+      --url https://mango.sievedata.com/v2/push \
+      -H 'X-API-Key: <your-api-key>' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "function": "<org-name>/simple_translation"
+        "inputs": {
+          "file": {"url": "https://storage.googleapis.com/mango-public-models/output1.mp4"},
+          "target_language": "spa"
+        }
+      }'
+    ```
+
+    ```python Python Client
+    import sieve
+
+    simple_translation = sieve.function.get("<your-org-name>/simple_translation")
+
+    # This will create a Sieve job and run in the cloud!
+    output = simple_translation.run(sieve.File(path="./sample.mp4"))
+    print(output)
+    ```
+    </CodeGroup>
+  </Step>
+</Steps>
+
+### **What just happened?**
+
+That was easy! We just built a simple AI translation app in a few lines of code. Let's walk through it.
+
+At its core, we used 2 Sieve functions to build this app:
+- [sieve/speech_transcriber](https://sievedata.com/functions/sieve/speech_transcriber): Transcription model, backed by OpenAI's Whisper model.
+- [sieve/seamless_text2text](https://sievedata.com/functions/sieve/seamless_text2text): Translation model, developed by Meta.
+
+Sieve makes it easy to use any public Sieve functions in the cloud, synchronously or asynchronously. 
+<CodeGroup>
+```python Sync Calls
+# Running transcription syncronously
+transcribe = sieve.function.get("sieve/speech_transcriber")
+transcript = transcribe.run(file)
+```
+
+```python Async Calls
+# Running translation asyncronously
+translate = sieve.function.get("sieve/seamless_text2text")
+translate_job = translate.push(
+    "Hello, how are you?",
+    source_language="eng",
+    target_language="spa"
+)
+
+# translate_job is a Python future, so you can use it in a non-blocking way
+print(translate_job)
+```
+</CodeGroup>
+
+We wrote all of our logic for translating a file in a single function and defined a [custom Sieve function](/guide/custom-apps/deploying-functions) with the `@sieve.function` decorator.
+
+Deploying our function with `sieve deploy` lets us run this function via API and lets us visualize our inputs & outputs via the Sieve dashboard!
+
+## **What's next?**
+
+All you need to get started with Sieve is an [account](https://www.sievedata.com/dashboard). From there, you can decide what you’d like to do next.
+
+<CardGroup cols={3}>
   <Card 
-  title="Pre-built app without Code" 
-  href="/guide/quickstart/explore"
-  icon="database"
+  title="Run AI apps with API"
+  href="https://sievedata.com/explore"
+  icon="image"
   color="#ea5a0c"
   >
-    Run a Pre-built app on Sieve without code!
-  </Card>
-  <Card 
-  title="Pre-built app with Code" 
-  href="/guide/examples/audio-transcription"
-  icon="server"
-  color="#0285c7"
-  >
-    Run a Pre-built app on Sieve with a few lines of code!
+    Run a production ready app on Sieve
   </Card>
   <Card 
   title="Complex Applications" 
@@ -52,22 +175,18 @@ All you need to get started with Sieve is an account which you can sign up for [
   icon="square-terminal"
   color="#16a34a"
   >
-    Building complex applications with multiple models
+    Build complex apps like video dubbing
   </Card>
   <Card 
-  title="Custom Models" 
-  icon="folder"
+  title="Custom Functions" 
+  icon="database"
   href="/guide/custom-apps/deploying-functions"
   >
-    Deploying your own custom models
+    Deploy your own functions
   </Card>
 </CardGroup>
 
-## **[](http://localhost:3000/guide/intro#how-it-works)How it Works**
-
-At its core Sieve is an ML runtime focused on ease-of-use and collaboration. Users can deploy completely custom functions on arbitrary hardware and get access to primitives that make it easy to build increasingly complex applications. On top of the runtime, Sieve offers many production-ready solutions of its own that solve use cases out-of-the-box. The benefit of this is that you don’t need to think about infrastructure, or even which models to deploy if you don’t want to — just the higher level logic of integrating various models into your application.
-
 ## Support
 
-If you need any assistance or have any questions, you can reach out to our support team through our website or by joining our community Slack channel. We are available to help you with any issues or concerns you may have and ensure that your experience with Sieve is smooth and successful.
+If you need any assistance or have any questions, feel free to join our [Discord community](https://discord.com/invite/Pnh97rvRtD). Looking forward to see what you build!
 
