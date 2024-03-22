@@ -63,6 +63,6 @@ After you've defined your code and environment, you'll run `sieve deploy` to dep
 
 When you run a job, Sieve will spin up a container with your function and run your function with the provided arguments. Our autoscaler will tear down the container after the function has finished running. To control idle time and minimum replicas on your function, see the [autoscaling section](/guide/custom-apps/autoscaling).
 
-To monitor the state of your workers in the cloud, reference the `current_workers` field [here](/reference-v2/api/functions/id).
+To monitor the state of your workers in the cloud, reference the `current_workers` field [here](/reference-v2/api/get-function-version).
 
 Jobs are automatically routed to the latest version of your function unless otherwise specified.

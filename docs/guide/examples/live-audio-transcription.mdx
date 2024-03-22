@@ -65,9 +65,9 @@ A common usecase for transcription is transcribing RTMP or HLS livestreams. Let'
         print(segment)
     ```
 
-    The segment output will print as it's being transcribed. You may also push a job via the REST API [here](/reference-v2/api/push) and later poll for outputs with [this endpoint](/reference-v2/api/jobs/get).
+    The segment output will print as it's being transcribed. You may also push a job via the REST API [here](/reference-v2/api/create-new-job) and later poll for outputs with [this endpoint](/reference-v2/api/get-job).
 
-    This is an example of a job that will not cancel automatically as it's processing a stream! To cancel the job once you're done, you may use the `cancel` API linked [here](/reference-v2/api/jobs/cancel). You may also cancel the job via the dashboard.
+    This is an example of a job that will not cancel automatically as it's processing a stream! To cancel the job once you're done, you may use the `cancel` API linked [here](/reference-v2/api/cancel-job). You may also cancel the job via the dashboard.
   </Step>
 </Steps>
 
