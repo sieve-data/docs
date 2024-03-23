@@ -11,10 +11,12 @@ cd docs && mintlify dev
 API docs are generated from our OpenAPI spec. Run `make docs` with `SIEVE_API_URL` set to regenerate API documentation.
 
 ## TODO
+* We still show `sieve.Array` and others in our v2 reference. Should remove at some point.
 * Add some docs about `yield` vs `return`
     * We currently `yield` in many of the walkthroughs, but no detailed explanations 
 * Potentially add some more details about default values and `kwargs`
 * Add more detail to autoscaling section after redesign (@wizgrao)
+* Remove v1 endpoints at some point
 * Add section on file caching behavior (@aupadhyay)
 * Describe error handling / split out function lifecycle when implemented (@aupadhyay)
 * Fix error codes section once consolidated in code

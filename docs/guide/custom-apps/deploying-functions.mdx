@@ -21,6 +21,8 @@ def foo(a):
 	return a + 1
 ```
 
+<Note>Sieve also supports running functions with a `__setup__` method. This is especially useful for loading models into memory once for many jobs. Learn more about `sieve.Model` [here](/reference-v2/sdk/functions_models).</Note>
+
 To define a custom environment, Sieve lets you specify your Python packages, system packages, and any other build-time commands that you may want to run on function build. 
 
 Here's a quick example of all 3 in action:
@@ -55,7 +57,7 @@ sieve deploy main.py
 
 You'll now see your custom function on the Sieve dashboard and can run jobs via API, Python client, or the dashboard. Keep reading for a deep dive into the function lifecycle and how to monitor your function.
 
-There are loads of other things you can customize including CUDA versions, Python versions, and [more](/reference-v2/sdk/function).
+There are loads of other things you can customize including CUDA versions, Python versions, and [more](/reference-v2/sdk/functions_models).
 
 ## Sieve Function Lifecycle
 
