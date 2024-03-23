@@ -6,133 +6,128 @@ description: "Build a video dubbing Sieve app"
 In this example, we will explore a more complex use case of Sieve. We’ll create an application that automatically dubs a video of a person speaking into another language! We’ll take an input video, transcribe it, translate that text to another language, generate text-to-speech of that translated text, and have the original video lipsync to the new audio.
 
 By following this, you will learn how to:
-
-- Use the Sieve client package to call multiple existing functions in pure Python
-- Combine these functions to create a customized app that meets your requirements
+- Use the Sieve client package to call multiple existing functions in Python
+- Combine these functions to create a customized app that meets our requirements
 
 ## **Introduction**
 
 As mentioned above, to create an app that can dub videos, we need several models to work together:
 
-1. ****************WhisperX****************: an audio transcription model
-2. ************************SeamlessT2T:************************ a text-to-text translation model
-3. ******************XTTS-V1:****************** a text-to-speech model
-4. ******************************************Sieve Video Retalker:****************************************** an optimized version of video retalker for lipsyncing
-
-## **Using the python client**
-
-Ensure that the Sieve python package is installed on your system by executing the following command.
-
-```python
-pip show sievedata
-```
-
-If installed successfully, you will see an output detailing the package's version, summary, dependencies, etc. If it isn’t, please follow installation instructions linked here.
+1. **WhisperX**: an audio transcription model
+2. **SeamlessT2T**: a text-to-text translation model
+3. **XTTS-V1**: a text-to-speech model
+4. **Sieve Video Retalker**: an optimized version of video retalker for lipsyncing
 
 ## Building **the app from scratch**
 
-Create a new Python file named **`video_dubbing.py`** with the following command:
+<Steps>
+  <Step title="Set up folder and Python file">
+    Create a folder and Python file named **`video_dubbing.py`** with the following command:
+    
+    ```bash
+    mkdir video_dubbing
+    touch video_dubbing/pipeline.py
+    ```
+    
+  </Step>
 
-```bash
-touch video_dubbing.py
-```
+  <Step title="Set up pipeline">
+    Paste the following code into `pipeline.py`. The higher level logic of this code is as follows:
+    1. Extract audio from the video
+    2. Transcribe the audio
+    3. Translate the transcript
+    4. Generate new audio from the translated text
+    5. Combine audio and video with our lipsyncer
 
-Then, paste the following code into `video_dubbing.py`. This function uses other models that have already been deployed to Sieve that you can run almost like you're running them locally. The function calls that use `.run()`, such as `transcriber.run(source_audio)` are executed on the Sieve cloud.
+    ```python
+    import sieve
 
-The higher level logic of this code is as follows:
-- Extract audio from the video
-- Transcribe the audio
-- Translate the transcript
-- Generate new audio from the translated text
-- Combine audio and video with our lipsyncer
+    # Helper functions
+    def extract_audio(source_video: sieve.Video):
+        import subprocess
+        audio_path = 'temp.wav'
+        subprocess.run(["ffmpeg", "-i", source_video.path, audio_path, "-y"])
+        return sieve.Audio(path=audio_path)
 
-```python
-import sieve
+    def transcript_to_text(transcript):
+        text = " ".join([segment["text"] for segment in transcript])
+        return text
 
-def extract_audio(source_video: sieve.Video):
-    import subprocess
-    audio_path = 'temp.wav'
-    subprocess.run(["ffmpeg", "-i", source_video.path, audio_path, "-y"])
-    return sieve.Audio(path=audio_path)
+    @sieve.function(
+        name="video_dubbing",
+        python_packages=[
+            "numpy>=1.19.0",
+        ],
+        system_packages=["ffmpeg"],
+    )
+    def video_dubbing(source_video: sieve.Video, language: str):
+        """
+        :param source_video: The video to dub
+        :param language: The language to dub the video in
+        :return: The dubbed video
+        """
 
-def transcript_to_text(transcript):
-    text = " ".join([segment["text"] for segment in transcript])
-    return text
+        print("extracting audio from video")
+        source_audio = extract_audio(source_video)
+        print("done extracting")
 
-@sieve.function(
-    name="video-dubber",
-    python_packages=[
-        "numpy>=1.19.0",
-    ],
-    system_packages=["ffmpeg"],
-)
-def video_dubbing(source_video: sieve.Video, language: str):
-    """
-    :param source_video: The video to dub
-    :param language: The language to dub the video in
-    :return: The dubbed video
-    """
+        # check if language is supported
+        if language not in ["english", "spanish", "french", "german", "italian", "portuguese", "polish", "turkish", "russian", "dutch", "czech", "arabic", "chinese"]:
+            raise Exception("Language not supported")
 
-    print("extracting audio from video")
-    # Extract audio from video
-    source_audio = extract_audio(source_video)
-    print("done extracting")
+        # use remote Sieve functions
+        transcriber = sieve.function.get("sieve/speech_transcriber")
+        translator = sieve.function.get("sieve/seamless_text2text")
+        tts = sieve.function.get("sieve/xtts")
+        lipsyncer = sieve.function.get("sieve/video_retalking")
 
-    # check if language is supported
-    if language not in ["english", "spanish", "french", "german", "italian", "portuguese", "polish", "turkish", "russian", "dutch", "czech", "arabic", "chinese"]:
-        raise Exception("Language not supported")
+        print("transcribing audio")
+        transcript = list(transcriber.run(source_audio))
+        text = transcript_to_text(transcript)
+        text_language = "english"
+        print("transcription:", text)
 
-    # use remote sieve models
-    transcriber = sieve.function.get("sieve/speech_transcriber")
-    translator = sieve.function.get("sieve/seamless_text2text")
-    tts = sieve.function.get("sieve/xtts")
-    lipsyncer = sieve.function.get("sieve/video_retalking")
+        print("translating text")
+        translated_text = translator.run(text, text_language, language)
+        print("translated text:", translated_text)
 
-    print("transcribing audio")
-    # transcribe audio
-    transcript = list(transcriber.run(source_audio))
-    text = transcript_to_text(transcript)
-    text_language = "english"
-    print("transcription:", text)
+        print("generating tts audio")
+        target_audio = tts.run(translated_text, source_audio, stability=0.5, similarity_boost=0.5)
+        print("done generating audio")
 
-    print("translating text")
-    # Translate text
-    translated_text = translator.run(text, text_language, language)
-    print("translated text:", translated_text)
+        print("starting lipsync")
+        return lipsyncer.run(source_video, target_audio)
 
-    print("generating tts audio")
-    # Generate new audio from translated text
-    target_audio = tts.run(translated_text, source_audio, stability=0.5, similarity_boost=0.5)
-    print("done generating audio")
+    if __name__ == "__main__":
+        video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
+        dubbed_video = video_dubbing.run(video, "spanish")
+        print('dubbed video path: ', dubbed_video.path)
+    ```
+  </Step>
 
-    print("starting lipsync")
-    # Combine audio and video with Retalker
-    return lipsyncer.run(source_video, target_audio)
+  <Step title="Run the pipeline">
+    <Warning>Make sure you're in the `video_dubbing` directory before running the pipeline.</Warning>
+    Run the pipeline with the following command. Because we are running our function with `video_dubbing.run`, where `video_dubbing` is the local Sieve function, this will deploy the Sieve function and then run a job.
 
-if __name__ == "__main__":
-    video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
-    dubbed_video = video_dubbing.run(video, "spanish")
-    print('dubbed video path: ', dubbed_video.path)
-```
+    ```bash
+    python pipeline.py
+    ```
+    
+    You should start seeing some logs streaming in. You can also view the status of this job on the Sieve dashboard. After it has completed running, you'll see a video file path printed to the console, which has been saved to a temporary directory. You can open this video to see the results.
+  </Step>
 
-Now let's run the code. This will deploy your function to Sieve and call it with the video we provided.
+  <Step title="View your dubbed file!">
+    Open your video in your file explorer with the following command:
+    <CodeGroup>
+      ```bash Linux/MacOS
+      open <video_path>
+      ```
 
-```bash
-python video_dubbing.py
-```
+      ```bash Windows
+      start <video_path>
+      ```
+    </CodeGroup>
 
-You should start seeing some logs streaming in. You can also view the status of this job on the Sieve dashboard. After it has completed running, you'll see a video file path printed to the console, which has been saved to a temporary directory. You can open this video to see the results.
-
-On MacOS, you can open the video with the following command:
-
-```bash
-open <video_path>
-```
-
-On Windows, you can open the video with the following command:
-
-```bash
-start <video_path>
-```
-
-Or just view the video on the Sieve dashboard!
+    Or just view the video on the Sieve dashboard!
+  </Step>
+</Steps>

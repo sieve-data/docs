@@ -46,31 +46,27 @@
     ],
     "navigation": [
         {
-            "group": "Guide",
+            "group": "Introduction",
             "pages": [
                 "guide/intro",
-                "guide/installation/intro",
-                "guide/examples/audio-transcription",
-                "guide/examples/video-dubbing"
+                "guide/public-functions"
             ]
         },
         {
-            "group": "Custom Functions and Models",
+            "group": "Custom Functions & Models",
             "pages": [
                 "guide/custom-apps/deploying-functions",
                 "guide/custom-apps/gpu-acceleration",
-                "guide/examples/yolo-object-detection",
-                "guide/custom-apps/typing-and-metadata",
-                "guide/sieve/inputs-and-outputs",
+                "guide/custom-apps/referencing-functions",
+                "guide/custom-apps/typing", 
                 "guide/custom-apps/autoscaling",
-                "guide/custom-apps/visibility",
                 "guide/custom-apps/using-webhooks"
             ]
         },
         {
-            "group": "Building Complex Applications",
+            "group": "Walkthroughs",
             "pages": [
-                "guide/custom-apps/function-calling-and-references",
+                "guide/examples/audio-transcription",
                 "guide/examples/parallelized-face-detection",
                 "guide/examples/video-dubbing",
                 "guide/examples/live-audio-transcription"
@@ -129,9 +125,6 @@
                         "reference-v1/api/push",
                         "reference-v1/api/jobs/get",
                         "reference-v1/api/jobs/list",
-                        "reference-v1/api/workflows/get",
-                        "reference-v1/api/workflows/delete",
-                        "reference-v1/api/workflows/list",
                         "reference-v1/api/models/get",
                         "reference-v1/api/models/list",
                         "reference-v1/api/models/metrics",
@@ -152,6 +145,6 @@
     },
     "footerSocials": {
         "website": "https://www.sievedata.com",
-        "slack": "https://join.slack.com/t/sievecommunity/shared_invite/zt-16yj3jgzb-MUuamHJU7WJPGyFqiOs0MA"
+        "discord": "https://discord.com/invite/Pnh97rvRtD"
     }
 }

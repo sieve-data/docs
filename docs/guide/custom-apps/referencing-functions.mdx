@@ -1,0 +1,40 @@
+---
+title: "Referencing Functions"
+description: "Call deployed functions from anywhere"
+---
+
+Sieve has [many functions available](https://sievedata.com/explore) to reference in your code out of the box. Instead of rewriting the code for popular models and building blocks, you can use shared functions in a few lines.
+
+## Running functions via API
+
+Running any public functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint. Specific information for a public function can be found on the Usage Guide ([sample](https://www.sievedata.com/functions/sieve/autocrop/guide)).
+
+## Running functions in Python
+
+You may also reference & run functions in Python directly. This has a couple key benefits:
+* Calling your function will return a Python object directly in-line rather than JSON
+* Async job handling is handled by default. No need to poll for outputs or job status
+* Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more. 
+
+The Sieve Python client lets you run functions synchronously or asynchroously. Let’s take the Whisper transcription model for example. You can call it synchronously as follows:
+
+```python
+import sieve
+
+audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+transcriber = sieve.function.get("sieve/whisper")
+print(transcriber.run(audio))
+```
+
+You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you’d like to send many requests at once. You can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
+
+```python
+import sieve
+
+audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+transcriber = sieve.function.get("sieve/whisperx")
+
+job = transcriber.push(audio)
+
+print(job.result())
+```

@@ -3,45 +3,35 @@ title: "Deploying Functions"
 description: "Customize and deploy your own Sieve function"
 ---
 
-Sieve functions run on a Debian-based OS with Python 3.8 by default. Typically, you’ll want to customize this to your own liking, which Sieve let’s you do in a few ways.
+Sieve functions are run in the cloud and are written in Python. Any function deployed on Sieve is automatically available as an API and can also be accessed via the Sieve Python client library.
 
-One thing you’ll typically want to do is add custom python packages, like [opencv](https://pypi.org/project/opencv-python/). To do this, you can add it to a list of packages as follows under the `python_packages` tag.
+These functions can be treated as normal Python functions and can be used to pipeline other functions together, deploy custom ML models on cloud GPUs, or arbitrary Python code in the cloud.
+
+## Defining a Sieve Function
+
+To run a function in the cloud, we need to define both:
+- the Python function to run itself
+- its runtime / environment
+
+Defining a Sieve function is as simple as adding the `@sieve.function` decorator on top of your Python function and running `sieve deploy` in your directory. 
 
 ```python
-@sieve.function(
-	name="hello",
-	python_packages=[
-		"opencv-python"
-	]
-)
-def hello(img: sieve.Image) -> sieve.Image:
-	import cv2
-	...
+@sieve.function(name="foo")
+def foo(a):
+	return a + 1
 ```
 
-In the same way, you can also specify custom system packages that will get `apt-install`-ed.
+<Note>Sieve also supports running functions with a `__setup__` method. This is especially useful for loading models into memory once for many jobs. Learn more about `sieve.Model` [here](/reference-v2/sdk/functions_models).</Note>
+
+To define a custom environment, Sieve lets you specify your Python packages, system packages, and any other build-time commands that you may want to run on function build. 
+
+Here's a quick example of all 3 in action:
 
 ```python
-@sieve.function(
-	name="hello",
-	python_packages=[
-		"opencv-python"
-	],
-	system_packages=[
-		"ffmpeg"
-	]
-)
-def hello(img: sieve.Image) -> sieve.Image:
-	import subprocess
-	subprocess.run(["ffmpeg", "-h"])
-	...
-```
+# my_sieve_func/main.py
 
-Sieve also let’s you specify custom shell commands for example if you want to download model weights or anything else to the container before it runs.
-
-```python
 @sieve.function(
-	name="hello",
+	name="my_custom_function",
 	python_packages=[
 		"opencv-python"
 	],
@@ -50,19 +40,31 @@ Sieve also let’s you specify custom shell commands for example if you want to 
 	],
 	run_commands=[
 		"mkdir -p /root/.cache/models/",
-    "wget -c 'https://whisperx.s3.eu-west-2.amazonaws.com/model_weights/segmentation/0b5b3216d60a2d32fc086b47ea8c67589aaeb26b7e07fcbe620d6d0b83e209ea/pytorch_model.bin' -P /root/.cache/models/"
 	]
 )
-def hello(img: sieve.Image) -> sieve.Image:
-	import subprocess
-	subprocess.run(["ffmpeg", "-h"])
-	...
+def my_custom_function(a: int,  b: int) -> int:
+	import cv2 # This will be installed in your cloud function and can be imported here
+
+	return a + b
 ```
 
-You can deploy your function to the sieve cloud by using the `deploy` command:
-```python
-sieve deploy
-```
-Make sure your sieve cli is authenticated by following the instructions [here](/guide/installation/intro).
+To deploy & build this function to use on the Sieve platform, you can simply run:
 
-There are loads of other things you can customize including CUDA versions, python versions, and more which you can read more about [here](/reference-v2/sdk/function).
+```bash
+cd my_sieve_func
+sieve deploy main.py
+```
+
+You'll now see your custom function on the Sieve dashboard and can run jobs via API, Python client, or the dashboard. Keep reading for a deep dive into the function lifecycle and how to monitor your function.
+
+There are loads of other things you can customize including CUDA versions, Python versions, and [more](/reference-v2/sdk/functions_models).
+
+## Sieve Function Lifecycle
+
+After you've defined your code and environment, you'll run `sieve deploy` to deploy your function to the cloud. On deployment, Sieve will install your Python & system packages, run your build commands, and package your environment and code as a container.
+
+When you run a job, Sieve will spin up a container with your function and run your function with the provided arguments. Our autoscaler will tear down the container after the function has finished running. To control idle time and minimum replicas on your function, see the [autoscaling section](/guide/custom-apps/autoscaling).
+
+To monitor the state of your workers in the cloud, reference the `current_workers` field [here](/reference-v2/api/get-function-version).
+
+Jobs are automatically routed to the latest version of your function unless otherwise specified.
