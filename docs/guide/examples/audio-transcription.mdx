@@ -26,18 +26,7 @@ Audio transcription helps transcribe audio to spoken word, which can be useful f
     ```
   </Step>
   <Step title="Create transcriber script">
-    Create a new Python file named **`transcriber.py`**:
-
-    ```bash
-    touch transcriber.py
-    ```
-
-    Paste the following code into **`transcriber.py`** that:
-
-    - Initializes a Sieve typed audio object and passes a URL to it (you can also pass a local path)
-    - Gets a remote function by reference for audio transcription
-    - Synchronously executes that remote function using `.run()`
-    - Prints out the transcription
+    Create a new Python file named `transcriber.py` with the following code:
 
     ```python
     import sieve
@@ -54,6 +43,12 @@ Audio transcription helps transcribe audio to spoken word, which can be useful f
     if __name__ == '__main__':
         transcribe_audio()
     ```
+
+    This Python script:
+    - Initializes a Sieve typed audio object and passes a URL to it (you can also pass a local path)
+    - Gets a remote function by reference for audio transcription
+    - Synchronously executes that remote function using `.run()`
+    - Prints out the transcription
   </Step>
 
   <Step title="Execute the code">

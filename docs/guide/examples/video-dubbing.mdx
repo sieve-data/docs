@@ -68,7 +68,6 @@ As mentioned above, to create an app that can dub videos, we need several models
         """
 
         print("extracting audio from video")
-        # Extract audio from video
         source_audio = extract_audio(source_video)
         print("done extracting")
 
@@ -83,24 +82,20 @@ As mentioned above, to create an app that can dub videos, we need several models
         lipsyncer = sieve.function.get("sieve/video_retalking")
 
         print("transcribing audio")
-        # transcribe audio
         transcript = list(transcriber.run(source_audio))
         text = transcript_to_text(transcript)
         text_language = "english"
         print("transcription:", text)
 
         print("translating text")
-        # Translate text
         translated_text = translator.run(text, text_language, language)
         print("translated text:", translated_text)
 
         print("generating tts audio")
-        # Generate new audio from translated text
         target_audio = tts.run(translated_text, source_audio, stability=0.5, similarity_boost=0.5)
         print("done generating audio")
 
         print("starting lipsync")
-        # Combine audio and video with Retalker
         return lipsyncer.run(source_video, target_audio)
 
     if __name__ == "__main__":

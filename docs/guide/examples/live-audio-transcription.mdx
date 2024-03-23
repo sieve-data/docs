@@ -29,9 +29,9 @@ A common usecase for transcription is transcribing RTMP or HLS livestreams. Let'
   <Step title="Deploy custom function">
     The code we'll be deploying can be found at `examples/audio_transcription/live_transcriber.py`.
 
-    This is an example ofa custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities.
+    This is an example of a custom function to Sieve that can ingest a livestream and pass it into other functions using Sieve's function calling capabilities.
 
-    We won't dive too deep into what the code does but at a high level it:
+    At a high level, this module does the following:
     1. Imports necessary libraries and modules.
     2. Loads the `sieve/whisperx` model and `sieve/seamless_text2text` model for translation.
     3. Takes in audio from `ffmpeg` at a specified chunk size, splits by the last silence in the audio to prevent splitting words.

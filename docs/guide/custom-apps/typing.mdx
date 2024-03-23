@@ -12,11 +12,15 @@ Sieve jobs can be run in 2 ways -- via the API or the Python client. Some Python
 	- `sieve.File`: a generic file object, used to pass references through Sieve functions
 	- `sieve.Image`, `sieve.Video`, `sieve.Audio`: special file objects, optimized for images, videos, and audio
 
-**Inputs:** If your function is not typed, we allow you to pass in any Python object via the client (and any JSON-encodable input from the API). For example, you can run an untyped function with a `pandas.DataFrame` as input via the client, but this wouldn't be possible from the API without implementing a custom JSON encoder/decoder in your function code.
+<Accordion title="Aside: Untyped function handling">
+
+**Inputs:** If your function is not typed, we allow you to pass in any Python object via the client (and any JSON-encodable input from the API). For example, you can run an untyped function with a `pandas.DataFrame` as input via Python, but this wouldn't be possible from the API without implementing a custom JSON encoder/decoder in your function code.
 
 **Outputs:** When fetching job outputs from the API, we automatically try to JSON encode your function's return value. If your function is typed, we will use the type to determine how to encode the output. If your function is not typed, we will use the default JSON encoder. From the Python client, we always return the direct Python object.
 
-Types also allow Sieve to render auto-generated UIs that can be used to run these functions via the dashboard. You may also include [Sphinx docs](https://www.sphinx-doc.org/) with each function to show descriptions with each of your inputs.
+</Accordion>
+
+Types allow Sieve to render auto-generated UIs that can be used to run these functions via the dashboard. You may also include [Sphinx docs](https://www.sphinx-doc.org/) with each function to show descriptions with each of your inputs.
 
 Here's an example of a typed function with a description for the input:
 
@@ -25,7 +29,7 @@ import sieve
 
 @sieve.function(
     name="audio_extractor",
-		system_packages=["ffmpeg"]
+	system_packages=["ffmpeg"]
 )
 class fn(video: sieve.Video) -> sieve.Audio:
 	"""
@@ -52,7 +56,7 @@ curl -X POST \
 
 ```python Python Client
 import sieve
-audio_extractor = sieve.function.get("<org>/audio_extractor")
+audio_extractor = sieve.function.get("<org-name>/audio_extractor")
 
 # Run the function with a video file
 audio = audio_extractor.run(sieve.Video("path/to/video.mp4"))
@@ -77,8 +81,8 @@ metadata = sieve.Metadata(
 
 @sieve.function(
     name="audio_extractor",
-		system_packages=["ffmpeg"],
-		metadata=metadata
+	system_packages=["ffmpeg"],
+	metadata=metadata
 )
 class fn(video: sieve.Video) -> sieve.Audio:
 	"""

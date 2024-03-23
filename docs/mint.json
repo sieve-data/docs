@@ -48,7 +48,8 @@
         {
             "group": "Introduction",
             "pages": [
-                "guide/intro"
+                "guide/intro",
+                "guide/public-functions"
             ]
         },
         {

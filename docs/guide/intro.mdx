@@ -148,7 +148,8 @@ translate_job = translate.push(
 )
 
 # translate_job is a Python future, so you can use it in a non-blocking way
-print(translate_job)
+print(translate_job) # <Future at 0x7f8e3c3e3e50 state=running>
+print(translate_job.result()) # "Hola, ¿cómo estás?"
 ```
 </CodeGroup>
 
