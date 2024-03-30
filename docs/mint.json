@@ -86,8 +86,7 @@
                         "reference-v2/api/list-function-jobs",
                         "reference-v2/api/get-job",
                         "reference-v2/api/cancel-job",
-                        "reference-v2/api/list-jobs",
-                        "reference-v2/api/webhook"
+                        "reference-v2/api/list-jobs"
                     ]
                 },
                 {
