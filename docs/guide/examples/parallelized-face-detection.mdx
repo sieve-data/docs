@@ -12,13 +12,12 @@ import sieve
 
 @sieve.function(
     name="video_face_detector",
-    python_packages=["ffmpeg-python==0.2.0"],
-    system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
+    system_packages=["ffmpeg"],
 )
-def vfd(video: sieve.Video):
+def detector(video: sieve.Video):
     """
     :param video: a video to process
-    :return: a bunch of face coordinates
+    :return: a bunch of face coordinates, yielded
     """
     return
 ```
@@ -34,6 +33,11 @@ import concurrent.futures
     system_packages=["ffmpeg"],
 )
 def detector(video: sieve.Video):
+    """
+    :param video: a video to process
+    :return: a bunch of face coordinates, yielded
+    """
+
     import os
     import subprocess
     import glob
@@ -52,7 +56,7 @@ def detector(video: sieve.Video):
     os.makedirs(temp_dir, exist_ok=True)
 
     # extract frames from video
-    subprocess.run(["ffmpeg", "-i", video_path, "-qscale:v", "2", f"{temp_dir}/%06d.jpg"])
+    subprocess.run(["ffmpeg", "-i", video_path, "-qscale:v", "2", f"{temp_dir}/%06d.jpg", '-loglevel', 'error'])
 
     # get list of frames
     frames = glob.glob(f"{temp_dir}/*.jpg")
@@ -66,7 +70,7 @@ def detector(video: sieve.Video):
     os.makedirs(output_dir, exist_ok=True)
 
     # start joining frames back together as they finish
-    imgs = [sieve.Image(path=frame) for frame in frames]
+    imgs = [sieve.File(path=frame) for frame in frames]
     with concurrent.futures.ThreadPoolExecutor() as executor:
         count = 0
         for job in executor.map(face_detector.push, imgs):
@@ -74,7 +78,7 @@ def detector(video: sieve.Video):
             res = list(job.result())
             yield {
                 "frame_number": count,
-                "boxes": res[1]
+                "boxes": res[0]["boxes"],
             }
             print(f"Detected faces in frame {count} in {time.time() - t} seconds")
             count += 1
