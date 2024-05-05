@@ -53,9 +53,9 @@ A common usecase for transcription is transcribing RTMP or HLS livestreams. Let'
     import sieve
 
     url = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service" # Public BBC service
-    language = "eng" # If this language is different from the stream, translation will happen automatically
+    language = "en" # If this language is different from the stream, translation will happen automatically
 
-    live_speech_transcriber = sieve.function.get("{your_org}/live_transcriber")
+    live_speech_transcriber = sieve.function.get("sieve-internal/live_speech_transcriber")
     output = live_speech_transcriber.push(url, target_language=language)
 
     print(f"Started job with id {output.job['id']}")
