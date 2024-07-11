@@ -7,6 +7,8 @@ description: "Webhooks provide a way for notifications to be delivered to an ext
 
 As an alternative to polling the Sieve API for a job to complete, webhooks allow Sieve to notify your API when results are ready. This eliminates unnecessary requests made by polling, and can get results back faster. In addition, webhooks can be triggered by the Sieve website, which can enable complex workflows with an accessible interface.
 
+Webhooks in Sieve are sent as POST requests and are sent once regardless of the status of the response. We currently don't provide a signature to verify sender, but it is a feature we are looking into.
+
 ## **Event types**
 
 See the [API reference](/reference-v2/api/create-new-job#webhooks) for all event types and response information.
