@@ -24,7 +24,9 @@
             "method": "key",
             "name": "X-API-Key"
         },
-        "baseUrl": ["https://mango.sievedata.com"]
+        "baseUrl": [
+            "https://mango.sievedata.com"
+        ]
     },
     "topbarLinks": [
         {
@@ -58,7 +60,7 @@
                 "guide/custom-apps/deploying-functions",
                 "guide/custom-apps/gpu-acceleration",
                 "guide/custom-apps/referencing-functions",
-                "guide/custom-apps/typing", 
+                "guide/custom-apps/typing",
                 "guide/custom-apps/autoscaling",
                 "guide/custom-apps/using-webhooks"
             ]
@@ -86,7 +88,8 @@
                         "reference-v2/api/list-function-jobs",
                         "reference-v2/api/get-job",
                         "reference-v2/api/cancel-job",
-                        "reference-v2/api/list-jobs"
+                        "reference-v2/api/list-jobs",
+                        "reference-v2/api/get-job-cost"
                     ]
                 },
                 {
@@ -134,7 +137,9 @@
         },
         {
             "group": "Errors",
-            "pages": ["error-codes"]
+            "pages": [
+                "error-codes"
+            ]
         }
     ],
     "feedback": {
