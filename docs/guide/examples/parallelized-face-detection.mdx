@@ -14,7 +14,7 @@ import sieve
     name="video_face_detector",
     system_packages=["ffmpeg"],
 )
-def detector(video: sieve.Video):
+def detector(video: sieve.File):
     """
     :param video: a video to process
     :return: a bunch of face coordinates, yielded
@@ -32,7 +32,7 @@ import concurrent.futures
     name="video_face_detector",
     system_packages=["ffmpeg"],
 )
-def detector(video: sieve.Video):
+def detector(video: sieve.File):
     """
     :param video: a video to process
     :return: a bunch of face coordinates, yielded
@@ -87,7 +87,7 @@ def detector(video: sieve.Video):
     shutil.rmtree(temp_dir)
 
 if __name__=="__main__":
-    video = sieve.Video(url="https://storage.googleapis.com/mango-public-models/david.mp4")
+    video = sieve.File(url="https://storage.googleapis.com/mango-public-models/david.mp4")
 
     # Calling detector.run both deploys and runs the current version of your code
     for detection in detector.run(video):

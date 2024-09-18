@@ -21,7 +21,7 @@ You can specify one of these in code as follows.
 	name="gpu_function",
 	gpu=sieve.gpu.T4()
 )
-def runs_on_gpu(video: sieve.Video) -> sieve.Video:
+def runs_on_gpu(video: sieve.File) -> sieve.File:
 	...
 ```
 
@@ -34,7 +34,7 @@ By default, Sieve will allocate an entire GPU for your function worker to use. E
 	name="gpu_function_sharing",
 	gpu=sieve.gpu.T4(split=3)
 )
-def runs_on_gpu(video: sieve.Video) -> sieve.Video:
+def runs_on_gpu(video: sieve.File) -> sieve.File:
 	...
 ```
 

@@ -12,15 +12,18 @@ class File(sieve.Struct):
 
 A type that represents a file.
 
-## Constructor Arguments
+## Constructor Optional Arguments
 - `url` (str): The URL of the file to download.
 - `path` (str): The local path to the file.
 
-
-A `File` can be instantiated in two ways, either by providing a local file path, or an external url.
+A `File` can be instantiated in two ways, either by providing a local file path, or an external url. You can either pass them in as positional arguments or as keyword arguments to path or url.
 
 ```python
 import sieve
+
+# Instantiate a sieve File with implied path or url
+local_file = sieve.File("path/to/file.txt")
+external_file = sieve.File("example.com/file.txt")
 
 # Instantiate a sieve File with a local file path
 local_file = sieve.File(path="path/to/file.txt")
@@ -28,8 +31,31 @@ local_file = sieve.File(path="path/to/file.txt")
 # Instantiate a sieve File with a url
 external_file = sieve.File(url="example.com/file.txt")
 
-## Properties
 ```
+
+## Properties
+
+### url
+
+```python
+url: str
+```
+
+The url of the file, if it exists. This will return None if the file refers to something on the local filesystem.
+
+```python
+
+import sieve
+
+# Instantiate a File with a url
+my_external_file = sieve.File(url="example.com/file.txt")
+my_local_file = sieve.File("path/to/file.txt")
+
+# Download the file, open it, and read the contents
+print(my_external_file.url) # prints "example.com/file.txt"
+print(my_local_file.url) # prints None
+
+
 ### path
 ```python
 @property

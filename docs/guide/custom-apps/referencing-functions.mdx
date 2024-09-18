@@ -21,7 +21,7 @@ The Sieve Python client lets you run functions synchronously or asynchroously. L
 ```python
 import sieve
 
-audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+audio = sieve.File(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
 transcriber = sieve.function.get("sieve/whisper")
 print(transcriber.run(audio))
 ```
@@ -31,7 +31,7 @@ You can also `push` to a queue of a function and wait for the request to complet
 ```python
 import sieve
 
-audio = sieve.Audio(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
+audio = sieve.File(url="https://storage.googleapis.com/sieve-public-data/assets/audio.mp3")
 transcriber = sieve.function.get("sieve/whisperx")
 
 job = transcriber.push(audio)
