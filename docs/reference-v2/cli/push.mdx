@@ -17,7 +17,7 @@ sieve push [OPTIONS] FUNCTION_NAME INPUTS
 - `INPUTS` JSON string representing the inputs to the function.
 
 ## Example
-A function named `sample_function` that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following command:
+A function named `sample_function` that takes in a `sieve.File` named `video` and a `sieve.File` named `image` would be triggered with the following command:
 ```bash
 sieve push sample_function '{"video": {"url": "{SOME_VIDEO_URL}"}, "image": {"url": "{SOME_IMAGE_URL}"}}'
 ```

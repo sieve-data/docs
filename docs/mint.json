@@ -108,11 +108,7 @@
                     "pages": [
                         "reference-v2/sdk/intro",
                         "reference-v2/sdk/functions_models",
-                        "reference-v2/sdk/types/file",
-                        "reference-v2/sdk/types/array",
-                        "reference-v2/sdk/types/image",
-                        "reference-v2/sdk/types/video",
-                        "reference-v2/sdk/types/audio"
+                        "reference-v2/sdk/types/file"
                     ]
                 }
             ]

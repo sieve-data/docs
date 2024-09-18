@@ -10,7 +10,6 @@ Sieve jobs can be run in 2 ways -- via the API or the Python client. Some Python
 - All Python primitives (`str`, `int`, `float`, `bool`, `dict`, `list`)
 - Sieve types (see [SDK reference](/reference-v2/sdk/types/file))
 	- `sieve.File`: a generic file object, used to pass references through Sieve functions
-	- `sieve.Image`, `sieve.Video`, `sieve.Audio`: special file objects, optimized for images, videos, and audio
 
 <Accordion title="Aside: Untyped function handling">
 
@@ -31,7 +30,7 @@ import sieve
     name="audio_extractor",
 	system_packages=["ffmpeg"]
 )
-class fn(video: sieve.Video) -> sieve.Audio:
+class fn(video: sieve.File) -> sieve.File:
 	"""
 	:param video: a video to extract audio from
 	"""
@@ -59,12 +58,12 @@ import sieve
 audio_extractor = sieve.function.get("<org-name>/audio_extractor")
 
 # Run the function with a video file
-audio = audio_extractor.run(sieve.Video("path/to/video.mp4"))
+audio = audio_extractor.run(sieve.File("path/to/video.mp4"))
 print(audio.path)
 ```
 </CodeGroup>
 
-You may also view this function in the dashboard and upload files for the `sieve.Video` input directly, making it easy to share with others on your team.
+You may also view this function in the dashboard and upload files for the `sieve.File` input directly, making it easy to share with others on your team.
 
 
 ## Metadata
@@ -84,10 +83,10 @@ metadata = sieve.Metadata(
 	system_packages=["ffmpeg"],
 	metadata=metadata
 )
-class fn(video: sieve.Video) -> sieve.Audio:
+class fn(video: sieve.File) -> sieve.File:
 	"""
 	:param video: a video to extract audio from
-	:return: the extracted audio
+	:return: the extracted audio as a sieve File
 	"""
 	...
 ```

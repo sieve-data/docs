@@ -45,8 +45,10 @@ class Yolo:
     import torch
     self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5l')
 
-  def __predict__(self, img: sieve.Image) -> List:
-    results = self.yolo_model(img.array)
+  def __predict__(self, img: sieve.File) -> List:
+    import cv2
+    img_arr = cv2.imread(img.path)
+    results = self.yolo_model(img_arr)
     outputs = []
     for pred in reversed(results.pred):
       for *box, conf, cls in reversed(pred):
