@@ -55,7 +55,7 @@
             ]
         },
         {
-            "group": "Custom Functions & Models",
+            "group": "Custom Functions",
             "pages": [
                 "guide/custom-apps/deploying-functions",
                 "guide/custom-apps/gpu-acceleration",
