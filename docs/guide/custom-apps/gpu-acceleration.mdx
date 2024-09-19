@@ -25,6 +25,18 @@ def runs_on_gpu(video: sieve.File) -> sieve.File:
 	...
 ```
 
+The CUDA version can be specified with the `cuda_version` parameter in the function decorator. The full list of possible CUDA versions can be found [here](/reference-v2/sdk/functions_models#cuda-versions).
+
+```python
+@sieve.function(
+    name="gpu_function_cuda",
+    gpu=sieve.gpu.T4(),
+    cuda_version="12.1"
+)
+def runs_on_gpu(video: sieve.File) -> sieve.File:
+	...
+```
+
 ## GPU Sharing
 
 By default, Sieve will allocate an entire GPU for your function worker to use. Each worker runs one prediction at a time. This way, your worker is guaranteed to have the entire GPU to use for the duration of a function call. However, some workloads may not require the use of an entire GPU. You can use the optional `split` argument in the GPU constructor to tell Sieve to let multiple workers share the same GPU. For example, the following would tell sieve to allocate 3 workers per GPU:
@@ -69,20 +81,17 @@ import sieve
     system_packages=["libgl1-mesa-glx", "libglib2.0-0", "ffmpeg"],
     python_version="3.10",
 )
-class Yolo(
-    image: sieve.File,
-    threshold: float = 0.5
-):
-	def __setup__(self):
-		import torch
-		self.model = YOLO('yolov8l.pt')
+class Yolo:
+    def __setup__(self):
+        from ultralytics import YOLO
+        self.model = YOLO('yolov8l.pt')
 
-	def __predict__(self, img: sieve.File) -> list:
-		preds = model.predict(img.path)
-		all_boxes = []
-		for pred in preds:
-			all_boxes.append(pred.boxes.xyxy.cpu().numpy().tolist())
-    	return all_boxes
+    def __predict__(self, img: sieve.File) -> list:
+        preds = self.model(img.path)
+        all_boxes = []
+        for pred in preds:
+            all_boxes.append(pred.boxes.xyxy.cpu().numpy().tolist())
+        return all_boxes
 ```
   </Step>
 
