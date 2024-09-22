@@ -1,5 +1,5 @@
 ---
-title: "Using Webhooks"
+title: "Integrating Webhooks"
 description: "Webhooks provide a way for notifications to be delivered to an external web server when a Sieve job completes."
 ---
 
@@ -19,7 +19,7 @@ The website [webhook.site](https://webhook.site/) provides a great way to test w
 
 Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
 
-```python
+```bash
   curl 'https://mango.sievedata.com/v2/push' \
   -H 'X-API-Key: <your api key>' \
   --data-raw '{

@@ -1,6 +1,6 @@
 ---
-title: "Autoscaling"
-description: "Autoscaling your functions and models on Sieve"
+title: "Autoscaling Functions"
+description: "Control the autoscaling of your Sieve functions."
 ---
 
 Sieve automatically scales functions up and down based on traffic sent to them. The autoscaler implementation is based on job queue length, current replica count, and average setup time (which depends on your container size and setup function). To handle bursty workloads better, we also keep replicas up for some time after a job is completed. For more granular control over this autoscaling behavior, feel free to [reach out](https://discord.com/invite/Pnh97rvRtD)!
@@ -9,4 +9,4 @@ You can configure the minimum and maximum replicas for a function on the functio
 
 ![](https://storage.googleapis.com/sieve-public-data/assets/autoscaling.png)
 
-For use cases where cold starts greatly affect performance, we suggest keeping a few min replicas up. However, your usage does also include idle time (time where your function is not processing any jobs). To track your usage, refer to the [Usage tab](https://sievedata.com/dashboard/usage) in the dashboard.
+For use cases where cold starts greatly affect performance, we suggest keeping a few minimum replicas up. However, your usage does also include idle time (time where your function is not processing any jobs). To track your usage, refer to the [Usage tab](https://sievedata.com/dashboard/usage) in the dashboard.

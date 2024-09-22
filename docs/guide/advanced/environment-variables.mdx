@@ -1,0 +1,127 @@
+---
+title: "Environment Variables"
+description: "Access secrets and global constants as environment variables in custom function."
+---
+
+## **About Environment Variables**
+
+Environment variables allow you to access information uniformly across both public apps on Sieve and custom deployed Sieve functions. These can be accessed through `os.environ`, just like through a local experience. Several public apps, like [Dubbing](https://www.sievedata.com/functions/sieve/dubbing) and [Text-To-Speech](https://www.sievedata.com/functions/sieve/tts), use environment variables to let users supply custom API Keys for external services like OpenAI and ElevenLabs. 
+
+If users set secrets, they will automatically be mapped to the environment variable for any app with a matching name. For more information more information on secrets, click [here](/guide/advanced/secrets).
+
+## **Adding Environment Variables to a Sieve Function**
+
+We can add one or more environment variables to a sieve Function using the header parameter `environment_variables`. 
+
+Each environment variable you would supply is packaged as a `sieve.Env` object, which is structured as follows:
+
+```python
+class Env:
+  name: str # the name of the environment variable (e.g. OPENAI_API_KEY)
+  description: str # what the environment variable is used for in the function
+  default: Optional[str] # a default value for the environment variable, if not provided by the user.
+```
+
+To use environment variables, you would pass in a `list` of `sieve.Env` objects to the `environment_variables` parameter of the header. An example function is pasted below.
+
+```python
+import sieve
+
+@sieve.function(
+  name="test_environment_variables",
+  environment_variables=[
+    sieve.Env(name="OPENAI_API_KEY", description="Used to communication with the OpenAI API."),
+    sieve.Env(name="OPTIONAL_CREDENTIALS", description="An optional credential used for a backup operation.", default="")
+  ],
+)
+def test_environment_variables(a: str) -> bool:
+  import os
+  return (os.environ["OPENAI_API_KEY"] is not "") and (os.environ["OPTIONAL_CREDENTIALS"] is not "")
+```
+
+
+## **Example: Generate an image with Dall-E 3**
+
+Let's build a simple function to generate an image using OpenAI's Dall-E 3 model.
+
+```python
+# openai_image_generator/main.py
+
+import sieve
+
+@sieve.function(
+  name="openai_image_generator",
+  python_packages=[
+    "openai"
+  ],
+)
+def openai_image_generator(prompt: str) -> sieve.File:
+  from openai import OpenAI
+  client = OpenAI()
+
+  response = client.images.generate(
+    model="dall-e-3",
+    prompt=prompt,
+    size="1024x1024",
+    quality="standard",
+    n=1,
+  )
+
+  image_url = response.data[0].url
+
+  return sieve.File(image_url)
+
+```
+
+If you run this function via the Sieve dashboard, you will get an error similar to the following:
+```
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+```
+![](https://storage.googleapis.com/sieve-public-data/assets/keyerror.png)
+
+
+We don't want to leak credentials in our source code, so lets use secrets and environment variables to inject our API key into our function. 
+
+First, sign up for an OpenAI API key [here](https://openai.com/api/).
+
+Then, let's set the API key as an environment variable via the [settings](https://www.sievedata.com/dashboard/settings/secrets) page on the dashboard.
+
+![](https://storage.googleapis.com/sieve-public-data/assets/add_secret.png)
+
+Now let's add an environment variable to the code to make use of this secret.
+
+```python
+# openai_image_generator/main.py
+
+import sieve
+
+@sieve.function(
+  name="openai_image_generator",
+  python_packages=[
+    "openai"
+  ],
+  environment_variables=[
+    sieve.Env(name="OPENAI_API_KEY", description="API key for OpenAI"),
+  ],
+)
+def openai_image_generator(prompt: str) -> sieve.File:
+  from openai import OpenAI
+  client = OpenAI()
+
+  response = client.images.generate(
+    model="dall-e-3",
+    prompt=prompt,
+    size="1024x1024",
+    quality="standard",
+    n=1,
+  )
+
+  image_url = response.data[0].url
+
+  return sieve.File(image_url)
+
+```
+
+And now if you run it on the Sieve dashboard, you should get an output like this!
+
+![](https://storage.googleapis.com/sieve-public-data/assets/dolphin.png)
