@@ -1,13 +1,13 @@
 ---
 title: "Environment Variables"
-description: "Access secrets and global constants as environment variables in custom function."
+description: "Access secrets and global constants as environment variables in a Sieve function."
 ---
 
 ## **About Environment Variables**
 
-Environment variables allow you to access information uniformly across both public apps on Sieve and custom deployed Sieve functions. These can be accessed through `os.environ`, just like through a local experience. Several public apps, like [Dubbing](https://www.sievedata.com/functions/sieve/dubbing) and [Text-To-Speech](https://www.sievedata.com/functions/sieve/tts), use environment variables to let users supply custom API Keys for external services like OpenAI and ElevenLabs. 
+Environment variables allow you to access information uniformly across public apps on Sieve and custom-deployed Sieve functions. These can be accessed through `os.environ`. Several public apps, like [Dubbing](https://www.sievedata.com/functions/sieve/dubbing) and [Text-To-Speech](https://www.sievedata.com/functions/sieve/tts), use environment variables to let users supply custom API Keys for external services like OpenAI and ElevenLabs. 
 
-If users set secrets, they will automatically be mapped to the environment variable for any app with a matching name. For more information more information on secrets, click [here](/guide/advanced/secrets).
+If users set secrets, they will be mapped automatically to any environment variable with a matching name. For more information on secrets, click [here](/guide/advanced/secrets).
 
 ## **Adding Environment Variables to a Sieve Function**
 
@@ -80,7 +80,7 @@ openai.OpenAIError: The api_key client option must be set either by passing api_
 ![](https://storage.googleapis.com/sieve-public-data/assets/keyerror.png)
 
 
-We don't want to leak credentials in our source code, so lets use secrets and environment variables to inject our API key into our function. 
+We don't want to leak credentials in our source code, so let's use secrets and environment variables to inject our API key into our function. 
 
 First, sign up for an OpenAI API key [here](https://openai.com/api/).
 
@@ -88,7 +88,7 @@ Then, let's set the API key as an environment variable via the [settings](https:
 
 ![](https://storage.googleapis.com/sieve-public-data/assets/add_secret.png)
 
-Now let's add an environment variable to the code to make use of this secret.
+Now, let's add an environment variable to the code to use this secret.
 
 ```python
 # openai_image_generator/main.py
@@ -122,6 +122,6 @@ def openai_image_generator(prompt: str) -> sieve.File:
 
 ```
 
-And now if you run it on the Sieve dashboard, you should get an output like this!
+Now, if you run it on the Sieve dashboard, you should get an output like this!
 
 ![](https://storage.googleapis.com/sieve-public-data/assets/dolphin.png)
