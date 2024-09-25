@@ -48,10 +48,11 @@
     ],
     "navigation": [
         {
-            "group": "Introduction",
+            "group": "Getting Started",
             "pages": [
                 "guide/intro",
-                "guide/public-functions"
+                "guide/public-functions",
+                "guide/referencing-functions"
             ]
         },
         {
@@ -59,10 +60,16 @@
             "pages": [
                 "guide/custom-apps/deploying-functions",
                 "guide/custom-apps/gpu-acceleration",
-                "guide/custom-apps/referencing-functions",
                 "guide/custom-apps/typing",
-                "guide/custom-apps/autoscaling",
-                "guide/custom-apps/using-webhooks"
+                "guide/custom-apps/autoscaling"
+            ]
+        },
+        {
+            "group": "Advanced Features",
+            "pages": [
+                "guide/advanced/webhooks",
+                "guide/advanced/secrets",
+                "guide/advanced/environment-variables"
             ]
         },
         {
@@ -83,7 +90,7 @@
                         "reference-v2/api/intro",
                         "reference-v2/api/create-new-job",
                         "reference-v2/api/get-function",
-                        "reference-v2/api/get-function-versions",
+                        "reference-v2/api/list-function-versions",
                         "reference-v2/api/get-function-version",
                         "reference-v2/api/list-function-jobs",
                         "reference-v2/api/get-job",
