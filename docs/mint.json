@@ -58,10 +58,10 @@
         {
             "group": "Custom Functions",
             "pages": [
-                "guide/custom-apps/deploying-functions",
-                "guide/custom-apps/gpu-acceleration",
-                "guide/custom-apps/typing",
-                "guide/custom-apps/autoscaling"
+                "guide/custom-functions/deploying-functions",
+                "guide/custom-functions/gpu-acceleration",
+                "guide/custom-functions/typing",
+                "guide/custom-functions/autoscaling"
             ]
         },
         {

@@ -11,7 +11,14 @@ Webhooks in Sieve are sent as POST requests and are sent once regardless of the 
 
 ## **Event types**
 
-See the [API reference](/reference-v2/api/create-new-job#webhooks) for all event types and response information.
+The following is a full list of all webhook event types. Click the events to see the exact response payload.
+
+| Event                                                                             | Description                                                                   |
+|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| [job.start](/reference-v2/api/models/job_start_webhook)                           | Occurs when a job starts.                                                     |
+| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes, errors, or is cancelled.                                        |
+| [job.complete.no_output](/reference-v2/api/models/job_complete_no_output_webhook) | Occurs when a job completes, errors, or is cancelled -- excludes the output payload from the response. |
+| [job.new_output](/reference-v2/api/models/job_new_output_webhook)                 | Occurs when a job produces a new output.                                      |
 
 ## **Using webhooks via the HTTP API**
 
@@ -53,6 +60,20 @@ f.run(
         }
     ]
 )
+```
+
+```python
+f = sieve.function.get("...")
+future = f.push(
+    target_audio,
+    webhooks=[
+        {
+            "type": "<event type>",
+            "url": "<your webhook url>"
+        }
+    ]
+)
+future.result() # Wait for output, you will receive a webhook after this line completes.
 ```
 
 The code will run as usual, with the added benefit of a webhook being triggered once the job is complete.
