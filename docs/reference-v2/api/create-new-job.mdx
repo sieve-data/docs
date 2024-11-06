@@ -35,12 +35,13 @@ A function that takes in a `string` named `prompt` would be triggered with the f
 
 Webhooks provide a way for notifications to be delivered to an external web server when various events related Sieve jobs occur.
 
-The following is a full list of all webhook event types.
+The following is a full list of all webhook event types. Click the events to see the exact response payload.
 
 | Event                                                                             | Description                                                                   |
 |-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 | [job.start](/reference-v2/api/models/job_start_webhook)                           | Occurs when a job starts.                                                     |
-| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes.                                                  |
-| [job.complete.no_output](/reference-v2/api/models/job_complete_no_output_webhook) | Occurs when a job completes -- excludes the output payload from the response. |
+| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes, errors, or is cancelled.                                        |
+| [job.complete.no_output](/reference-v2/api/models/job_complete_no_output_webhook) | Occurs when a job completes, errors, or is cancelled -- excludes the output payload from the response. |
 | [job.new_output](/reference-v2/api/models/job_new_output_webhook)                 | Occurs when a job produces a new output.                                      |
 
+See the [webhooks guide](/reference-v2/api/create-new-job#webhooks) for more information on webhook integration.

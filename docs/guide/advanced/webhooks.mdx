@@ -7,11 +7,20 @@ description: "Webhooks provide a way for notifications to be delivered to an ext
 
 As an alternative to polling the Sieve API for a job to complete, webhooks allow Sieve to notify your API when results are ready. This eliminates unnecessary requests made by polling, and can get results back faster. In addition, webhooks can be triggered by the Sieve website, which can enable complex workflows with an accessible interface.
 
-Webhooks in Sieve are sent as POST requests and are sent once regardless of the status of the response. We currently don't provide a signature to verify sender, but it is a feature we are looking into.
+Webhooks in Sieve are delivered as POST requests. They are retried up to ten times using exponential backoff until a 200 status code is received.
+
+We currently don't provide a signature to verify sender, but it is a feature we are looking into.
 
 ## **Event types**
 
-See the [API reference](/reference-v2/api/create-new-job#webhooks) for all event types and response information.
+The following is a full list of all webhook event types. Click the events to see the exact response payload.
+
+| Event                                                                             | Description                                                                   |
+|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| [job.start](/reference-v2/api/models/job_start_webhook)                           | Occurs when a job starts.                                                     |
+| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes, errors, or is cancelled.                                        |
+| [job.complete.no_output](/reference-v2/api/models/job_complete_no_output_webhook) | Occurs when a job completes, errors, or is cancelled -- excludes the output payload from the response. |
+| [job.new_output](/reference-v2/api/models/job_new_output_webhook)                 | Occurs when a job produces a new output.                                      |
 
 ## **Using webhooks via the HTTP API**
 
@@ -53,6 +62,20 @@ f.run(
         }
     ]
 )
+```
+
+```python
+f = sieve.function.get("...")
+future = f.push(
+    target_audio,
+    webhooks=[
+        {
+            "type": "<event type>",
+            "url": "<your webhook url>"
+        }
+    ]
+)
+future.result() # Wait for output, you will receive a webhook after this line completes.
 ```
 
 The code will run as usual, with the added benefit of a webhook being triggered once the job is complete.
