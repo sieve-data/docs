@@ -94,10 +94,14 @@
                         "reference-v2/api/cancel-job",
                         "reference-v2/api/list-jobs",
                         "reference-v2/api/get-function",
+                        "reference-v2/api/edit-function",
                         "reference-v2/api/list-function-versions",
                         "reference-v2/api/get-function-version",
+                        "reference-v2/api/edit-function-version",
                         "reference-v2/api/list-function-jobs",
                         "reference-v2/api/list-function-version-jobs",
+                        "reference-v2/api/list-functions",
+                        "reference-v2/api/get-logs",
                         {
                             "group": "Usage",
                             "pages": [
@@ -127,24 +131,6 @@
                         "reference-v2/sdk/intro",
                         "reference-v2/sdk/functions_models",
                         "reference-v2/sdk/types/file"
-                    ]
-                }
-            ]
-        },
-        {
-            "group": "Reference (V1 Legacy)",
-            "pages": [
-                {
-                    "group": "API Reference",
-                    "pages": [
-                        "reference-v1/api/intro",
-                        "reference-v1/api/push",
-                        "reference-v1/api/jobs/get",
-                        "reference-v1/api/jobs/list",
-                        "reference-v1/api/models/get",
-                        "reference-v1/api/models/list",
-                        "reference-v1/api/models/metrics",
-                        "reference-v1/api/models/requests"
                     ]
                 }
             ]
