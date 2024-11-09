@@ -11,6 +11,7 @@ The Sieve API uses the following [error codes](https://developer.mozilla.org/en-
 | 401 | *Unauthorized* -- Your API key is wrong. |
 | 403 | *Forbidden* -- The project requested is hidden for administrators only or doesn't exist. |
 | 406 | *Not Acceptable* -- You requested a format that isn't json. |
-| 429 | *Too Many Requests* -- You're sending images too quickly! Slow down! |
+| 408 | *Timeout* -- Your request to an await endpoint has timed out. |
+| 429 | *Too Many Requests* -- You're sending requests too quickly! Slow down! |
 | 500 | *Internal Server Error* -- We had a problem with our server. Try again later. |
 | 503 | *Service Unavailable* -- We're temporarily offline for maintenance. Please try again later. |
