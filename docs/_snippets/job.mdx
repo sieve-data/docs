@@ -1,4 +1,3 @@
-
     <ResponseField name="id" type="string">
       The id of the job.
     </ResponseField>
@@ -12,13 +11,13 @@
     The status of the job. Possible values: 'queued', 'processing', 'error', 'finished', 'cancelled';
     </ResponseField>
     <ResponseField name="created_at" type="string">
-      The time the job was created.
+      The time the job was created (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000Z).
     </ResponseField>
     <ResponseField name="started_at" type="string">
-      The time the job started processing by the function.
+      The time the job started processing (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000Z).
     </ResponseField>
     <ResponseField name="completed_at" type="string">
-      The time the job was completed.
+      The time the job was completed (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000Z).
     </ResponseField>
     <ResponseField name="inputs" type="list">
     <Expandable title="properties">
@@ -31,7 +30,7 @@
     </Expandable>
     </ResponseField>
     <ResponseField name="error" type="string">
-      The error that the job ran into. Empty string if there's no error. 
+      The error that the job ran into. Empty string if there's no error.
     </ResponseField>
     <ResponseField name="visibility" type="string">
       "public" or "private".
