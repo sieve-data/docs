@@ -2692,7 +2692,7 @@
               }
             ],
             "title": "Created At",
-            "description": "The time the job was created (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000)",
+            "description": "The time the job was created (ISO8601 format with milliseconds in UTC timezone, e.g. 2024-12-14T20:19:31.680000)",
             "type": "string",
             "format": "date-time"
           },
@@ -2707,7 +2707,7 @@
               }
             ],
             "title": "Started At",
-            "description": "The time the job started processing (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000)",
+            "description": "The time the job started processing (ISO8601 format with milliseconds in UTC timezone, e.g. 2024-12-14T20:19:56.011000)",
             "type": "string",
             "format": "date-time"
           },
@@ -2722,7 +2722,7 @@
               }
             ],
             "title": "Completed At",
-            "description": "The time the job was completed (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000)",
+            "description": "The time the job was completed (ISO8601 format with milliseconds in UTC timezone, e.g. 2024-12-14T20:19:56.479000)",
             "type": "string",
             "format": "date-time"
           },
