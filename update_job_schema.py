@@ -27,7 +27,7 @@ def update_job_schema():
                 schema["properties"][field].update({
                     "type": "string",
                     "format": "date-time",
-                    "description": f"{base_desc} (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000Z)"
+                    "description": f"{base_desc} (ISO8601 format with milliseconds, e.g. 2023-10-05T22:45:34.238000)"
                 })
 
     # Write back with proper formatting
