@@ -16,3 +16,26 @@ After logging in,  your api key will be stored here: `~/.config/.sieve/config`
 ### Options
 - `--help` Show this message and exit.
 
+## Alternatives
+
+As an alternative to using the `sieve login` command, you can set the `SIEVE_API_KEY` as an environment variable. 
+
+This is useful in environments where terminal interaction is not possible. 
+
+In Bash, you can set:
+```bash
+export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
+```
+
+In Python, you can set:
+```bash
+import os
+os.environ["SIEVE_API_KEY"]="YOUR_SIEVE_API_KEY"
+```
+
+In a Dockerfile, you can add:
+```Dockerfile
+ENV SIEVE_API_KEY=YOUR_SIEVE_API_KEY
+```
+
+
