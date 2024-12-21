@@ -62,7 +62,7 @@ The `.run()` method blocks and waits for the function to complete, and directly 
 
 ### push
 
-The `.push()` method returns a `concurrent.futures.future` object, which resolves to the value returned by the function. You can later access the value of the future using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
+The `.push()` method returns a `SieveFuture` object, which contains information about the job. You can later access the output using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
     
     ```python
     import sieve
@@ -79,6 +79,8 @@ The `.push()` method returns a `concurrent.futures.future` object, which resolve
     for multiplication_job in multiplication_jobs:
         print(multiplication_job.result())
     ```
+
+**Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`. You will have to define a `ThreadPoolExecutor` outside the `.push()` methods to use it in this way.
     
 
 You can call both `.run()` and `.push()` locally, or within another Sieve function or Model. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
