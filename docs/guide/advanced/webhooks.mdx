@@ -31,6 +31,8 @@ Submit a new job by sending a POST request to the **`/v2/push`** endpoint:
 ```bash
   curl 'https://mango.sievedata.com/v2/push' \
   -H 'X-API-Key: <your api key>' \
+  -H 'Content-Type:application/json' \
+  -X POST \
   --data-raw '{
     "function": "sieve/speech_transcriber",
     "inputs": {
