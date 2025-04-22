@@ -1,0 +1,190 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Sieve",
+  "colors": {
+    "primary": "#8d62ee",
+    "light": "#c4b5fd",
+    "dark": "#7240ff"
+  },
+  "appearance": {
+    "default": "light"
+  },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guide/intro",
+              "guide/quickstart"
+            ]
+          },
+          {
+            "group": "Integration",
+            "pages": [
+              "guide/public-functions",
+              "guide/referencing-functions",
+              "guide/advanced/webhooks",
+              "guide/advanced/secrets"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "sieve-job-doesnotexistyet",
+              "sieve-file-doesnotexistyet"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Examples",
+        "groups": [
+          {
+            "group": "Tutorials",
+            "pages": [
+              "guide/examples/audio-transcription",
+              "guide/examples/parallelized-face-detection",
+              "guide/examples/video-dubbing",
+              "guide/examples/live-audio-transcription"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "reference-v2/api/intro",
+              "reference-v2/api/create-new-job",
+              "reference-v2/api/get-job",
+              "reference-v2/api/get-job-await",
+              "reference-v2/api/cancel-job",
+              "reference-v2/api/get-logs",
+              "reference-v2/api/get-job-cost",
+              "reference-v2/api/list-jobs",
+              "reference-v2/api/list-functions",
+              "reference-v2/api/list-function-versions",
+              {
+                "group": "Function",
+                "pages": [
+                  "reference-v2/api/get-function",
+                  "reference-v2/api/list-function-jobs",
+                  "reference-v2/api/edit-function"
+                ]
+              },
+              {
+                "group": "Function Version",
+                "pages": [
+                  "reference-v2/api/get-function-version",
+                  "reference-v2/api/list-function-version-jobs",
+                  "reference-v2/api/edit-function-version"
+                ]
+              },
+              {
+                "group": "Usage",
+                "pages": [
+                  "reference-v2/api/get-function-usage",
+                  "reference-v2/api/get-version-usage",
+                  "reference-v2/api/get-per-function-usage",
+                  "reference-v2/api/get-total-usage"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "CLI Reference",
+            "pages": [
+              "reference-v2/cli/intro",
+              "reference-v2/cli/login",
+              "reference-v2/cli/job",
+              "reference-v2/cli/push",
+              "reference-v2/cli/deploy",
+              "reference-v2/cli/whoami"
+            ]
+          },
+          {
+            "group": "SDK Reference",
+            "pages": [
+              "reference-v2/sdk/intro",
+              "reference-v2/sdk/functions_models",
+              "reference-v2/sdk/types/file",
+              {
+                "group": "Custom Functions",
+                "pages": [
+                  "guide/custom-apps/deploying-functions",
+                  "guide/custom-apps/gpu-acceleration",
+                  "guide/custom-apps/typing",
+                  "guide/custom-apps/autoscaling",
+                  "guide/advanced/environment-variables"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Search",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guide/testsearchthing"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Discord",
+          "href": "https://discord.com/invite/Pnh97rvRtD",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://www.sievedata.com/blog",
+          "icon": "book"
+        }
+      ]
+    }
+  },
+  "logo": "/logo.svg",
+  "api": {
+    "mdx": {
+      "server": [
+        "https://mango.sievedata.com"
+      ],
+      "auth": {
+        "method": "key",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://www.sievedata.com/dashboard"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://www.sievedata.com",
+      "discord": "https://discord.com/invite/Pnh97rvRtD"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/reference-v2/api/push",
+      "destination": "/reference-v2/api/push-new-job"
+    }
+  ]
+}
