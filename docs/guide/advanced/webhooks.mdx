@@ -15,12 +15,12 @@ We currently don't provide a signature to verify sender, but it is a feature we 
 
 The following is a full list of all webhook event types. Click the events to see the exact response payload.
 
-| Event                                                                             | Description                                                                   |
-|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| [job.start](/reference-v2/api/models/job_start_webhook)                           | Occurs when a job starts.                                                     |
-| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes, errors, or is cancelled.                                        |
+| Event                                                                             | Description                                                                                            |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [job.start](/reference-v2/api/models/job_start_webhook)                           | Occurs when a job starts.                                                                              |
+| [job.complete](/reference-v2/api/models/job_complete_webhook)                     | Occurs when a job completes, errors, or is cancelled.                                                  |
 | [job.complete.no_output](/reference-v2/api/models/job_complete_no_output_webhook) | Occurs when a job completes, errors, or is cancelled -- excludes the output payload from the response. |
-| [job.new_output](/reference-v2/api/models/job_new_output_webhook)                 | Occurs when a job produces a new output.                                      |
+| [job.new_output](/reference-v2/api/models/job_new_output_webhook)                 | Occurs when a job produces a new output.                                                               |
 
 ## **Using webhooks via the HTTP API**
 
@@ -82,12 +82,9 @@ future.result() # Wait for output, you will receive a webhook after this line co
 
 The code will run as usual, with the added benefit of a webhook being triggered once the job is complete.
 
-## **Using webhooks via the Sieve dashboard**
+{" "}
 
-Webhooks can also be set on a per-function basis via the dashboard. In other words, every time the function is run (from the UI, REST API, or Python client), the webhook will be triggered. Add the webhook on the Settings page once you have a function selected.
-
-Once you submit a run, you should again receive a notification.
-
-![](https://storage.googleapis.com/sieve-public-data/assets/webhooks.png)
-
- <Warning>If a list of webhooks is specified via the REST API or Python client, this will override any webhooks set on the UI.</Warning>
+<Warning>
+  If a list of webhooks is specified via the REST API or Python client, this
+  will override any webhooks set on the UI.
+</Warning>

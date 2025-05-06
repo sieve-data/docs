@@ -18,10 +18,7 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": [
-              "guide/intro",
-              "guide/quickstart"
-            ]
+            "pages": ["guide/intro", "guide/quickstart"]
           },
           {
             "group": "Integration",
@@ -34,29 +31,12 @@
           },
           {
             "group": "Concepts",
-            "pages": [
-              "sieve-job-doesnotexistyet",
-              "sieve-file-doesnotexistyet"
-            ]
+            "pages": ["sieve-job-doesnotexistyet", "sieve-file-doesnotexistyet"]
           }
         ]
       },
       {
-        "tab": "Examples",
-        "groups": [
-          {
-            "group": "Tutorials",
-            "pages": [
-              "guide/examples/audio-transcription",
-              "guide/examples/parallelized-face-detection",
-              "guide/examples/video-dubbing",
-              "guide/examples/live-audio-transcription"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Reference",
+        "tab": "API Reference",
         "groups": [
           {
             "group": "API Reference",
@@ -130,13 +110,25 @@
         ]
       },
       {
+        "tab": "Examples",
+        "groups": [
+          {
+            "group": "Tutorials",
+            "pages": [
+              "guide/examples/audio-transcription",
+              "guide/examples/parallelized-face-detection",
+              "guide/examples/video-dubbing",
+              "guide/examples/live-audio-transcription"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Search",
         "groups": [
           {
             "group": "Getting Started",
-            "pages": [
-              "guide/testsearchthing"
-            ]
+            "pages": ["guide/testsearchthing"]
           }
         ]
       }
@@ -159,9 +151,7 @@
   "logo": "/logo.svg",
   "api": {
     "mdx": {
-      "server": [
-        "https://mango.sievedata.com"
-      ],
+      "server": ["https://mango.sievedata.com"],
       "auth": {
         "method": "key",
         "name": "X-API-Key"
