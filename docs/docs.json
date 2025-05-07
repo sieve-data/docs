@@ -107,12 +107,7 @@
         "groups": [
           {
             "group": "Tutorials",
-            "pages": [
-              "guide/examples/audio-transcription",
-              "guide/examples/parallelized-face-detection",
-              "guide/examples/video-dubbing",
-              "guide/examples/live-audio-transcription"
-            ]
+            "pages": ["guide/examples/introduction"]
           }
         ]
       },
