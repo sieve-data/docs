@@ -100,20 +100,20 @@ In production, you may choose to run jobs that are quite long, so you may choose
 
 <CodeGroup>
 ```python Sync Calls
-# Running transcription syncronously
+# Running Dubbing syncronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.run(file, target_language="spa")
 ```
 
 ```python Async Calls
-# Running translation asyncronously
+# Running Dubbing asyncronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.push(file, target_language="spa")
 
-# translate_job is a Python future, so you can use it in a non-blocking way
+# dubbing_job is a Python future, so you can use it in a non-blocking way
 print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
 for output_object in dubbing_job.result():
-    print(output_object.path)# "Path of dubbed file"
+    print(output_object.path) # Path of dubbed file
 ```
 
 </CodeGroup>
