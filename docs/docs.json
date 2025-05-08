@@ -111,15 +111,6 @@
             "pages": ["guide/examples/introduction"]
           }
         ]
-      },
-      {
-        "tab": "Search",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": ["guide/testsearchthing"]
-          }
-        ]
       }
     ],
     "global": {

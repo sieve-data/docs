@@ -2,6 +2,8 @@
 title: Sieve Function
 ---
 
+![placeholder](https://storage.googleapis.com/sieve-public-data/assets/docs/placeholder-function.jpg)
+
 ## Overview
 
 Functions are the fundamental building blocks on Sieve. They have a single entry point and exit point and are defined using standard Python function syntax along with a header that annotates any required dependencies.
@@ -20,37 +22,33 @@ referenced_function = sieve.function.get("sieve/{function name}")
 
 The `.run()` method blocks and waits for the function to complete, and directly returns the value returned by the function.
 
-    ```python
-    import sieve
-
-    mult = sieve.function.get("username/multiplier")
-    product1 = mult.run(2, 3)
-    product2 = mult.run(product1, 4)
-    ```
-
 ### push
 
 The `.push()` method returns a `SieveFuture` object, which contains information about the job. You can later access the output using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
 
-    ```python
-    import sieve
-
-    mult = sieve.function.get("username/multiplier")
-    multiplication_inputs = [4, 8, 15, 16, 23, 42]
-    multiplication_jobs = []
-
-    # send all of the jobs first
-    for multiplication_input in multiplication_inputs:
-        multiplication_jobs.append(mult.push(2, multiplication_input))
-
-    # then, once everything is submitted, grab the results
-    for multiplication_job in multiplication_jobs:
-        print(multiplication_job.result())
-    ```
-
 **Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`. You will have to define a `ThreadPoolExecutor` outside the `.push()` methods to use it in this way.
 
 You can call both `.run()` and `.push()` locally, or within another Sieve function. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
+
+<CodeGroup>
+```python Sync Calls i.e Run
+# Running Dubbing syncronously
+dubbing = sieve.function.get("sieve/dubbing")
+dubbing_job = dubbing.run(file, target_language="spa")
+```
+
+```python Async Calls i.e Push
+# Running Dubbing asyncronously
+dubbing = sieve.function.get("sieve/dubbing")
+dubbing_job = dubbing.push(file, target_language="spa")
+
+# dubbing_job is a Python future, so you can use it in a non-blocking way
+print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
+for output_object in dubbing_job.result():
+    print(output_object.path) # Path of dubbed file
+```
+
+</CodeGroup>
 
 ## Specifying Additional Data for Functions
 
