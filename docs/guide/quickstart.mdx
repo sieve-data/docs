@@ -98,26 +98,27 @@ You can customize parameters and test more function specific specs on the [Dubbi
 
 In production, you may choose to run jobs that are quite long, so you may choose to use our async API. Here is how you might do that in curl and Python
 
+<CodeGroup>
+```python Sync Calls
+# Running transcription syncronously
+dubbing = sieve.function.get("sieve/dubbing")
+dubbing_job = dubbing.run(file, target_language="spa")
+```
+
+```python Async Calls
+# Running translation asyncronously
+dubbing = sieve.function.get("sieve/dubbing")
+dubbing_job = dubbing.push(file, target_language="spa")
+
+# translate_job is a Python future, so you can use it in a non-blocking way
+print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
+for output_object in dubbing_job.result():
+    print(output_object.path)# "Path of dubbed file"
+```
+
+</CodeGroup>
+
 <Tip>
   For more production integration options, check out our section on
   [webhooks](/guide/advanced/webhooks).
 </Tip>
-
-## NOTE: HYPOTHETICAL OUTLINE BELOW, NEED TO FLESH OUT - kept as reference for now
-
-Let's take this clip of a Steve Jobs interview
-
-Let's dub this video into a language of our choice, say Spanish
-
-Here is how we can send a job to Sieve, your request should finish in a few minutes.
-
-Note: Toggle between curl /run??? Stupid to give a /push thing the way we do for the first user interaction.
-and toggle to python .run.
-
-Should clarify this is nice for quite iteration and integration but we don't recommend this in production settings idk.
-
-In production, you may choose to run jobs that are quite long, so you may choose to use our async API. Here is how you might do that in curl and Python
-
-For more production integration options, check out our section on webhooks
-
-Running a job on Sieve is that simple\! Try one of our many other APIs here: you can see the spec for the APIs on the website. Click some of the links in our sidebar to view apps specific guides
