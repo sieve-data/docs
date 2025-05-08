@@ -52,7 +52,7 @@
               "reference-v2/api/cancel-job",
               "reference-v2/api/get-logs",
               "reference-v2/api/list-jobs",
-              "reference-v2/api/list-functions",
+              "reference-v2/api/get-function",
               "reference-v2/api/list-function-jobs",
               {
                 "group": "Pricing & Usage",
