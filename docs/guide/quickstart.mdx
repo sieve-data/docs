@@ -60,10 +60,10 @@ We will be dubbing this clip of a Steve Jobs interview from English to Spanish.
       -H 'X-API-Key: <your-api-key>' \
       -H 'Content-Type: application/json' \
       --data '{
-        "function": "<org-name>/simple_translation"
+        "function": "sieve/dubbing"
         "inputs": {
-          "file": {"url": "https://storage.googleapis.com/mango-public-models/output1.mp4"},
-          "target_language": "spa"
+          "file": {"url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/bbf89d2d-9dfa-4c38-86b1-f3f2bbe5ac61/34813c02-f6a5-4862-96bf-0e52fa0d168c-input-source_file.mp4"},
+          "target_language": "spanish"
         }
       }'
     ```
