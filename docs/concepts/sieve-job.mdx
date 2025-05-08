@@ -1,50 +1,90 @@
 ---
 title: "Sieve Job"
-description: "Call a Sieve API"
 ---
 
-## Note: SHOULD MAKE THIS MORE LIKE https://docs.exa.ai/reference/quickstart. LESS IS MORE
+Manage jobs in Sieve.
 
-## **Getting Started**
-
-Every account comes with $20 of credit to get you started:
-
-- [Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
-- Install the Sieve Python client
+## Usage
 
 ```bash
-pip install sievedata
+sieve job [OPTIONS] COMMAND [ARGS]...
 ```
 
-- Login with your API key
+## Options
 
-If running on a terminal:
+- `--help` Show this message and exit.
+
+## Commands
+
+- `list` List all jobs.
+- `get` Get the information and output of a job.
+- `logs` Get the logs of a job.
+- `status` Get the status of a job.
+
+## `sieve job list`
+
+List all jobs.
+
+### Usage
 
 ```bash
-sieve login
+sieve job list [OPTIONS]
 ```
 
-If terminal interaction isn't possible, set the `SIEVE_API_KEY` as an environment variable:
+### Options
+
+- `--help` Show this message and exit.
+
+## `sieve job get`
+
+Get the information and output of a job.
+
+### Usage
 
 ```bash
-export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
+sieve job get [OPTIONS] JOB_ID
 ```
 
-## NOTE: HYPOTHETICAL OUTLINE BELOW, NEED TO FLESH OUT
+### Options
 
-Let's take this clip of a Steve Jobs interview
+- `--help` Show this message and exit.
 
-Let's dub this video into a language of our choice, say Spanish
+### Arguments
 
-Here is how we can send a job to Sieve, your request should finish in a few minutes.
+- `JOB_ID` ID of job to get information about.
 
-Note: Toggle between curl /run??? Stupid to give a /push thing the way we do for the first user interaction.
-and toggle to python .run.
+## `sieve job logs`
 
-Should clarify this is nice for quite iteration and integration but we don't recommend this in production settings idk.
+Get the logs of a job.
 
-In production, you may choose to run jobs that are quite long, so you may choose to use our async API. Here is how you might do that in curl and Python
+### Usage
 
-For more production integration options, check out our section on webhooks
+```bash
+sieve job logs [OPTIONS] JOB_ID
+```
 
-Running a job on Sieve is that simple! Try one of our many other APIs here: you can see the spec for the APIs on the website. Click some of the links in our sidebar to view apps specific guides
+### Options
+
+- `--help` Show this message and exit.
+
+### Arguments
+
+- `JOB_ID` ID of job to get logs of.
+
+## `sieve job status`
+
+Get the status of a job. The possible values can be "queued", "started", "finished", or "error".
+
+### Usage
+
+```bash
+sieve job status [OPTIONS] JOB_ID
+```
+
+### Options
+
+- `--help` Show this message and exit.
+
+### Arguments
+
+- `JOB_ID` ID of job to get status of.

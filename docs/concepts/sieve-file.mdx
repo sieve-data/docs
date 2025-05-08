@@ -1,50 +1,181 @@
 ---
 title: "Sieve File"
-description: "Call a Sieve API"
 ---
 
-## Note: SHOULD MAKE THIS MORE LIKE https://docs.exa.ai/reference/quickstart. LESS IS MORE
+## Overview
 
-## **Getting Started**
+`sieve.File` is a utility class that helps with handling files that are inputs to a `function`, produced locally in the file system, or downloaded from an external url.
 
-Every account comes with \$20 of credit to get you started:
+The underlying contents in a `sieve.File` are backed by Sieve's file servers and are downloaded lazily, meaning that they will not download the content until requested with the `path` property. This means that a `sieve.File` can be passed around to different functions efficiently without having to deal with network overhead.
 
-- [Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
-- Install the Sieve Python client
-
-```bash
-pip install sievedata
+```python
+class File(sieve.Struct):
 ```
 
-- Login with your API key
+## Constructor Optional Arguments
 
-If running on a terminal:
+- `url` (str): The URL of the file to download.
+- `path` (str): The local path to the file.
 
-```bash
-sieve login
+A `File` can be instantiated in two ways, either by providing a local file path, or an external url. You can either pass them in as positional arguments or as keyword arguments to path or url.
+
+```python
+import sieve
+
+# Instantiate a sieve File with implied path or url
+local_file = sieve.File("path/to/file.txt")
+external_file = sieve.File("example.com/file.txt")
+
+# Instantiate a sieve File with a local file path
+local_file = sieve.File(path="path/to/file.txt")
+
+# Instantiate a sieve File with a url
+external_file = sieve.File(url="example.com/file.txt")
+
 ```
 
-If terminal interaction isn't possible, set the `SIEVE_API_KEY` as an environment variable:
+## Properties
 
-```bash
-export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
+### url
+
+```python
+url: str
 ```
 
-## NOTE: HYPOTHETICAL OUTLINE BELOW, NEED TO FLESH OUT
+The url of the file, if it exists. This will return None if the file refers to something on the local filesystem.
 
-Let's take this clip of a Steve Jobs interview
+```python
 
-Let's dub this video into a language of our choice, say Spanish
+import sieve
 
-Here is how we can send a job to Sieve, your request should finish in a few minutes.
+# Instantiate a File with a url
+my_external_file = sieve.File("https://example.com/file.txt") # Will automatically identify it is a URL
+my_local_file = sieve.File("path/to/file.txt") # Will automatically identify it is a local path
 
-Note: Toggle between curl /run??? Stupid to give a /push thing the way we do for the first user interaction.
-and toggle to python .run.
+# Download the file, open it, and read the contents
+print(my_external_file.url) # prints "example.com/file.txt"
+print(my_local_file.url) # prints None
+```
 
-Should clarify this is nice for quite iteration and integration but we don't recommend this in production settings idk.
+### path
 
-In production, you may choose to run jobs that are quite long, so you may choose to use our async API. Here is how you might do that in curl and Python
+```python
+@property
+def path(self) -> str:
+```
 
-For more production integration options, check out our section on webhooks
+The local path to the file. This will download the file if it is not downloaded already, and return the path of the downloaded file.
 
-Running a job on Sieve is that simple\! Try one of our many other APIs here: you can see the spec for the APIs on the website. Click some of the links in our sidebar to view apps specific guides
+**Note:** If files are passed around within Sieve, they may not have a path or URL associated due to the lazy loading properties of Sieve files. To get a path to these files, simply run `.path` on the `sieve.File` object.
+
+```python
+import sieve
+
+# Instantiate a File with a url
+my_file = sieve.File(url="example.com/file.txt")
+
+# Download the file, open it, and read the contents
+opened_file = open(my_file.path, "r")
+print(opened_file.read())
+```
+
+## Usage
+
+### Python SDK
+
+When pushing to Sieve via SDK, you can simplify pass in a `sieve.File` instance as the argument to the function.
+
+```python
+future = sieve.function.get("sieve/dubbing").push(source_file=sieve.File("path/to/audio.mp3), target_language="spanish") # Returns future
+```
+
+```python
+output = sieve.function.get("sieve/dubbing").run(source_file=sieve.File("path/to/audio.mp3), target_language="spanish") # Synchronous call
+```
+
+### REST API
+
+When pushing via API, you will define the input as a JSON struct similar to the following:
+
+```json
+{
+  "url": "https://exampleurl.com/file.mp3"
+}
+```
+
+For the dubbing example, here is what an equivalent cURL request may look like:
+
+```bash
+
+curl --request POST \
+  --url https://mango.sievedata.com/v2/push \
+  --header 'Content-Type: application/json' \
+  --header 'X-API-Key: $SIEVE_API_KEY' \
+  --data '{
+  "function": "sieve/dubbing",
+  "inputs": {
+    "source_file": {
+      "url": "https://exampleurl.com/file.mp3"
+    },
+    "target_language": "spanish"
+  }
+}'
+```
+
+**Aside:** For more information on Sieve Dubbing, check out the function [here](https://www.sievedata.com/functions/sieve/dubbing).
+
+When retrieving outputs for the Sieve job, the structure will be the similar to the JSON format as described above, except contained within a "data" subfield in the object.
+We've attached a simplified job JSON below as retrieved from the [Get Job](/reference-v2/api/get-job) endpoint.
+
+```json
+{
+  "id": "5ead25ea-a1b5-42be-909e-d4ca179fe9ed",
+  "function_id": "99d82ab9-7214-47b3-98f3-05367c2180dc",
+  "organization_id": "c4d968f5-f25a-412b-9102-5b6ab6dafcb4",
+  "function": "..."
+  "status": "finished",
+  "created_at": "2024-12-04T14:07:38.463000",
+  "started_at": "2024-12-04T14:08:13.283000",
+  "completed_at": "2024-12-04T14:09:45.652000",
+  "inputs": {
+    "source_file": {
+      "type": "sieve.File",
+      "name": "source_file",
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/99d82ab9-7214-47b3-98f3-05367c2180dc/5ead25ea-a1b5-42be-909e-d4ca179fe9ed-input-source_file.mp4"
+      },
+      "description": "An audio or video input file to dub.",
+      "schema": {
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "run_id": null
+    },
+    "target_language": {
+      "type": "str",
+      "name": "target_language",
+      "data": "spanish",
+      "description": "A comma-separated list of languages to which the audio will be translated. Default is \"spanish\". See supported languages in README.",
+      "schema": null,
+      "run_id": null
+    },
+    ...
+  },
+  "outputs": [
+    {
+      "type": "sieve.File",
+      "name": null,
+      "data": {
+        "url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/99d82ab9-7214-47b3-98f3-05367c2180dc/5ead25ea-a1b5-42be-909e-d4ca179fe9ed-output-4c2a3eb3-4134-4903-904a-34fa2b63fe34.mp4",
+        "_path": null
+      },
+      "description": null,
+      "schema": null,
+      "run_id": "5ead25ea-a1b5-42be-909e-d4ca179fe9ed-71e5881a-7db1-4884-a6b4-295d0f9078f0"
+    }
+  ],
+  "visibility": "public",
+}
+```

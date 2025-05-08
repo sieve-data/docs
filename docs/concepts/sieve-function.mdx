@@ -1,50 +1,162 @@
 ---
-title: "Sieve Function"
-description: "Call a Sieve API"
+title: Sieve Function
 ---
 
-## Note: SHOULD MAKE THIS MORE LIKE https://docs.exa.ai/reference/quickstart. LESS IS MORE
+## Overview
 
-## **Getting Started**
+Functions are the fundamental building blocks on Sieve. They have a single entry point and exit point and are defined using standard Python function syntax along with a header that annotates any required dependencies.
 
-Every account comes with $20 of credit to get you started:
+All code is mounted by default into `/src` of the container.
 
-- [Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
-- Install the Sieve Python client
+## Calling Functions
 
-```bash
-pip install sievedata
+Functions already deployed on Sieve can both be referenced by using
+
+```python
+referenced_function = sieve.function.get("sieve/{function name}")
 ```
 
-- Login with your API key
+### push
 
-If running on a terminal:
+The `.push()` method returns a `SieveFuture` object, which contains information about the job. You can later access the output using the `.result()` method, for example. This is useful for when you are pushing several jobs at once, like when processing frames from a video. This ensures that you are not waiting for previous frames to finish processing before pushing the next ones, and are taking full advantage of parallel processing.
 
-```bash
-sieve login
+    ```python
+    import sieve
+
+    mult = sieve.function.get("username/multiplier")
+    multiplication_inputs = [4, 8, 15, 16, 23, 42]
+    multiplication_jobs = []
+
+    # send all of the jobs first
+    for multiplication_input in multiplication_inputs:
+        multiplication_jobs.append(mult.push(2, multiplication_input))
+
+    # then, once everything is submitted, grab the results
+    for multiplication_job in multiplication_jobs:
+        print(multiplication_job.result())
+    ```
+
+**Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`. You will have to define a `ThreadPoolExecutor` outside the `.push()` methods to use it in this way.
+
+You can call both `.run()` and `.push()` locally, or within another Sieve function. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
+
+## Specifying Additional Data for Functions
+
+By default, Sieve functions live inside Linux containers without a GPU and a limited number of python packages installed. You can use a number of key word arguments in the function decorator in order to customize the environment.
+
+| Parameter             | Type            | Description                                                                                                                                                                                                                                                                                                                                                                                                   | Default                                                          |
+| --------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| name                  | str             | Defines the name of the function                                                                                                                                                                                                                                                                                                                                                                              | This field is required                                           |
+| gpu                   | sieve.gpu       | Determines whether the function is deployed on a server with a GPU, which GPU it should be deployed to, . See the `Parameter` column in the table in [GPU Acceleration](/guide/custom-apps/gpu-acceleration) for a list of options and for more information about GPU sharing. The default value runs on a machine with no GPU. Any other value is specified with a call to one of the sieve.gpu constructors | `None`                                                           |
+| python_version        | str             | Determines the python version installed                                                                                                                                                                                                                                                                                                                                                                       | Default is 3.8                                                   |
+| python_packages       | List[str]       | List of python packages to be installed during build                                                                                                                                                                                                                                                                                                                                                          | A minimum set of Sieve dependencies will be installed by default |
+| system_packages       | List[str]       | List of Linux packages to be installed during build                                                                                                                                                                                                                                                                                                                                                           | []                                                               |
+| cuda_version          | str             | Version of cuda to be installed (for functions with gpu enabled). See [below](#cuda-versions) for possible versions.                                                                                                                                                                                                                                                                                          | Default is determined by python packages                         |
+| run_commands          | List[str]       | List of shell commands to be run during build. Note: these commands currently do not have access to the uploaded code                                                                                                                                                                                                                                                                                         | []                                                               |
+| environment_variables | List[sieve.Env] | List of environment variables that allow you to pass in org-level configs and secrets to your sieve Function. Check out our guide [here](/guide/advanced/environment-variables) for more.                                                                                                                                                                                                                     | []                                                               |
+| metadata              | sieve.Metadata  | Extra information about the function to be shown on the dashboard. See [below](#using-metadata) for example.                                                                                                                                                                                                                                                                                                  | None                                                             |
+| restart_on_error      | bool            | If this variable is true, if your function ever errors the container will automatically be restarted from scratch. This takes time, but is useful in the event of irreversible failures like GPU corruption. Read more about it [below](#restart-behavior).                                                                                                                                                   | True                                                             |
+
+### Using Metadata
+
+Metadata can be used to provide additional information on the dashboard, including a full title, a description, a code reference, tags, and a readme. You can create a metadata object as follows:
+
+```python
+metadata = sieve.Metadata(
+    title="Adder",
+    description="adds two numbers together",
+    code_url="https://github.com/username/repo/blob/main/adder/main.py",
+    image=sieve.File(
+        "https://example.com/cover.gif"
+    ),
+    tags=["Math", "Example"],
+    readme="This is an example readme",
+)
 ```
 
-If terminal interaction isn't possible, set the `SIEVE_API_KEY` as an environment variable:
+Then, pass it into the decorator:
 
-```bash
-export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
+```python
+@sieve.function(
+		name="adder",
+		metadata=metadata
+)
+def adder
 ```
 
-## NOTE: HYPOTHETICAL OUTLINE BELOW, NEED TO FLESH OUT
+### Restart Behavior
 
-Let's take this clip of a Steve Jobs interview
+By default, when errors occur, all Sieve functions are restarted. This means that dependencies, modules, etc., are reloaded into memory. This behavior is intended as a safeguard against irreversible errors, including GPU errors and state-related errors. For production applications, you may choose to disable this so that functions don't restart during more trivial errors, such as invalid inputs or edge cases in code. Restarting functions takes longer but guarantees a brand new state after every function error.
 
-Let's dub this video into a language of our choice, say Spanish
+To disable this behavior, you can set the `restart_on_error` parameter in the function header as follows:
 
-Here is how we can send a job to Sieve, your request should finish in a few minutes.
+```python
+@sieve.function(
+		name="adder",
+		restart_on_error=False,
+)
+def adder
+```
 
-Note: Toggle between curl /run??? Stupid to give a /push thing the way we do for the first user interaction.
-and toggle to python .run.
+In the event that you disable this behavior by default but also do want to trigger a hard restart in certain scenarios, you can raise a `sieve.FatalException`.
 
-Should clarify this is nice for quite iteration and integration but we don't recommend this in production settings idk.
+#### sieve.FatalException
 
-In production, you may choose to run jobs that are quite long, so you may choose to use our async API. Here is how you might do that in curl and Python
+A `sieve.FatalException` is a special Python Exception in the Sieve ecosystem that allows you to trigger a hard restart of the function when certain irreversible errors are caught, even if the `restart_on_error` parameter is set to False. Here is a brief example of this in action.
 
-For more production integration options, check out our section on webhooks
+```python
+import sieve
 
-Running a job on Sieve is that simple! Try one of our many other APIs here: you can see the spec for the APIs on the website. Click some of the links in our sidebar to view apps specific guides
+@sieve.function(
+    name="multiplier",
+    restart_on_error=False,
+)
+def multiply(x1: int, x2: int) -> int:
+    if (x1 == 5):
+        # This will not restart the function, and subsequent calls will happen instantaneously.
+        raise ValueError("x1 is an invalid value")
+    if (x2 == 10):
+        # This will restart the function, which will give fresh state for the function but may take a bit more time.
+        raise sieve.FatalException("x2 is an invalid value, will restart")
+    return x1 * x2
+```
+
+### Cuda Versions
+
+The CUDA version can be specified with the `cuda_version` parameter in the function decorator. You can specify parts of versions as well (e.g. `'12.2'` for `'12.2.2'`). Possible values for `cuda_version` are:
+
+```
+'8.0'
+'9.0'
+'9.1'
+'9.2'
+'10.0'
+'10.1'
+'10.2'
+'11.0.3'
+'11.1.1'
+'11.2.0'
+'11.2.1'
+'11.2.2'
+'11.3.0'
+'11.3.1'
+'11.4.0'
+'11.4.1'
+'11.4.2'
+'11.4.3'
+'11.5.0'
+'11.5.1'
+'11.5.2'
+'11.6.0'
+'11.6.1'
+'11.6.2'
+'11.7.0'
+'11.7.1'
+'11.8.0'
+'12.0.0'
+'12.0.1'
+'12.1.0'
+'12.1.1'
+'12.2.2'
+'12.3.2'
+```
