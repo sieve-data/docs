@@ -34,7 +34,8 @@
             "pages": [
               "concepts/sieve-file",
               "concepts/sieve-job",
-              "concepts/sieve-function"
+              "concepts/sieve-function",
+              "concepts/sieve-future"
             ]
           }
         ]

@@ -2,7 +2,17 @@
 title: "Sieve Job"
 ---
 
-Manage jobs in Sieve.
+## Overview
+
+A Sieve job represents a single execution of a Sieve function. When you call a function using either the `.run()` or `.push()` methods, Sieve creates a job to handle that execution. Jobs can be monitored and managed through the [Sieve dashboard](https://www.sievedata.com/dashboard).
+
+Jobs have several important characteristics:
+
+- Each job has a unique ID that can be used to track its progress and retrieve its outputs
+- Jobs can be in different states: "queued", "started", "finished", or "error"
+- Jobs maintain information about their inputs, outputs, and execution time
+- When a job is created using `.push()`, it returns a `SieveFuture` object that can be used to track the job's progress and retrieve its results
+- Jobs can be monitored through the CLI using various commands to check their status, logs, and outputs. Refer to [Job API](/reference-v2/api/get-job) for further information.
 
 ## Usage
 
