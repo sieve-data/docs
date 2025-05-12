@@ -108,7 +108,13 @@
         "groups": [
           {
             "group": "Tutorials",
-            "pages": ["guide/examples/introduction"]
+            "pages": [
+              "guide/examples/introduction",
+              "guide/examples/background-replacement-and-caption-effects-pipeline",
+              "guide/examples/youtube-video-dubbing-with-AI",
+              "guide/examples/AI-background-noise-removal",
+              "guide/examples/speaker-recognition-and-detection"
+            ]
           }
         ]
       }
@@ -155,6 +161,22 @@
     {
       "source": "/reference-v2/api/push",
       "destination": "/reference-v2/api/push-new-job"
+    },
+    {
+      "source": "/guide/examples/background-replacement-and-caption-effects-pipeline",
+      "destination": "https://www.sievedata.com/blog/automated-background-and-caption-effects-pipeline"
+    },
+    {
+      "source": "/guide/examples/youtube-video-dubbing-with-AI",
+      "destination": "https://www.sievedata.com/blog/youtube-video-dubbing-with-ai"
+    },
+    {
+      "source": "/guide/examples/AI-background-noise-removal",
+      "destination": "https://www.sievedata.com/blog/ai-audio-video-background-noise-removal-apis"
+    },
+    {
+      "source": "/guide/examples/speaker-recognition-and-detection",
+      "destination": "https://www.sievedata.com/blog/ai-audio-video-speaker-recognition-methods"
     }
   ]
 }
