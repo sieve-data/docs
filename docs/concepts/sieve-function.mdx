@@ -1,5 +1,5 @@
 ---
-title: Sieve Function
+title: "Sieve Function"
 ---
 
 ![placeholder](https://storage.googleapis.com/sieve-public-data/assets/docs/placeholder-function.jpg)
@@ -28,14 +28,16 @@ The `.push()` method returns a `SieveFuture` object, which contains information 
 
 **Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`. You will have to define a `ThreadPoolExecutor` outside the `.push()` methods to use it in this way.
 
-You can call both `.run()` and `.push()` locally, or within another Sieve function. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications!
+You can call both `.run()` and `.push()` locally, or within another Sieve function. Calling `.run()` or `.push()` within Sieve, allows you to chain function calls together, enabling powerful AI applications\!
 
 <CodeGroup>
+
 ```python Sync Calls i.e Run
 # Running Dubbing syncronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.run(file, target_language="spa")
 ```
+
 
 ```python Async Calls i.e Push
 # Running Dubbing asyncronously
@@ -49,6 +51,10 @@ for output_object in dubbing_job.result():
 ```
 
 </CodeGroup>
+
+<Card title="Custom Functions" icon="lightbulb-gear" iconType="duotone" color="#7240ff" horizontal={false} href="/guide/custom-apps/deploying-functions">
+  To deploy a custom function to Sieve check the SDK guide
+</Card>
 
 ## Specifying Additional Data for Functions
 
