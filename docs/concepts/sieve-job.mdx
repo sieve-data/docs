@@ -14,6 +14,57 @@ Jobs have several important characteristics:
 - When a job is created using `.push()`, it returns a `SieveFuture` object that can be used to track the job's progress and retrieve its results
 - Jobs can be monitored through the CLI using various commands to check their status, logs, and outputs. Refer to [Job API](/reference-v2/api/get-job) for further information.
 
+## Job Response Structure
+
+When you retrieve information about a job, you'll receive a response with the following structure:
+
+```json
+{
+    "id": "string",                    // Unique identifier for the job
+    "function_id": "string",           // ID of the function being executed
+    "organization_id": "string",       // ID of the organization that owns the job
+    "function": {...details...},       // Detailed information about the function
+    "status": "string",                // Current status: "queued", "started", "finished", or "error"
+    "created_at": "string",            // Timestamp when the job was created
+    "started_at": "string",            // Timestamp when the job started
+    "completed_at": "string",          // Timestamp when the job completed
+    "inputs": {                        // Input parameters for the job
+        "parameter_name": {
+            "type": "string",          // Type of the parameter
+            "name": "string",          // Name of the parameter
+            "data": any,               // Value of the parameter
+            "description": "string",   // Description of the parameter
+            "schema": object,          // Schema definition for the parameter
+            "run_id": "string"         // Run ID if applicable
+        },
+        "another_parameter": {
+            "type": "string",
+            "name": "string",
+            "data": any,
+            "description": "string",
+            "schema": object,
+            "run_id": "string"
+        },
+        ...
+    },
+    "outputs": [                       // Output results from the job
+        {
+            "type": "string",          // Type of the output
+            "name": "string",          // Name of the output
+            "data": object,            // Output data
+            "description": "string",   // Description of the output
+            "schema": object,          // Schema definition for the output
+            "run_id": "string"         // Run ID if applicable
+        }
+    ],
+    "error": "string",                 // Error message if the job failed
+    "visibility": "string",            // Visibility setting of the job
+    "run_id": "string",                // Unique run identifier
+    "children": ["string"],            // Child job IDs if applicable
+    "restarts": number                 // Number of times the job has been restarted
+}
+```
+
 ## Usage
 
 ```bash
