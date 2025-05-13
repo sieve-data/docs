@@ -23,13 +23,13 @@ You can also `push` to a queue of a function and wait for the request to complet
 
 <CodeGroup>
 ```python Sync Calls
-# Running Dubbing syncronously
+# Running Dubbing synchronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.run(file, target_language="spa")
 ```
 
 ```python Async Calls
-# Running Dubbing asyncronously
+# Running Dubbing asynchronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.push(file, target_language="spa")
 

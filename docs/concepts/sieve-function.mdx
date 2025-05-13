@@ -33,13 +33,13 @@ You can call both `.run()` and `.push()` locally, or within another Sieve functi
 <CodeGroup>
 
 ```python Sync Calls i.e Run
-# Running Dubbing syncronously
+# Running Dubbing synchronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.run(file, target_language="spa")
 ```
 
 ```python Async Calls i.e Push
-# Running Dubbing asyncronously
+# Running Dubbing asynchronously
 dubbing = sieve.function.get("sieve/dubbing")
 dubbing_job = dubbing.push(file, target_language="spa")
 
