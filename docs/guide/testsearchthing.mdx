@@ -7,14 +7,15 @@ Sieve has [many functions available](https://sievedata.com/explore) to reference
 
 ## Running functions via API
 
-Running any public functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint. Specific information for a public function can be found on the Usage Guide ([sample](https://www.sievedata.com/functions/sieve/autocrop/guide)).
+Running any public functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint. Specific information for a public function can be found on the Usage Guide ([example](https://www.sievedata.com/functions/sieve/autocrop/guide)).
 
 ## Running functions in Python
 
 You may also reference & run functions in Python directly. This has a couple key benefits:
-* Calling your function will return a Python object directly in-line rather than JSON
-* Async job handling is handled by default. No need to poll for outputs or job status
-* Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more. 
+
+- Calling your function will return a Python object directly in-line rather than JSON
+- Async job handling is handled by default. No need to poll for outputs or job status
+- Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more.
 
 The Sieve Python client lets you run functions synchronously or asynchroously. Let’s take the Whisper transcription model for example. You can call it synchronously as follows:
 
