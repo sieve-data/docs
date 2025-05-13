@@ -18,15 +18,15 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["guide/intro", "guide/quickstart", "guide/pricing"]
+            "pages": ["guide/overview", "guide/quickstart", "guide/pricing"]
           },
           {
             "group": "Integration",
             "pages": [
-              "guide/public-functions",
-              "guide/referencing-functions",
-              "guide/advanced/webhooks",
-              "guide/advanced/secrets"
+              "guide/integration/explore-apis",
+              "guide/integration/integrate-apis",
+              "guide/integration/webhooks",
+              "guide/integration/secrets"
             ]
           },
           {
