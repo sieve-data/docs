@@ -109,10 +109,10 @@
             "group": "Tutorials",
             "pages": [
               "guide/examples/introduction",
-              "guide/examples/background-replacement-and-caption-effects-pipeline",
-              "guide/examples/youtube-video-dubbing-with-AI",
-              "guide/examples/AI-background-noise-removal",
-              "guide/examples/speaker-recognition-and-detection"
+              "guide/examples/background-Replacement-and-Caption-Effects-Pipeline",
+              "guide/examples/youTube-Video-Dubbing-with-AI",
+              "guide/examples/AI-Background-Noise-Removal",
+              "guide/examples/speaker-Recognition-and-Detection"
             ]
           }
         ]

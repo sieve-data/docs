@@ -1,11 +1,14 @@
 ---
 title: "Quickstart"
-description: "Call a Sieve API"
+description: "Call your first Sieve API"
 ---
 
 ## **Setup**
 
-- [Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
+<Steps>
+
+<Step title="Sign up and get your API key">
+[Sign up](https://www.sievedata.com/dashboard) and get your [API key](https://www.sievedata.com/dashboard/settings)
 
 <Card
   title="Get Sieve API Key"
@@ -17,14 +20,17 @@ description: "Call a Sieve API"
 >
   {}
 </Card>
+</Step >
 
-- Install the Sieve Python client
+<Step title="Install the Sieve Python client">
 
 ```bash
 pip install sievedata
 ```
 
-- Login with your API key
+</Step>
+
+<Step title="Login with your API key">
 
 If running on a terminal:
 
@@ -38,7 +44,11 @@ If terminal interaction isn't possible, set the `SIEVE_API_KEY` as an environmen
 export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
 ```
 
-### **Submitting your first Sieve Job**
+</Step>
+
+</Steps>
+
+## **Submitting your first Sieve Job**
 
 We will be dubbing this clip about plants from English to Spanish.
 
