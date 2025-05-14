@@ -1,6 +1,6 @@
 ---
 title: "Deploying Functions"
-description: "Customize and deploy your own simple Sieve function"
+description: "Customize and deploy your own simple Sieve function."
 ---
 
 Sieve functions are run in the cloud and are written in Python. Any function deployed on Sieve is automatically available as an API and can also be accessed via the Sieve Python client library.
@@ -10,10 +10,11 @@ These functions can be treated as normal Python functions and can be used to pip
 ## Defining a Sieve Function
 
 To run a function in the cloud, we need to define both:
+
 - the Python function to run itself
 - its runtime / environment
 
-Defining a Sieve function is as simple as adding the `@sieve.function` decorator on top of your Python function and running `sieve deploy` in your directory. 
+Defining a Sieve function is as simple as adding the `@sieve.function` decorator on top of your Python function and running `sieve deploy` in your directory.
 
 ```python
 @sieve.function(name="foo")
@@ -21,9 +22,13 @@ def foo(a):
 	return a + 1
 ```
 
-<Note>Sieve also supports running functions with a `__setup__` method. This is especially useful for loading models into memory once for many jobs. Learn more about `sieve.Model` [here](/reference-v2/sdk/functions_models).</Note>
+<Note>
+  Sieve also supports running functions with a `__setup__` method. This is
+  especially useful for loading models into memory once for many jobs. Learn
+  more about `sieve.Model` [here](/reference-v2/sdk/functions_models).
+</Note>
 
-To define a custom environment, Sieve lets you specify your Python packages, system packages, and any other build-time commands that you may want to run on function build. 
+To define a custom environment, Sieve lets you specify your Python packages, system packages, and any other build-time commands that you may want to run on function build.
 
 Here's a quick example of all 3 in action:
 
