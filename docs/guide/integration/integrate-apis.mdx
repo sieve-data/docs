@@ -3,9 +3,11 @@ title: "Integrate APIs"
 description: "Call public or custom functions from anywhere"
 ---
 
-## Running functions via API
+<Tabs>
+  <Tab title="API">
+    ## Running functions via API
 
-Running any public functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint.
+    Running any public functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint.
 
     ```bash API
     curl -X POST \
@@ -21,12 +23,15 @@ Running any public functions via API can be done through the [Push](/reference-v
       }'
     ```
 
-## Running functions in Python
+  </Tab>
+  <Tab title="Python">
+    ## Running functions in Python
 
-You may also reference & run functions in Python directly. This has a couple key benefits:
+    You may also reference and run functions in Python directly. This has a couple of key benefits:
 
-- Calling your function will return a Python object directly in-line rather than JSON
-- Async job handling is handled by default. No need to poll for outputs or job status
+    - Calling your function will return a Python object directly in-line rather than JSON
+    - Async job handling is handled by default. No need to poll for outputs or job status
+
 - Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more.
 
 ```python Python Client
@@ -48,9 +53,9 @@ print(output_object.path)
   information about integration.
 </Note>
 
-The Sieve Python client lets you run functions synchronously or asynchronously. Let’s take the [Dubbing API]("https://www.sievedata.com/functions/sieve/dubbing") for example.
+The Sieve Python client lets you run functions synchronously or asynchronously. Let's take the [Dubbing API]("https://www.sievedata.com/functions/sieve/dubbing") for example.
 
-You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you’d like to send many requests at once. You can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
+You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you'd like to send many requests at once. You can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
 
 <CodeGroup>
 ```python Sync Calls
@@ -71,3 +76,5 @@ for output_object in dubbing_job.result():
 ```
 
 </CodeGroup>
+  </Tab>
+</Tabs>
