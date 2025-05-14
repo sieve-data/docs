@@ -104,6 +104,9 @@ We will dub this clip about plants from English to Spanish.
         import sieve
 
         source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
+        #You can also reference a local file by its path
+        my_local_source_file = sieve.File("path/to/example_file.mp4") # Will automatically identify it is a local path
+
         dubbing = sieve.function.get("sieve/dubbing")
         target_language = "spanish"
         output = dubbing.run(source_file, target_language)
