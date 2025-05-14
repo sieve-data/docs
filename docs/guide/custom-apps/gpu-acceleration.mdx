@@ -76,7 +76,7 @@ touch sieve_yolov8/main.py
 ```python
 import sieve
 
-@sieve.Model(
+@sieve.function(
     name="yolo-v8",
     gpu=sieve.gpu.T4(split=4),
     python_packages=["ultralytics", "torch==1.13.1", "torchvision==0.14.1"],
@@ -87,10 +87,10 @@ import sieve
 class Yolo:
     def __setup__(self):
         from ultralytics import YOLO
-        self.model = YOLO('yolov8l.pt')
+        self.function = YOLO('yolov8l.pt')
 
     def __predict__(self, img: sieve.File) -> list:
-        preds = self.model(img.path)
+        preds = self.function(img.path)
         all_boxes = []
         for pred in preds:
             all_boxes.append(pred.boxes.xyxy.cpu().numpy().tolist())
@@ -99,7 +99,7 @@ class Yolo:
 
   </Step>
 
-  <Step title="Finally, let's deploy our model to Sieve.">
+  <Step title="Finally, let's deploy our function to Sieve.">
   After authenticating with your API key and making sure you're in the `sieve_yolov8` directory, we can simply run:
 
 ```bash
@@ -109,7 +109,7 @@ sieve deploy
   </Step>
 
   <Step title="Run jobs!">
-  You'll now see your deployed model on the Sieve dashboard, along with an auto-generated UI to play around with it!
+  You'll now see your deployed function on the Sieve dashboard, along with an auto-generated UI to play around with it!
   
   Your job traffic will autoscale GPUs, with each GPU having capacity for running 4 jobs at a time, as we specified with `sieve.gpu.T4(split=4)`.
   </Step>
