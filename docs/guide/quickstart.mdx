@@ -49,7 +49,7 @@ export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
 
 ## **Submitting your first Sieve Job**
 
-We will be dubbing this clip about plants from English to Spanish.
+We will dub this clip about plants from English to Spanish.
 
 <video
   controls
@@ -72,7 +72,7 @@ We will be dubbing this clip about plants from English to Spanish.
           -H 'X-API-Key: <your-api-key>' \
           -H 'Content-Type: application/json' \
           --data '{
-            "function": "sieve/dubbing"
+            "function": "sieve/dubbing",
             "inputs": {
               "file": {"url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4"},
               "target_language": "spanish"
@@ -80,11 +80,9 @@ We will be dubbing this clip about plants from English to Spanish.
           }'
         ```
 
-
-
       </Step>
       <Step title="Monitoring Job Status">
-        To fetch job and it's status use the [get job](/reference-v2/api/get-job) endpoint.
+        To fetch the job and its status, use the [get job](/reference-v2/api/get-job) endpoint.
       </Step>
     </Steps>
 
@@ -114,15 +112,14 @@ We will be dubbing this clip about plants from English to Spanish.
           print(output_object.path)
         ```
 
-
       </Step>
       <Step title="Monitoring Job Status">
-        Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will have appeared there.
+        Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will appear there.
         ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
       </Step>
     </Steps>
 
-    In production, you may choose to run jobs that are quite long, so you may choose to use our async API.
+    In production, you may choose to run jobs that are quite long, so you may want to use our async API.
 
     <CodeGroup>
     ```python Sync Calls
@@ -152,7 +149,7 @@ We will be dubbing this clip about plants from English to Spanish.
 
   </Step>
   <Step title="Monitoring Job Status">
-    You can see the status of your job in the playground. You can also navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will have appeared there.
+    You can see the status of your job in the playground. You can also navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will appear there.
 
 ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
 
@@ -168,4 +165,4 @@ We will be dubbing this clip about plants from English to Spanish.
 </Tip>
 
 Running a job on Sieve is that simple.
-You can customize parameters and test more function specific specs on the [Dubbing's Function Page](https://www.sievedata.com/functions/sieve/dubbing/guide).
+You can customize parameters and test more function-specific specs on [Dubbing API Page](https://www.sievedata.com/functions/sieve/dubbing/guide).
