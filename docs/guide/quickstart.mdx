@@ -22,27 +22,26 @@ description: "Call your first Sieve API"
 </Card>
 </Step >
 
-<Step title="Install the Sieve Python client">
-
-```bash
-pip install sievedata
-```
-
-</Step>
-
 <Step title="Login with your API key">
 
-If running on a terminal:
+<Tabs>
+<Tab title="Terminal">
 
 ```bash
 sieve login
 ```
+
+</Tab>
+<Tab title="Environment Variable">
 
 If terminal interaction isn't possible, set the `SIEVE_API_KEY` as an environment variable:
 
 ```bash
 export SIEVE_API_KEY=YOUR_SIEVE_API_KEY
 ```
+
+</Tab>
+</Tabs>
 
 </Step>
 
@@ -57,78 +56,111 @@ We will be dubbing this clip about plants from English to Spanish.
   className="w-full aspect-video"
   src="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4"
 ></video>
-<Steps>
-  <Step title="Pushing a Sieve Job">
-    Using UI:
-    Navigate to your function on the [Sieve Playground](https://www.sievedata.com/functions/sieve/dubbing) and upload a sample file to test out your app.
+Pushing a Sieve Job
+<Tabs>
+  <Tab title="API">
+    <Steps>
+      <Step title="Pushing a Sieve Job">
+        Call your function via [API call](/reference-v2/api/create-new-job)
 
-    Using API:
-    You can also call your function via [API call](/reference-v2/api/create-new-job) or the [Python client](/guide/custom-apps/referencing-functions).
+        <Info>Make sure to replace `<your-api-key>` with your API key.</Info>
 
-    <Info>Make sure to replace `<your-api-key>` with your API key.</Info>
+
+        ```bash API
+        curl -X POST \
+          --url https://mango.sievedata.com/v2/push \
+          -H 'X-API-Key: <your-api-key>' \
+          -H 'Content-Type: application/json' \
+          --data '{
+            "function": "sieve/dubbing"
+            "inputs": {
+              "file": {"url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4"},
+              "target_language": "spanish"
+            }
+          }'
+        ```
+
+
+
+      </Step>
+      <Step title="Monitoring Job Status">
+        To fetch job and it's status use the [get job](/reference-v2/api/get-job) endpoint.
+      </Step>
+    </Steps>
+
+  </Tab>
+  <Tab title="Python">
+    <Steps>
+      <Step title="Install the Sieve Python client">
+
+        ```bash
+        pip install sievedata
+        ```
+
+      </Step>
+      <Step title="Pushing a Sieve Job">
+        <Info>Make sure to replace `<your-api-key>` with your API key.</Info>
+
+
+        ```python Python Client
+        import sieve
+
+        source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
+        dubbing = sieve.function.get("sieve/dubbing")
+        target_language = "spanish"
+        output = dubbing.run(source_file, target_language)
+
+        for output_object in output:
+          print(output_object.path)
+        ```
+
+
+      </Step>
+      <Step title="Monitoring Job Status">
+        Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will have appeared there.
+        ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
+      </Step>
+    </Steps>
+
+    In production, you may choose to run jobs that are quite long, so you may choose to use our async API.
 
     <CodeGroup>
-    ```bash API
-    curl -X POST \
-      --url https://mango.sievedata.com/v2/push \
-      -H 'X-API-Key: <your-api-key>' \
-      -H 'Content-Type: application/json' \
-      --data '{
-        "function": "sieve/dubbing"
-        "inputs": {
-          "file": {"url": "https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4"},
-          "target_language": "spanish"
-        }
-      }'
-    ```
-
-    ```python Python Client
-    import sieve
-
-    source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
+    ```python Sync Calls
+    # Running Dubbing synchronously
     dubbing = sieve.function.get("sieve/dubbing")
-    target_language = "spanish"
-    output = dubbing.run(source_file, target_language)
-
-    for output_object in output:
-      print(output_object.path)
+    dubbing_job = dubbing.run(file, target_language="spa")
     ```
+
+    ```python Async Calls
+    # Running Dubbing asynchronously
+    dubbing = sieve.function.get("sieve/dubbing")
+    dubbing_job = dubbing.push(file, target_language="spa")
+
+    # dubbing_job is a Python future, so you can use it in a non-blocking way
+    print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
+    for output_object in dubbing_job.result():
+        print(output_object.path) # Path of dubbed file
+    ```
+
     </CodeGroup>
+
+  </Tab>
+  <Tab title="Playground">
+<Steps>
+  <Step title="Pushing a Sieve Job">
+    Navigate to the [Dubbing API Playground](https://www.sievedata.com/functions/sieve/dubbing) and upload a sample file to test out your app.
 
   </Step>
   <Step title="Monitoring Job Status">
-    Using UI:
-    Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will have appeared there.
+    You can see the status of your job in the playground. You can also navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will have appeared there.
 
 ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
-
-    Using API:
-    To fetch job and it's status use the [API call](/reference-v2/api/get-job).
 
   </Step>
 </Steps>
 
-In production, you may choose to run jobs that are quite long, so you may choose to use our async API.
-
-<CodeGroup>
-```python Sync Calls
-# Running Dubbing synchronously
-dubbing = sieve.function.get("sieve/dubbing")
-dubbing_job = dubbing.run(file, target_language="spa")
-```
-
-```python Async Calls
-# Running Dubbing asynchronously
-dubbing = sieve.function.get("sieve/dubbing")
-dubbing_job = dubbing.push(file, target_language="spa")
-
-# dubbing_job is a Python future, so you can use it in a non-blocking way
-print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
-for output_object in dubbing_job.result():
-    print(output_object.path) # Path of dubbed file
-```
-
-</CodeGroup>
+</Tab>
+</Tabs>
 
 <Tip>
   For more production integration options, check out our section on
