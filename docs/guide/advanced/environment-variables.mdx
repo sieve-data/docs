@@ -3,13 +3,13 @@ title: "Environment Variables"
 description: "Access secrets and global constants as environment variables in a Sieve function."
 ---
 
-## **About Environment Variables**
+## About Environment Variables
 
 Environment variables allow you to access information uniformly across public apps on Sieve and custom-deployed Sieve functions. These can be accessed through `os.environ`. Several public apps, like [Dubbing](https://www.sievedata.com/functions/sieve/dubbing) and [Text-To-Speech](https://www.sievedata.com/functions/sieve/tts), use environment variables to let users supply custom API Keys for external services like OpenAI and ElevenLabs.
 
 If users set secrets, they will be mapped automatically to any environment variable with a matching name. For more information on secrets, click [here](/guide/advanced/secrets).
 
-## **Adding Environment Variables to a Sieve Function**
+## Adding Environment Variables to a Sieve Function
 
 We can add one or more environment variables to a sieve Function using the header parameter `environment_variables`.
 
@@ -39,7 +39,7 @@ def test_environment_variables(a: str) -> bool:
   return (os.environ["OPENAI_API_KEY"] is not "") and (os.environ["OPTIONAL_CREDENTIALS"] is not "")
 ```
 
-## **Example: Generate an image with Dall-E 3**
+## Example: Generate an image with Dall-E 3
 
 Let's build a simple function to generate an image using OpenAI's Dall-E 3 model.
 

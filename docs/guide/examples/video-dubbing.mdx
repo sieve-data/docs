@@ -6,6 +6,7 @@ description: "Build a video dubbing Sieve app"
 In this example, we will explore a more complex use case of Sieve. We’ll create an application that automatically dubs a video of a person speaking into another language! We’ll take an input video, transcribe it, translate that text to another language, generate text-to-speech of that translated text, and have the original video lipsync to the new audio.
 
 By following this, you will learn how to:
+
 - Use the Sieve client package to call multiple existing functions in Python
 - Combine these functions to create a customized app that meets our requirements
 
@@ -18,7 +19,7 @@ As mentioned above, to create an app that can dub videos, we need several models
 3. **XTTS-V1**: a text-to-speech model
 4. **Sieve Video Retalker**: an optimized version of video retalker for lipsyncing
 
-## Building **the app from scratch**
+## Building the app from scratch
 
 <Steps>
   <Step title="Set up folder and Python file">
@@ -104,6 +105,7 @@ As mentioned above, to create an app that can dub videos, we need several models
         dubbed_video = video_dubbing(video, "spa")
         print('dubbed video path: ', dubbed_video.path)
     ```
+
   </Step>
 
   <Step title="Run the pipeline">
@@ -113,8 +115,9 @@ As mentioned above, to create an app that can dub videos, we need several models
     ```bash
     python pipeline.py
     ```
-    
+
     You should start seeing some logs streaming in. You can also view the status of this job on the Sieve dashboard. After it has completed running, you'll see a video file path printed to the console, which has been saved to a temporary directory. You can open this video to see the results.
+
   </Step>
 
   <Step title="View your dubbed file!">
@@ -130,5 +133,6 @@ As mentioned above, to create an app that can dub videos, we need several models
     </CodeGroup>
 
     Or just view the video on the Sieve dashboard!
+
   </Step>
 </Steps>

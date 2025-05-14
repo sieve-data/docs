@@ -1,9 +1,9 @@
 ---
 title: "Webhooks"
-description: "Webhooks provide a way for notifications to be delivered to an external web server when a Sieve job completes."
+description: "Webhooks provide a way for notifications to be delivered to an external web server when a Sieve job completes"
 ---
 
-## **About webhooks**
+## About webhooks
 
 As an alternative to polling the Sieve API for a job to complete, webhooks allow Sieve to notify your API when results are ready. This eliminates unnecessary polling requests, and can get results back faster. In addition, webhooks can be triggered by the Sieve website, which can enable complex workflows with an accessible interface.
 
@@ -11,7 +11,7 @@ Webhooks in Sieve are delivered as POST requests. They are retried up to ten tim
 
 We currently don't provide a signature to verify the sender, but it is a feature we are looking into.
 
-## **Event types**
+## Event types
 
 The following is a full list of all webhook event types. Click the events to see the exact response payload.
 
@@ -24,7 +24,7 @@ The following is a full list of all webhook event types. Click the events to see
 
 <Tabs>
   <Tab title="API">
-    ## **Using webhooks via the HTTP API**
+    ## Using webhooks via the HTTP API
 
     The website [webhook.site](https://webhook.site/) provides a great way to test webhooks. Copy the unique URL presented to you on the website.
 
@@ -53,7 +53,7 @@ Once the job completes, you'll receive a notification on [webhook.site](https://
 
   </Tab>
   <Tab title="Python">
-    ## **Using webhooks via the Python client**
+    ## Using webhooks via the Python client
 
     Webhooks can also be set via the Python client with the `webhooks` parameter.
 
