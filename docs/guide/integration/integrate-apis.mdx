@@ -97,12 +97,12 @@ description: "Call public or custom functions from anywhere."
 
 <Note>
   For functions that return a single output, `.result()` will block until the
-  output is ready. If the function returns multiple outputs, `.result()` will
-  return immediately, returning a generator object, and iterating over the
-  generator will block until each output is ready.
+  output is ready. For functions that return multiple outputs, `.result()` will
+  return immediately with a generator object. Iterating over the generator will
+  block until each output is ready.
 </Note>
 
-The job result object may or may not be a generator, depending on the function. For example, the [Lipsync API](https://www.sievedata.com/functions/sieve/lipsync) doesn't return a generator.
+The job result object may or may not be a generator, depending on the function. For example, the [Lipsync API](https://www.sievedata.com/functions/sieve/lipsync) returns a single output rather than a generator.
 Here's how to use it asynchronously:
 
 ```python Async Calls
