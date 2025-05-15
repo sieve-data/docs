@@ -92,33 +92,33 @@ description: "Call public or custom functions from anywhere."
     ```
     </CodeGroup>
 
+    <Note>
+      For functions that return a single output, `.result()` will block until the
+      output is ready. For functions that return multiple outputs, `.result()` will
+      return immediately with a generator object. Iterating over the generator will
+      block until each output is ready.
+    </Note>
+
+    The job result object may or may not be a generator, depending on the function. For example, the [Lipsync API](https://www.sievedata.com/functions/sieve/lipsync) returns a single output rather than a generator.
+    Here's how to use it asynchronously:
+
+    ```python Async Calls
+    # Running Lipsync asynchronously
+    import sieve
+
+    file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-file.mp4")
+    audio = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-audio.wav")
+
+    lipsync = sieve.function.get("sieve/lipsync")
+    output = lipsync.push(file, audio)
+
+    print(output)
+    # Execute other code
+    # ...
+    # ...
+    future_result = output.result()
+    print(future_result.path) # Path of synced file
+    ```
+
   </Tab>
 </Tabs>
-
-<Note>
-  For functions that return a single output, `.result()` will block until the
-  output is ready. For functions that return multiple outputs, `.result()` will
-  return immediately with a generator object. Iterating over the generator will
-  block until each output is ready.
-</Note>
-
-The job result object may or may not be a generator, depending on the function. For example, the [Lipsync API](https://www.sievedata.com/functions/sieve/lipsync) returns a single output rather than a generator.
-Here's how to use it asynchronously:
-
-```python Async Calls
-# Running Lipsync asynchronously
-import sieve
-
-file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-file.mp4")
-audio = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-audio.wav")
-
-lipsync = sieve.function.get("sieve/lipsync")
-output = lipsync.push(file, audio)
-
-print(output)
-# Execute other code
-# ...
-# ...
-future_result = output.result()
-print(future_result.path) # Path of synced file
-```
