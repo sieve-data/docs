@@ -101,21 +101,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Examples",
-        "groups": [
-          {
-            "group": "Tutorials",
-            "pages": [
-              "guide/examples/introduction",
-              "guide/examples/viral-ai-video-bot",
-              "guide/examples/background-replacement-and-caption-effects-pipeline",
-              "guide/examples/youtube-video-dubbing-with-ai",
-              "guide/examples/ai-background-noise-removal"
-            ]
-          }
-        ]
       }
     ],
     "global": {
