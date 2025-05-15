@@ -62,22 +62,6 @@
                   "reference-v2/api/get-function-usage",
                   "reference-v2/api/get-per-function-usage"
                 ]
-              },
-              {
-                "group": "Custom Functions",
-                "pages": [
-                  "reference-v2/api/get-function",
-                  "reference-v2/api/edit-function",
-                  "reference-v2/api/get-function-version",
-                  "reference-v2/api/edit-function-version",
-                  "reference-v2/api/list-function-version-jobs",
-                  "reference-v2/api/get-version-usage",
-                  "guide/custom-apps/deploying-functions",
-                  "guide/custom-apps/gpu-acceleration",
-                  "guide/custom-apps/typing",
-                  "guide/custom-apps/autoscaling",
-                  "guide/advanced/environment-variables"
-                ]
               }
             ]
           },
@@ -90,6 +74,22 @@
               "reference-v2/cli/push",
               "reference-v2/cli/deploy",
               "reference-v2/cli/whoami"
+            ]
+          },
+          {
+            "group": "Custom Functions",
+            "pages": [
+              "guide/custom-apps/deploying-functions",
+              "reference-v2/api/get-function",
+              "reference-v2/api/edit-function",
+              "reference-v2/api/get-function-version",
+              "reference-v2/api/edit-function-version",
+              "reference-v2/api/list-function-version-jobs",
+              "reference-v2/api/get-version-usage",
+              "guide/custom-apps/gpu-acceleration",
+              "guide/custom-apps/typing",
+              "guide/custom-apps/autoscaling",
+              "guide/advanced/environment-variables"
             ]
           },
           {
