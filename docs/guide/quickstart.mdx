@@ -129,13 +129,13 @@ We will dub this clip about plants from English to Spanish.
     ```python Sync Calls
     # Running Dubbing synchronously
     dubbing = sieve.function.get("sieve/dubbing")
-    dubbing_job = dubbing.run(file, target_language="spa")
+    dubbing_job = dubbing.run(file, target_language="spanish")
     ```
 
     ```python Async Calls
     # Running Dubbing asynchronously
     dubbing = sieve.function.get("sieve/dubbing")
-    dubbing_job = dubbing.push(file, target_language="spa")
+    dubbing_job = dubbing.push(file, target_language="spanish")
 
     # dubbing_job is a Python future, so you can use it in a non-blocking way
     print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
@@ -155,7 +155,7 @@ We will dub this clip about plants from English to Spanish.
   <Step title="Monitoring Job Status">
     You can see the status of your job in the playground. You can also navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will appear there.
 
-![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
+    ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
 
   </Step>
 </Steps>
