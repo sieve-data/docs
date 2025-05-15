@@ -90,7 +90,7 @@ The `.push()` method returns a `SieveFuture` object, which contains information 
         print(multiplication_job.result())
     ```
 
-**Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`. You will have to define a `ThreadPoolExecutor` outside the `.push()` methods to use it in this way.
+**Note:** `SieveFuture` objects don't work with traditional `concurrent.futures` methods like `concurrent.futures.as_completed` or `concurrent.futures.wait`.
 
 You can call both `.run()` and `.push()` locally, or within another Sieve function. Calling `.run()` or `.push()` within Sieve allows you to chain function calls together, enabling powerful AI applications!
 

@@ -7,9 +7,9 @@ description: "Call public or custom functions from anywhere."
   <Tab title="API">
     ## Running functions via API
 
-    Running any functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint.
+    You can run any function via the [Push](/reference-v2/api/create-new-job) endpoint.
 
-    For this example we are using the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing), but you can explore more api functions through the [explore page](https://www.sievedata.com/explore) as use it as `sieve/function-name`.
+    For this example, we are using the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing). You can explore more API functions through the [explore page](https://www.sievedata.com/explore) and use them as `sieve/function-name`.
 
     ```bash API
     curl -X POST \
@@ -25,13 +25,13 @@ description: "Call public or custom functions from anywhere."
       }'
     ```
 
-    The response will be a JSON object describing the job. Use the job `id` from this response to get the status and outputs of the job. Refer to [Job Outputs](reference-v2/api/get-job-outputs) endpoint for more information.
+    The response will be a JSON object describing the job. Use the job `id` from this response to get the status and outputs of the job. For more information, refer to the [Job Outputs](reference-v2/api/get-job-outputs) endpoint.
 
-    Alternatively, you can also see your job running in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
+    Alternatively, you can monitor your job in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
 
     <Note>
-      Function inputs and outputs vary from function to function. Please refer to
-      respective function's [Usage
+      Function inputs and outputs vary by function. Please refer to
+      the respective function's [Usage
       Guide](https://www.sievedata.com/functions/sieve/autocrop/guide) for more
       information about integration.
     </Note>
@@ -40,10 +40,10 @@ description: "Call public or custom functions from anywhere."
   <Tab title="Python">
     ## Running functions in Python
 
-    You may also reference and run functions in Python directly. This has a couple of key benefits:
+    You can also reference and run functions directly in Python. This approach offers several key benefits:
 
-    - Calling your function will return a Python object directly in-line rather than JSON
-    - Async job handling is handled by default. No need to poll for outputs or job status
+    - Functions return Python objects directly rather than JSON
+    - Asynchronous job handling is supported without the need to poll for outputs or job status
     - Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more.
 
     ```python Python Client
@@ -58,21 +58,20 @@ description: "Call public or custom functions from anywhere."
       print(output_object.path)
     ```
 
-    Here `output_object.path` will be the local path/s to the output file/s.
+    Here, `output_object.path` will contain the local path(s) to the output file(s).
 
-    Alternatively, you can also see your job running in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
-
+    Alternatively, you can monitor your job in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
 
     <Note>
-      Function inputs and outputs vary from function to function. Please refer to
-      respective function's [Usage
+      Function inputs and outputs vary by function. Please refer to
+      the respective function's [Usage
       Guide](https://www.sievedata.com/functions/sieve/autocrop/guide) for more
       information about integration.
     </Note>
 
-    The Sieve Python client lets you run functions synchronously or asynchronously. Let's take the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing) for example.
+    The Sieve Python client supports both synchronous and asynchronous function execution. Let's use the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing) as an example.
 
-    You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you'd like to send many requests at once. You can then get the outputs of these jobs by calling `.result()`, which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
+    You can also `push` to a function's queue and wait for the request to complete asynchronously. This is particularly beneficial when sending multiple requests simultaneously. The `push` method returns a Python future, which can be used with other Python async utilities.
 
     <CodeGroup>
     ```python Sync Calls
@@ -95,3 +94,31 @@ description: "Call public or custom functions from anywhere."
 
   </Tab>
 </Tabs>
+
+<Note>
+  For functions that return a single output, `.result()` will block until the
+  output is ready. If the function returns multiple outputs, `.result()` will
+  return immediately, returning a generator object, and iterating over the
+  generator will block until each output is ready.
+</Note>
+
+The job result object may or may not be a generator, depending on the function. For example, the [Lipsync API](https://www.sievedata.com/functions/sieve/lipsync) doesn't return a generator.
+Here's how to use it asynchronously:
+
+```python Async Calls
+# Running Lipsync asynchronously
+import sieve
+
+file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-file.mp4")
+audio = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/40932012-cf32-4c74-bb2b-1ddcd6f51fa7/9ea77af1-518e-4c1c-aae6-0feca93b56dd-input-audio.wav")
+
+lipsync = sieve.function.get("sieve/lipsync")
+output = lipsync.push(file, audio)
+
+print(output)
+# Execute other code
+# ...
+# ...
+future_result = output.result()
+print(future_result.path) # Path of synced file
+```

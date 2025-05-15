@@ -9,8 +9,6 @@ As an alternative to polling the Sieve API for a job to complete, webhooks allow
 
 Webhooks in Sieve are delivered as POST requests. They are retried up to ten times using exponential backoff until a 200 status code is received.
 
-We currently don't provide a signature to verify the sender, but it is a feature we are looking into.
-
 ## Event types
 
 The following is a full list of all webhook event types. Click the events to see the exact response payload.
