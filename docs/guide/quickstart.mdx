@@ -20,7 +20,7 @@ description: "Call a Sieve API and submit your first job."
 >
   {}
 </Card>
-</Step >
+</Step>
 
 <Step title="Login with your API key">
 
@@ -65,7 +65,6 @@ We will dub this clip about plants from English to Spanish.
 
         <Info>Make sure to replace `<your-api-key>` with your API key.</Info>
 
-
         ```bash API
         curl -X POST \
           --url https://mango.sievedata.com/v2/push \
@@ -80,11 +79,30 @@ We will dub this clip about plants from English to Spanish.
           }'
         ```
 
+        This will return a response containing a Job ID as `id`, along with the job status and other details.
+
       </Step>
       <Step title="Monitoring Job Status">
-        To fetch the job and its status, use the [get job](/reference-v2/api/get-job) endpoint.
+        Note the `id` parameter (Job ID) from the previous step, then use the [get job](/reference-v2/api/get-job) endpoint to fetch the job and its status.
+
+        ```bash API
+            curl --request GET
+            --url https://mango.sievedata.com/v2/jobs/<job-id>
+            -H "X-API-Key: <your-api-key>"
+        ```
+
+        ```bash Response
+        {
+          "id":"<job-id>",
+          ...
+          # queued | processing | finished | error | cancelled
+          "status":"processing"
+          ...
+        }
+        ```
       </Step>
     </Steps>
+    The response will provide the job status and additional details about the job, to learn more check [Sieve Job documentation](/concepts/sieve-job).
 
   </Tab>
   <Tab title="Python">
@@ -100,12 +118,11 @@ We will dub this clip about plants from English to Spanish.
       <Step title="Pushing a Sieve Job">
         <Info>Make sure to replace `<your-api-key>` with your API key.</Info>
 
-
         ```python Python Client
         import sieve
 
         source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
-        #You can also reference a local file by its path
+        # You can also reference a local file by its path
         my_local_source_file = sieve.File("path/to/example_file.mp4") # Will automatically identify it is a local path
 
         dubbing = sieve.function.get("sieve/dubbing")
@@ -118,12 +135,12 @@ We will dub this clip about plants from English to Spanish.
 
       </Step>
       <Step title="Monitoring Job Status">
-        Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will appear there.
+        Navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) to view the job status.
         ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
       </Step>
     </Steps>
 
-    In production, you may choose to run jobs that are quite long, so you may want to use our async API.
+    For production environments, you may want to use our async API for longer-running jobs.
 
     <CodeGroup>
     ```python Sync Calls
@@ -149,11 +166,11 @@ We will dub this clip about plants from English to Spanish.
   <Tab title="Playground">
 <Steps>
   <Step title="Pushing a Sieve Job">
-    Navigate to the [Dubbing API Playground](https://www.sievedata.com/functions/sieve/dubbing) and upload the file.
+    Navigate to the [Dubbing API Playground](https://www.sievedata.com/functions/sieve/dubbing) and upload your file.
 
   </Step>
   <Step title="Monitoring Job Status">
-    You can see the status of your job in the playground. You can also navigate to your [Sieve Dashboard](https://www.sievedata.com/dashboard) and the job will appear there.
+    You can monitor the status of your job in the playground. You can also check your [Sieve Dashboard](https://www.sievedata.com/dashboard) to view the job status.
 
     ![first-job](https://storage.googleapis.com/sieve-public-data/assets/docs/dashboard-firstjob.jpg)
 
@@ -169,4 +186,4 @@ We will dub this clip about plants from English to Spanish.
 </Tip>
 
 Running a job on Sieve is that simple.
-You can customize parameters and test more function-specific specs on [Dubbing API Page](https://www.sievedata.com/functions/sieve/dubbing/guide).
+You can customize parameters and test more function-specific specifications on the [Dubbing API Page](https://www.sievedata.com/functions/sieve/dubbing/guide).

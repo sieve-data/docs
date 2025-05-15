@@ -9,6 +9,8 @@ description: "Call public or custom functions from anywhere."
 
     Running any functions via API can be done through the [Push](/reference-v2/api/create-new-job) endpoint.
 
+    For this example we are using the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing), but you can explore more api functions through the [explore page](https://www.sievedata.com/explore) as use it as `sieve/function-name`.
+
     ```bash API
     curl -X POST \
       --url https://mango.sievedata.com/v2/push \
@@ -23,7 +25,7 @@ description: "Call public or custom functions from anywhere."
       }'
     ```
 
-    The response will be a JSON object describing the job. Use the job "id" from this response to get the status and outputs of the job. Refer to [Job Outputs](reference-v2/api/get-job-outputs) endpoint for more information.
+    The response will be a JSON object describing the job. Use the job `id` from this response to get the status and outputs of the job. Refer to [Job Outputs](reference-v2/api/get-job-outputs) endpoint for more information.
 
     Alternatively, you can also see your job running in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
 
