@@ -23,6 +23,17 @@ description: "Call public or custom functions from anywhere."
       }'
     ```
 
+    The response will be a JSON object describing the job. Use the job "id" from this response to get the status and outputs of the job. Refer to [Job Outputs](reference-v2/api/get-job-outputs) endpoint for more information.
+
+    Alternatively, you can also see your job running in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
+
+    <Note>
+      Function inputs and outputs vary from function to function. Please refer to
+      respective function's [Usage
+      Guide](https://www.sievedata.com/functions/sieve/autocrop/guide) for more
+      information about integration.
+    </Note>
+
   </Tab>
   <Tab title="Python">
     ## Running functions in Python
@@ -31,50 +42,54 @@ description: "Call public or custom functions from anywhere."
 
     - Calling your function will return a Python object directly in-line rather than JSON
     - Async job handling is handled by default. No need to poll for outputs or job status
+    - Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more.
 
-- Calling a function from inside a Sieve function is faster and takes advantage of file caching. Contact us to learn more.
+    ```python Python Client
+    import sieve
 
-```python Python Client
-import sieve
+    source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
+    dubbing = sieve.function.get("sieve/dubbing")
+    target_language = "spanish"
+    output = dubbing.run(source_file, target_language)
 
-source_file = sieve.File(url="https://storage.googleapis.com/sieve-prod-us-central1-public-file-upload-bucket/c27fa3e7-d590-4208-ab8e-57fe69e7a4b9/9acf16f7-be0e-4522-a933-13abcd2fd6e3-input-source_file.mp4")
-dubbing = sieve.function.get("sieve/dubbing")
-target_language = "spanish"
-output = dubbing.run(source_file, target_language)
+    for output_object in output:
+      print(output_object.path)
+    ```
 
-for output_object in output:
-  print(output_object.path)
-```
+    Here `output_object.path` will be the local path/s to the output file/s.
 
-<Note>
-  Function inputs and outputs vary from function to function. Please refer to
-  respective function's [Usage
-  Guide](https://www.sievedata.com/functions/sieve/autocrop/guide) for more
-  information about integration.
-</Note>
+    Alternatively, you can also see your job running in the [dashboard](https://www.sievedata.com/dashboard) where you can visualize outputs.
 
-The Sieve Python client lets you run functions synchronously or asynchronously. Let's take the [Dubbing API]("https://www.sievedata.com/functions/sieve/dubbing") for example.
 
-You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you'd like to send many requests at once. You can then get the outputs of these jobs by calling `.result()` which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
+    <Note>
+      Function inputs and outputs vary from function to function. Please refer to
+      respective function's [Usage
+      Guide](https://www.sievedata.com/functions/sieve/autocrop/guide) for more
+      information about integration.
+    </Note>
 
-<CodeGroup>
-```python Sync Calls
-# Running Dubbing synchronously
-dubbing = sieve.function.get("sieve/dubbing")
-dubbing_job = dubbing.run(file, target_language="spa")
-```
+    The Sieve Python client lets you run functions synchronously or asynchronously. Let's take the [Dubbing API](https://www.sievedata.com/functions/sieve/dubbing) for example.
 
-```python Async Calls
-# Running Dubbing asynchronously
-dubbing = sieve.function.get("sieve/dubbing")
-dubbing_job = dubbing.push(file, target_language="spa")
+    You can also `push` to a queue of a function and wait for the request to complete asynchronously. This is especially beneficial if you'd like to send many requests at once. You can then get the outputs of these jobs by calling `.result()`, which is blocking and waits for the result to be received. The `push` method returns a Python future, which can be used with other Python async utilities.
 
-# dubbing_job is a Python future, so you can use it in a non-blocking way
-print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
-for output_object in dubbing_job.result():
-    print(output_object.path) # Path of dubbed file
-```
+    <CodeGroup>
+    ```python Sync Calls
+    # Running Dubbing synchronously
+    dubbing = sieve.function.get("sieve/dubbing")
+    dubbing_job = dubbing.run(file, target_language="spa")
+    ```
 
-</CodeGroup>
+    ```python Async Calls
+    # Running Dubbing asynchronously
+    dubbing = sieve.function.get("sieve/dubbing")
+    dubbing_job = dubbing.push(file, target_language="spa")
+
+    # dubbing_job is a Python future, so you can use it in a non-blocking way
+    print(dubbing_job) # <Future at 0x7f8e3c3e3e50 state=running>
+    for output_object in dubbing_job.result():
+        print(output_object.path) # Path of dubbed file
+    ```
+    </CodeGroup>
+
   </Tab>
 </Tabs>
