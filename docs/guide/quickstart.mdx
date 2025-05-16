@@ -54,7 +54,7 @@ We will dub this clip about plants from English to Spanish.
 <video
   controls
   className="w-full aspect-video"
-  src="https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video-trim.mp4"
+  src="https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video.mp4"
 ></video>
 
 <Tabs>
@@ -73,7 +73,7 @@ We will dub this clip about plants from English to Spanish.
           --data '{
             "function": "sieve/dubbing",
             "inputs": {
-              "file": {"url": "https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video-trim.mp4"},
+              "file": {"url": "https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video.mp4"},
               "target_language": "spanish"
             }
           }'
@@ -121,7 +121,7 @@ We will dub this clip about plants from English to Spanish.
         ```python Python Client
         import sieve
 
-        source_file = sieve.File(url="https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video-trim.mp4")
+        source_file = sieve.File(url="https://storage.googleapis.com/sieve-public-data/assets/docs/quickstart-example-video.mp4")
         # You can also reference a local file by its path
         my_local_source_file = sieve.File("path/to/example_file.mp4") # Will automatically identify it is a local path
 
