@@ -1,18 +1,19 @@
 ---
 title: "Run GPU Workloads"
-description: "Accelerate your Sieve functions with GPU"
+description: "Accelerate your Sieve functions with GPU."
 ---
+
 ## Deploying GPU functions
 
 Sieve lets you run code on GPUs. To do so, all you need to do is add a `gpu` parameter to your function decorator with the GPU you want. Today, Sieve offers a couple machine configurations listed below.
 
-| Name | GPU | Memory (GB) | vCPUs | Parameter |
-| --- | --- | --- | --- | --- |
-| T4 (default) | T4 | 16 | 4 | `sieve.gpu.T4()` |
-| A100-40GB | A100-40GB | 85 | 12 | `sieve.gpu.A100()` |
-| A100-20GB | A100-20GB | 42.5 | 6 | `sieve.gpu.A10020GB()` |
-| V100 | V100 | 16 | 4 | `sieve.gpu.V100()` |
-| L4 | L4 | 32 | 8 | `sieve.gpu.L4()` |
+| Name         | GPU       | Memory (GB) | vCPUs | Parameter              |
+| ------------ | --------- | ----------- | ----- | ---------------------- |
+| T4 (default) | T4        | 16          | 4     | `sieve.gpu.T4()`       |
+| A100-40GB    | A100-40GB | 85          | 12    | `sieve.gpu.A100()`     |
+| A100-20GB    | A100-20GB | 42.5        | 6     | `sieve.gpu.A10020GB()` |
+| V100         | V100      | 16          | 4     | `sieve.gpu.V100()`     |
+| L4           | L4        | 32          | 8     | `sieve.gpu.L4()`       |
 
 You can specify one of these in code as follows.
 
@@ -52,13 +53,14 @@ def runs_on_gpu(video: sieve.File) -> sieve.File:
 
 `split` can be any integer between 1 and 8. Sieve will only share a GPU with other workers of the same function. Since `split` number of workers share the same GPU, Sieve will spin up that many workers at a time.
 
-Each shared worker will be billed at `1/split` the rate of a regular worker. So, Sieve will charge you the same amount per GPU hour regardless of how many workers are running on it. 
+Each shared worker will be billed at `1/split` the rate of a regular worker. So, Sieve will charge you the same amount per GPU hour regardless of how many workers are running on it.
 
 Read more about the way the `gpu` field works in [SDK reference](/reference-v2/sdk/functions_models#specifying-additional-data-for-functions-and-models).
 
 ## Example: YOLO Object Detection
 
 In this guide, we'll deploy [YOLOv8](https://github.com/ultralytics/ultralytics), a standard object detection model, to Sieve, using a cloud GPU (T4) and with GPU sharing enabled.
+
 <Steps>
   <Step title="Let’s first create a new directory and set up our project.">
 
@@ -66,6 +68,7 @@ In this guide, we'll deploy [YOLOv8](https://github.com/ultralytics/ultralytics)
 mkdir sieve_yolov8 && cd sieve_yolov8
 touch sieve_yolov8/main.py
 ```
+
   </Step>
 
   <Step title='Now, we can setup our YOLO model and write our inference code.'>
@@ -73,7 +76,7 @@ touch sieve_yolov8/main.py
 ```python
 import sieve
 
-@sieve.Model(
+@sieve.function(
     name="yolo-v8",
     gpu=sieve.gpu.T4(split=4),
     python_packages=["ultralytics", "torch==1.13.1", "torchvision==0.14.1"],
@@ -84,27 +87,29 @@ import sieve
 class Yolo:
     def __setup__(self):
         from ultralytics import YOLO
-        self.model = YOLO('yolov8l.pt')
+        self.function = YOLO('yolov8l.pt')
 
     def __predict__(self, img: sieve.File) -> list:
-        preds = self.model(img.path)
+        preds = self.function(img.path)
         all_boxes = []
         for pred in preds:
             all_boxes.append(pred.boxes.xyxy.cpu().numpy().tolist())
         return all_boxes
 ```
+
   </Step>
 
-  <Step title="Finally, let's deploy our model to Sieve.">
+  <Step title="Finally, let's deploy our function to Sieve.">
   After authenticating with your API key and making sure you're in the `sieve_yolov8` directory, we can simply run:
 
-  ```bash
-  sieve deploy
-  ```
+```bash
+sieve deploy
+```
+
   </Step>
 
   <Step title="Run jobs!">
-  You'll now see your deployed model on the Sieve dashboard, along with an auto-generated UI to play around with it!
+  You'll now see your deployed function on the Sieve dashboard, along with an auto-generated UI to play around with it!
   
   Your job traffic will autoscale GPUs, with each GPU having capacity for running 4 jobs at a time, as we specified with `sieve.gpu.T4(split=4)`.
   </Step>

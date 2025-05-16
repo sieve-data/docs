@@ -1,0 +1,150 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Sieve",
+  "colors": {
+    "primary": "#8d62ee",
+    "light": "#c4b5fd",
+    "dark": "#7240ff"
+  },
+  "appearance": {
+    "default": "light"
+  },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["guide/overview", "guide/quickstart", "guide/pricing"]
+          },
+          {
+            "group": "Integration",
+            "pages": [
+              "guide/integration/explore-apis",
+              "guide/integration/integrate-apis",
+              "guide/integration/webhooks",
+              "guide/integration/secrets"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "concepts/sieve-file",
+              "concepts/sieve-job",
+              "concepts/sieve-function"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "reference-v2/api/intro",
+              "reference-v2/api/create-new-job",
+              "reference-v2/api/get-job",
+              "reference-v2/api/get-job-await",
+              "reference-v2/api/cancel-job",
+              "reference-v2/api/get-logs",
+              "reference-v2/api/list-jobs",
+              "reference-v2/api/get-function",
+              "reference-v2/api/list-function-jobs",
+              {
+                "group": "Pricing & Usage",
+                "pages": [
+                  "reference-v2/api/get-total-usage",
+                  "reference-v2/api/get-job-cost",
+                  "reference-v2/api/get-function-usage",
+                  "reference-v2/api/get-per-function-usage"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "CLI Reference",
+            "pages": [
+              "reference-v2/cli/intro",
+              "reference-v2/cli/login",
+              "reference-v2/cli/job",
+              "reference-v2/cli/push",
+              "reference-v2/cli/deploy",
+              "reference-v2/cli/whoami"
+            ]
+          },
+          {
+            "group": "Custom Functions",
+            "pages": [
+              "guide/custom-apps/deploying-functions",
+              "guide/custom-apps/gpu-acceleration",
+              "guide/custom-apps/typing",
+              "guide/custom-apps/autoscaling",
+              "guide/advanced/environment-variables",
+              "reference-v2/api/get-function",
+              "reference-v2/api/edit-function",
+              "reference-v2/api/get-function-version",
+              "reference-v2/api/edit-function-version",
+              "reference-v2/api/list-function-version-jobs",
+              "reference-v2/api/get-version-usage"
+            ]
+          },
+          {
+            "group": "SDK Reference",
+            "pages": [
+              "reference-v2/sdk/intro",
+              "reference-v2/sdk/functions_models",
+              "reference-v2/sdk/types/file"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Discord",
+          "href": "https://discord.com/invite/Pnh97rvRtD",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://www.sievedata.com/blog",
+          "icon": "book"
+        }
+      ]
+    }
+  },
+  "logo": "/logo.svg",
+  "api": {
+    "mdx": {
+      "server": ["https://mango.sievedata.com"],
+      "auth": {
+        "method": "key",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://www.sievedata.com/dashboard"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://www.sievedata.com",
+      "discord": "https://discord.com/invite/Pnh97rvRtD"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/reference-v2/api/push",
+      "destination": "/reference-v2/api/push-new-job"
+    }
+  ]
+}

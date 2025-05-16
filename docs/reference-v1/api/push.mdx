@@ -18,7 +18,9 @@ api: "POST /v1/push"
 This endpoint triggers either a workflow or a model with a given set of inputs. The structure of the inputs should match the inputs types specified in the workflow or model definition.
 
 ## Example
+
 A workflow that takes in a `sieve.Video` named `video` and a `sieve.Image` named `image` would be triggered with the following request:
+
 ```json
 {
   "workflow_name": "sample_workflow",
@@ -34,6 +36,7 @@ A workflow that takes in a `sieve.Video` named `video` and a `sieve.Image` named
 ```
 
 A model that takes in a `str` named `prompt` would be triggered with the following request:
+
 ```json
 {
   "model_id": "570e75d6-008f-4a5a-93ec-fede6a8675eb",
@@ -47,7 +50,7 @@ A model that takes in a `str` named `prompt` would be triggered with the followi
 ```json
 {
   "id": "c49b2fa2-f236-43d8-b2f3-03eceff16d71",
-  "description": "Pushed c49b2fa2-f236-43d8-b2f3-03eceff16d71 to queue"
+  "description": "Pushed c49b2fa2-f236-43d8-b2f3-03eceff16d71 to queue."
 }
 ```
 </ResponseExample>
