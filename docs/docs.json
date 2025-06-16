@@ -19,7 +19,7 @@
           {
             "group": "Getting Started",
             "pages": [
-              "guide/intro",
+              "guide/overview",
               "guide/quickstart",
               "guide/pricing"
             ]
