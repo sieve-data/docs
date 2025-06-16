@@ -18,7 +18,11 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["guide/overview", "guide/quickstart", "guide/pricing"]
+            "pages": [
+              "guide/intro",
+              "guide/quickstart",
+              "guide/pricing"
+            ]
           },
           {
             "group": "Integration",
@@ -57,10 +61,12 @@
               {
                 "group": "Pricing & Usage",
                 "pages": [
+                  "reference-v2/api/get-concurrency-info",
                   "reference-v2/api/get-total-usage",
                   "reference-v2/api/get-job-cost",
                   "reference-v2/api/get-function-usage",
-                  "reference-v2/api/get-per-function-usage"
+                  "reference-v2/api/get-per-function-usage",
+                  "reference-v2/api/get-concurrency-stats"
                 ]
               }
             ]
@@ -121,7 +127,9 @@
   "logo": "/logo.svg",
   "api": {
     "mdx": {
-      "server": ["https://mango.sievedata.com"],
+      "server": [
+        "https://mango.sievedata.com"
+      ],
       "auth": {
         "method": "key",
         "name": "X-API-Key"
